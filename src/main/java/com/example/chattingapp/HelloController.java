@@ -1,5 +1,6 @@
 package com.example.chattingapp;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,26 +12,33 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class HelloController {
 
     ObservableList<Track> tracksList;
+    List listOfTracks = new ArrayList<>();
     UDPSender udpSender = new UDPSender();
+    ArrayList latitudeArray, longitudeArray, altitudeArray;
+//    Track track = new Track();
     private int minute;
     private int hour;
     private int second;
     private double latitude;
     private double longitude;
     private double altitude;
-    double startLatitude, startLongitude, startAltitude, endLatitude, endLongitude, endAltitude, speed, changeLatitude, changeLongitude, changeAltitude;
+    Double startLatitude, startLongitude, startAltitude;
+    Double changeLatitude, changeLongitude, changeAltitude, endLatitude, endLongitude, endAltitude, speed;
     long trackerFrequency;
+    int id, trackId;
     private int trackPerSecond;
-    boolean latitudeTracker;
-    boolean longitudeTracker;
-    boolean altitudeTracker;
+    static boolean latitudeTracker;
+    static boolean longitudeTracker;
+    static boolean altitudeTracker;
+    static boolean trackExists;
     String trackTime;
-
     double trackLatitude;
     double trackLongitude;
     double trackAltitude;
@@ -94,8 +102,6 @@ public class HelloController {
     private Button sendEnemiesTrackButton;
     @FXML
     private TextField timeOfTracking;
-    @FXML
-    private ChoiceBox<?> trackIdCheckBox;
     //////////////////////////////////////////////////
 //    @FXML
 //    private Spinner<Integer> enemyTimeField;
@@ -118,6 +124,8 @@ public class HelloController {
     @FXML
     private TableView<Track> enemyTable;
     @FXML
+    TableColumn<Track, Double> speedColumn;
+    @FXML
     private TableColumn<Track, String> militarySymbolColumn;
     @FXML
     private Button deleteEnemy;
@@ -138,15 +146,13 @@ public class HelloController {
     @FXML
     private TableColumn<Track, Double> v2Column;
     @FXML
-    private TableColumn<Track, Double> enemyLongitudeColumn;
+    private TableColumn<Track, Double> enemyLongitudeColumn, endLongitudeColumn, changeInLongitudeColumn;
     @FXML
     private TableColumn<Track, Integer> enemyIdColumn;
     @FXML
-    private TableColumn<Track, Double> enemyLatitudeColumn;
+    private TableColumn<Track, Double> enemyLatitudeColumn, endLatitudeColumn, changeInLatitudeColumn;
     @FXML
-    private TableColumn<Track, Double> enemyAltitudeColumn;
-    @FXML
-    private TableColumn<Track, Double> speedColumn;
+    private TableColumn<Track, Double> enemyAltitudeColumn, endAltitudeColumn, changeInAltitudeColumn;
     /////////////////////////////////////////////////////////
     @FXML
     private Label deviceAltitude;
@@ -185,7 +191,7 @@ public class HelloController {
     @FXML
     private TextField enemyAltitudeField;
     @FXML
-    private Label enemyAltitudeLable, trackV2Lable, trackPv2Lable, trackPv1Lable, trackV1Lable, trackRcsLabel,trackTypeLabel;
+    private Label enemyAltitudeLable, trackV2Lable, trackPv2Lable, trackPv1Lable, trackV1Lable, trackRcsLabel, trackTypeLabel;
     @FXML
     private Label enemyId;
     @FXML
@@ -251,11 +257,13 @@ public class HelloController {
     void deleteTrackButton(ActionEvent event) {
         int selectedEnemy = enemyTable.getSelectionModel().getSelectedIndex();
         enemyTable.getItems().remove(selectedEnemy);
-        }
+    }
+
     @FXML
     void resetSimulationButton(ActionEvent event) {
         enemyTable.getItems().clear();
     }
+
     @FXML
     void AutoTrackSenderButton(ActionEvent event) {
         // call the select row on the table
@@ -270,6 +278,7 @@ public class HelloController {
         double changeLatitude = Double.parseDouble(latitudeChangeField.getText());
         double changeLongitude = Double.parseDouble(longitudeChangeField.getText());
         double changeAltitude = Double.parseDouble(altitudeChangeField.getText());
+
         trackPerSecond = Integer.parseInt(numberOfTrackPerSecond.getText());
         long timeOfTrack = Long.parseLong(timeOfTracking.getText()) * 1000;
 
@@ -286,7 +295,7 @@ public class HelloController {
                     longitude = longitude + changeLongitude;
                     altitude = altitude + changeAltitude;
 
-                    Track tracker = new Track(Integer.parseInt(trackId),latitude,longitude,altitude);
+                    Track tracker = new Track(Integer.parseInt(trackId), latitude, longitude, altitude);
 
                     tracksList = enemyTable.getItems();
                     tracksList.add(tracker);
@@ -321,119 +330,223 @@ public class HelloController {
 //        enemyAltitudeField.setText(String.valueOf(selectedTrack.getAltitude()));
 //        enemyRadarIdField.setText(String.valueOf(selectedTrack.getRadarId()));
     }
+
     @FXML
-    void AutoNewTrackSenderButton(ActionEvent event){
-        int id;
+    void AutoNewTrackSenderButton(ActionEvent event) {
+
+        double latitude, longitude, altitude;
 
         id = Integer.parseInt(autoTrackIdField.getText());
         speed = Double.parseDouble(autoTrackSpeedField.getText());
-        startLatitude = Double.parseDouble(autoTrackStartLatitudeField.getText());
-        startLongitude = Double.parseDouble(autoTrackStartLongitudeField.getText());
-        startAltitude = Double.parseDouble(autoTrackStartAltitudeField.getText());
+        latitude = (Double.parseDouble(autoTrackStartLatitudeField.getText()));
+        longitude = (Double.parseDouble(autoTrackStartLongitudeField.getText()));
+        altitude = (Double.parseDouble(autoTrackStartAltitudeField.getText()));
         endLatitude = Double.parseDouble(autoTrackEndLatitudeField.getText());
         endLongitude = Double.parseDouble(autoTrackEndLongitudeField.getText());
         endAltitude = Double.parseDouble(autoTrackEndAltitudeField.getText());
-        trackerFrequency = Long.parseLong(trackFrequencyField.getText());
         changeLatitude = Double.parseDouble(latitudeChangeField.getText());
         changeLongitude = Double.parseDouble(longitudeChangeField.getText());
         changeAltitude = Double.parseDouble(altitudeChangeField.getText());
 
-//        trackLatitude = startLatitude;
-//        trackLongitude = startLongitude;
-//        trackAltitude = startAltitude;
+        // 1 minute in milliseconds
+
+        Calendar cal = Calendar.getInstance();
+        second = cal.get(Calendar.SECOND);
+        minute = cal.get(Calendar.MINUTE);
+        hour = cal.get(Calendar.HOUR);
+        trackTime = hour + ":" + (minute) + ":" + second;
+
+        Track tracker = new Track(Integer.parseInt(autoTrackIdField.getText()), trackTime, latitude, longitude, altitude
+                , trackMilitarySymbolLabel.getText(), Integer.parseInt(trackRadarIdLabel.getText()), Double.parseDouble(trackV1Lable.getText())
+                , Double.parseDouble(trackV2Lable.getText()), Double.parseDouble(trackPv1Lable.getText()), Double.parseDouble(trackPv2Lable.getText())
+                , Double.parseDouble(trackRcsLabel.getText()), Integer.parseInt(trackTypeLabel.getText()), Double.parseDouble(autoTrackSpeedField.getText())
+                , endLongitude, endLatitude, endAltitude, changeLatitude, changeLongitude, changeAltitude);
+
+        // fill the tableView
+        tracksList = enemyTable.getItems();
+        tracksList.add(tracker);
+        enemyTable.setItems(tracksList);
+
+
+    }
+
+
+    @FXML
+    void startSimulationButton(ActionEvent event) throws IOException {
 
         latitudeTracker = false;
         longitudeTracker = false;
         altitudeTracker = false;
 
-        long startTime = System.currentTimeMillis();
+//        tracksList = FXCollections.observableArrayList();
+        List<Track> oneStepOfTracks = new ArrayList<>();
 
-        long minuteInMillis = (trackerFrequency * 60) * 1000; // 1 minute in milliseconds
+        int loopCpunter = 0;// this counter to now the #round on the loop
 
-        Thread send = new Thread() {
-            public void run() {
-                while (!(latitudeTracker && longitudeTracker && altitudeTracker)) {
-                    long elapsedTime;
-                    // Perform loop operations here
-                    if(!latitudeTracker){
-                        if(startLatitude < endLatitude){
-                            startLatitude += changeLatitude;
-                            if(startLatitude >= endLatitude)
-                                latitudeTracker = true;
-                        }else{
-                            startLatitude -= changeLatitude;
-                            if(startLatitude <= endLatitude)
-                                latitudeTracker = true;
-                        }
-                    }
-                    if(!longitudeTracker){
-                        if(startLongitude < endLongitude){
-                            startLongitude += changeLongitude;
-                            if(startLongitude >= endLongitude)
-                                longitudeTracker = true;
-                        }else {
-                            startLongitude -= changeLongitude;
-                            if(startLongitude <= endLongitude)
-                                longitudeTracker = true;
-                        }
+        while (!(latitudeTracker && longitudeTracker && altitudeTracker)) {
 
-                    }
-                    if(!altitudeTracker){
-                        if(startAltitude < endAltitude){
-                            startAltitude += changeAltitude;
-                            if(startAltitude >= endAltitude)
-                                altitudeTracker = true;
-                        }else{
-                            startAltitude -= changeAltitude;
-                            if(startAltitude <= endAltitude)
-                                altitudeTracker = true;
-                        }
-                    }
-                    // Calculate elapsed time
-                    DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-                    Calendar cal = Calendar.getInstance();
-
-                    second = cal.get(Calendar.SECOND);
-                    minute = cal.get(Calendar.MINUTE);
-                    hour = cal.get(Calendar.HOUR);
-                    //System.out.println(hour + ":" + (minute) + ":" + second);
-                    trackTime = hour + ":" + (minute) + ":" + second;
-//                    enemyTimeField.setText(hour + ":" + (minute) + ":" + second);
-
-
-                    // fill the track model
-                    Track tracker = new Track(Integer.parseInt(autoTrackIdField.getText()),trackTime
-                            ,startLatitude,startLongitude,startAltitude,Double.parseDouble(autoTrackSpeedField.getText())
-                            ,trackMilitarySymbolLabel.getText(),Integer.parseInt(trackRadarIdLabel.getText())
-                            ,Double.parseDouble(trackV1Lable.getText()),Double.parseDouble(trackV2Lable.getText())
-                            ,Double.parseDouble(trackPv1Lable.getText()),Double.parseDouble(trackPv2Lable.getText())
-                            ,Double.parseDouble(trackRcsLabel.getText()),Integer.parseInt(trackTypeLabel.getText()));
-                    // fill the tableView
-                    tracksList = enemyTable.getItems();
-                    tracksList.add(tracker);
-                    enemyTable.setItems(tracksList);
-                    // sending the json body through UDPSender
+        tracksList = enemyTable.getItems();
 
 
 
-                    try {
-                        Thread.sleep(1000); // Delay for 1 second
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            for(int rowIndex = 0; rowIndex < tracksList.size(); rowIndex++){
+
+                Track track = tracksList.get(rowIndex);
+
+                track.setId(Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track))));
+                track.setSpeed(Double.parseDouble(String.valueOf(speedColumn.getCellData(track))));
+
+                track.setStartLatitude(Double.parseDouble(String.valueOf(enemyLatitudeColumn.getCellData(track))));
+                track.setStartLongitude(Double.parseDouble(String.valueOf(enemyLongitudeColumn.getCellData(track))));
+                track.setStartAltitude(Double.parseDouble(String.valueOf(enemyAltitudeColumn.getCellData(track))));
+
+                track.setEndLatitude(Double.parseDouble(String.valueOf(endLatitudeColumn.getCellData(track))));
+                track.setEndLongitude(Double.parseDouble(String.valueOf(endLongitudeColumn.getCellData(track))));
+                track.setEndAltitude(Double.parseDouble(String.valueOf(endAltitudeColumn.getCellData(track))));
+
+                track.setChangeInLatitude(Double.parseDouble(String.valueOf(changeInLatitudeColumn.getCellData(track))));
+                track.setChangeInLongitude(Double.parseDouble(String.valueOf(changeInLongitudeColumn.getCellData(track))));
+                track.setChangeInAltitude(Double.parseDouble(String.valueOf(changeInAltitudeColumn.getCellData(track))));
+                track.setTrackFrequency(Long.parseLong(trackFrequencyField.getText()));
+                System.out.println(("Row Index : " + rowIndex));
+                System.out.println("loop Counter: "+loopCpunter);
+                printTableTrack(track);
+//                long startTime = System.currentTimeMillis();
+
+                //long minuteInMillis = (trackerFrequency * 60) * 1000; // 1 minute in milliseconds
+
+//            Thread send = new Thread() {
+//                public void run() {
+
+                // Perform loop operations here
+                if(loopCpunter == 0){
+                    track.setLatitude(this.countLLA(track.getStartLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),latitudeTracker));
+                    track.setLongitude(this.countLLA(track.getStartLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),longitudeTracker));
+                    track.setAltitude(this.countLLA(track.getStartAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),altitudeTracker));
+                }else{
+                    track.setLatitude(this.countLLA(track.getLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),latitudeTracker));
+                    track.setLongitude(this.countLLA(track.getLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),longitudeTracker));
+                    track.setAltitude(this.countLLA(track.getAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),altitudeTracker));
                 }
+                if(track.getLatitude() == track.getEndLatitude()){
+                    latitudeTracker = true;
+                }
+                if(track.getLongitude() == track.getEndLongitude()){
+                    longitudeTracker = true;
+                }
+                if(track.getAltitude() == track.getEndAltitude()){
+                    altitudeTracker = true;
+                }
+
+                // Calculate elapsed time
+                trackTime = this.getLocalTime();
+
+                //Search the current list against existing id vs new id
+                trackExists = false;
+                if(trackExists){
+                    searchOnTracksList(oneStepOfTracks, track);
+                }
+
+                if(!trackExists){
+                    oneStepOfTracks.add(track);
+                }
+//                if(track.getLatitude() == track.getEndLatitude() && track.getLongitude() == track.getEndLongitude() && track.getAltitude() == track.getEndAltitude())
+//                    break;
+
+                try {
+                    Thread.sleep(track.getTrackFrequency()*1000); // Delay for TrackFrequency second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
-        };
-
-        send.start();
+            udpSender.sendData(oneStepOfTracks);
+            loopCpunter++;
+        }
 
 
     }
-    @FXML
-    void startSimulationButton(ActionEvent event) throws IOException {
-//        udpSender = new UDPSender(Integer.parseInt(portField.getText()),ipAddressField.getText());
-        udpSender.sendData(tracksList);
+    private void searchOnTracksList(List<Track> oneStepOfTracks, Track track){
+        for(int i = 0; i < oneStepOfTracks.size(); i++){
+            Track ExistingTrack = oneStepOfTracks.get(i);
+            if(ExistingTrack.getId() == track.getId()){
+                oneStepOfTracks.set(i,track);
+                trackExists = true;
+                break;
+            }
+        }
     }
+    private void printTableTrack(Track track){
+
+
+        track.setId(Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track))));
+        track.setSpeed(Double.parseDouble(String.valueOf(speedColumn.getCellData(track))));
+
+        track.setStartLatitude(Double.parseDouble(String.valueOf(enemyLatitudeColumn.getCellData(track))));
+        track.setStartLongitude(Double.parseDouble(String.valueOf(enemyLongitudeColumn.getCellData(track))));
+        track.setStartAltitude(Double.parseDouble(String.valueOf(enemyAltitudeColumn.getCellData(track))));
+
+        track.setEndLatitude(Double.parseDouble(String.valueOf(endLatitudeColumn.getCellData(track))));
+        track.setEndLongitude(Double.parseDouble(String.valueOf(endLongitudeColumn.getCellData(track))));
+        track.setEndAltitude(Double.parseDouble(String.valueOf(endAltitudeColumn.getCellData(track))));
+
+        track.setChangeInLatitude(Double.parseDouble(String.valueOf(changeInLatitudeColumn.getCellData(track))));
+        track.setChangeInLongitude(Double.parseDouble(String.valueOf(changeInLongitudeColumn.getCellData(track))));
+        track.setChangeInAltitude(Double.parseDouble(String.valueOf(changeInAltitudeColumn.getCellData(track))));
+        track.setTrackFrequency(Long.parseLong(trackFrequencyField.getText()));
+
+    }
+    private String getLocalTime(){
+
+        Calendar cal = Calendar.getInstance();
+        second = cal.get(Calendar.SECOND);
+        minute = cal.get(Calendar.MINUTE);
+        hour = cal.get(Calendar.HOUR);
+        String localTime = hour + ":" + (minute) + ":" + second;
+
+        return localTime;
+    }
+    private Double countLLA(Double startLLA, Double endLLA,Double changeInLLA, boolean brakLoop){
+
+        if(!brakLoop){
+            if(startLLA < endLLA){
+                startLLA += changeInLLA;
+                if(startLLA >= endLLA)
+                    brakLoop = true;
+
+            }else{
+                startLLA -= changeInLLA;
+                if(startLLA <= endLLA)
+                    brakLoop = true;
+            }
+        }
+        return startLLA;
+    }
+
+
+    private Track getTrackFromUi() {
+
+        Track track = new Track(trackId, trackTime, latitude, longitude, altitude, speed
+                , trackMilitarySymbolLabel.getText(), Integer.parseInt(trackRadarIdLabel.getText())
+                , Double.parseDouble(trackV1Lable.getText()), Double.parseDouble(trackV2Lable.getText())
+                , Double.parseDouble(trackPv1Lable.getText()), Double.parseDouble(trackPv2Lable.getText())
+                , Double.parseDouble(trackRcsLabel.getText()), Integer.parseInt(trackTypeLabel.getText()));
+
+//        trackId = (Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track))));
+//        speed = (Double.parseDouble(String.valueOf(speedColumn.getCellData(track))));
+//        startLatitude.equals(Double.parseDouble(String.valueOf(enemyLatitudeColumn.getCellData(track))));
+//        startLongitude.equals(Double.parseDouble(String.valueOf(enemyLongitudeColumn.getCellData(track))));
+//        startAltitude.equals(Double.parseDouble(String.valueOf(enemyAltitudeColumn.getCellData(track))));
+//        endLatitude = (Double.parseDouble(String.valueOf(endLatitudeColumn.getCellData(track))));
+//        endLongitude = (Double.parseDouble(String.valueOf(endLongitudeColumn.getCellData(track))));
+//        endAltitude = (Double.parseDouble(String.valueOf(endAltitudeColumn.getCellData(track))));
+//        changeLatitude = (Double.parseDouble(String.valueOf(changeInLatitudeColumn.getCellData(track))));
+//        changeLongitude = (Double.parseDouble(String.valueOf(changeInLongitudeColumn.getCellData(track))));
+//        changeAltitude = (Double.parseDouble(String.valueOf(changeInAltitudeColumn.getCellData(track))));
+        return track;
+    }
+
+    ;
 
     @FXML
     void sendConnectionProperties(ActionEvent event) throws UnknownHostException {
@@ -456,8 +569,8 @@ public class HelloController {
         String deviceLongitude = deviceLongitudeField.getText();
         String deviceAltitude = deviceAltitudeField.getText();
 
-        Device device = new Device(Integer.parseInt(deviceIdField.getText()),Double.parseDouble(deviceLatitudeField.getText())
-                ,Double.parseDouble(deviceLongitudeField.getText()),Double.parseDouble(deviceAltitudeField.getText()));
+        Device device = new Device(Integer.parseInt(deviceIdField.getText()), Double.parseDouble(deviceLatitudeField.getText())
+                , Double.parseDouble(deviceLongitudeField.getText()), Double.parseDouble(deviceAltitudeField.getText()));
 
 
         deviceIdLable.setText(deviceId);
@@ -474,13 +587,13 @@ public class HelloController {
 
     @FXML
     void sendEnemyButton(ActionEvent event) throws IOException {
-        Track tracker = new Track(Integer.parseInt(enemyIdField.getText()),enemyTimeField.getText()
-                ,Double.parseDouble(enemyLatitudeField.getText()),Double.parseDouble(enemyLongitudeField.getText())
-                ,Double.parseDouble(enemyAltitudeField.getText()),Double.parseDouble(enemySpeedField.getText())
-                ,enemyMilitarySymbolField.getText(),Integer.parseInt(enemyRadarIdField.getText())
-                ,Double.parseDouble(enemyV1Field.getText()),Double.parseDouble(enemyV2Field.getText())
-                ,Double.parseDouble(enemyPv1Field.getText()),Double.parseDouble(enemyPv2Field.getText())
-                ,Double.parseDouble(enemyRcsField.getText()),Integer.parseInt(enemyTypeField.getText()));
+        Track tracker = new Track(Integer.parseInt(enemyIdField.getText()), enemyTimeField.getText()
+                , Double.parseDouble(enemyLatitudeField.getText()), Double.parseDouble(enemyLongitudeField.getText())
+                , Double.parseDouble(enemyAltitudeField.getText()), Double.parseDouble(enemySpeedField.getText())
+                , enemyMilitarySymbolField.getText(), Integer.parseInt(enemyRadarIdField.getText())
+                , Double.parseDouble(enemyV1Field.getText()), Double.parseDouble(enemyV2Field.getText())
+                , Double.parseDouble(enemyPv1Field.getText()), Double.parseDouble(enemyPv2Field.getText())
+                , Double.parseDouble(enemyRcsField.getText()), Integer.parseInt(enemyTypeField.getText()));
 
         tracksList = enemyTable.getItems();
         tracksList.add(tracker);
@@ -502,7 +615,6 @@ public class HelloController {
 //        UDPSender udpSender = new UDPSender();
 //        udpSender = new UDPSender(Integer.parseInt(portField.getText()),ipAddressField.getText());
         udpSender.sendData(tracker);
-
 
 
     }
@@ -564,8 +676,14 @@ public class HelloController {
         enemyLongitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("longitude"));
         enemyIdColumn.setCellValueFactory(new PropertyValueFactory<Track, Integer>("id"));
         enemyLatitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("latitude"));
-//        speedColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("speed"));
+        speedColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("speed"));
         enemyAltitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("altitude"));
+        endLatitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("endLatitude"));
+        endLongitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("endLongitude"));
+        endAltitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("endAltitude"));
+        changeInLatitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("changeInLatitude"));
+        changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("changeInLongitude"));
+        changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("changeInAltitude"));
 
 
     }
@@ -1125,4 +1243,137 @@ public class HelloController {
     public void setEnemySpeed(Label enemySpeed) {
         this.enemySpeed = enemySpeed;
     }
+
+    public void printTrackList(){
+
+
+    }
+//    public void test() throws IOException {
+//
+//        latitudeTracker = false;
+//        longitudeTracker = false;
+//        altitudeTracker = false;
+//
+//        while (!(latitudeTracker && longitudeTracker && altitudeTracker)) {
+//
+////        tracksList = enemyTable.getItems();
+//
+//            for(int row = 0; row < tracksList.size(); row++){
+//
+//                Track track = tracksList.get(row);
+//
+//                id = Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track)));
+//                speed = Double.parseDouble(String.valueOf(speedColumn.getCellData(track)));
+//
+//                startLatitude = Double.parseDouble(String.valueOf(enemyLatitudeColumn.getCellData(track)));
+//                startLongitude = Double.parseDouble(String.valueOf(enemyLongitudeColumn.getCellData(track)));
+//                startAltitude = Double.parseDouble(String.valueOf(enemyAltitudeColumn.getCellData(track)));
+//
+//                endLatitude = Double.parseDouble(String.valueOf(endLatitudeColumn.getCellData(track)));
+//                endLongitude = Double.parseDouble(String.valueOf(endLongitudeColumn.getCellData(track)));
+//                endAltitude = Double.parseDouble(String.valueOf(endAltitudeColumn.getCellData(track)));
+//
+//                changeLatitude = Double.parseDouble(String.valueOf(changeInLatitudeColumn.getCellData(track)));
+//                changeLongitude = Double.parseDouble(String.valueOf(changeInLongitudeColumn.getCellData(track)));
+//                changeAltitude = Double.parseDouble(String.valueOf(changeInAltitudeColumn.getCellData(track)));
+//
+////            trackerFrequency = Long.parseLong(trackFrequencyField.getText());
+//
+////        trackLatitude = startLatitude;
+////        trackLongitude = startLongitude;
+////        trackAltitude = startAltitude;
+//
+//
+//
+//                long startTime = System.currentTimeMillis();
+//
+//                //long minuteInMillis = (trackerFrequency * 60) * 1000; // 1 minute in milliseconds
+//
+//
+////            Thread send = new Thread() {
+////                public void run() {
+//
+//                long elapsedTime;
+//                // Perform loop operations here
+//                if(!latitudeTracker){
+//                    if(startLatitude < endLatitude){
+//                        startLatitude += changeLatitude;
+//                        if(startLatitude >= endLatitude)
+//                            latitudeTracker = true;
+//                    }else{
+//                        startLatitude -= changeLatitude;
+//                        if(startLatitude <= endLatitude)
+//                            latitudeTracker = true;
+//                    }
+//                }
+//                if(!longitudeTracker){
+//                    if(startLongitude < endLongitude){
+//                        startLongitude += changeLongitude;
+//                        if(startLongitude >= endLongitude)
+//                            longitudeTracker = true;
+//                    }else {
+//                        startLongitude -= changeLongitude;
+//                        if(startLongitude <= endLongitude)
+//                            longitudeTracker = true;
+//                    }
+//
+//                }
+//                if(!altitudeTracker){
+//                    if(startAltitude < endAltitude){
+//                        startAltitude += changeAltitude;
+//                        if(startAltitude >= endAltitude)
+//                            altitudeTracker = true;
+//                    }else{
+//                        startAltitude -= changeAltitude;
+//                        if(startAltitude <= endAltitude)
+//                            altitudeTracker = true;
+//                    }
+//                }
+//                // Calculate elapsed time
+//                DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+//                Calendar cal = Calendar.getInstance();
+//
+//                second = cal.get(Calendar.SECOND);
+//                minute = cal.get(Calendar.MINUTE);
+//                hour = cal.get(Calendar.HOUR);
+//                //System.out.println(hour + ":" + (minute) + ":" + second);
+//                trackTime = hour + ":" + (minute) + ":" + second;
+////                    enemyTimeField.setText(hour + ":" + (minute) + ":" + second);
+//
+//
+//                // fill the track model
+//                Track tracker = new Track(Integer.parseInt(autoTrackIdField.getText()),trackTime
+//                        ,startLatitude,startLongitude,startAltitude,Double.parseDouble(autoTrackSpeedField.getText())
+//                        ,trackMilitarySymbolLabel.getText(),Integer.parseInt(trackRadarIdLabel.getText())
+//                        ,Double.parseDouble(trackV1Lable.getText()),Double.parseDouble(trackV2Lable.getText())
+//                        ,Double.parseDouble(trackPv1Lable.getText()),Double.parseDouble(trackPv2Lable.getText())
+//                        ,Double.parseDouble(trackRcsLabel.getText()),Integer.parseInt(trackTypeLabel.getText()));
+//
+//                // fill the tableView
+//                listOfTracks.add(tracker);
+//                udpSender.sendData(listOfTracks);
+//
+////                        tracksList = enemyTable.getItems();
+////                        tracksList.add(tracker);
+////                        enemyTable.setItems(tracksList);
+//
+//                // sending the json body through UDPSender
+//
+//
+//
+////                        try {
+////                            Thread.sleep(1000); // Delay for 1 second
+////                        } catch (InterruptedException e) {
+////                            e.printStackTrace();
+////                        }
+//            }
+////                }
+////            };
+//
+////            send.start();
+//
+////            udpSender.sendData(tracksList);
+//
+//        }
+//    }
 }

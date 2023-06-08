@@ -35,175 +35,6 @@
          <children>
             <TabPane prefHeight="301.0" prefWidth="442.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab id="enemyControl" disable="true" text="Enemy Control">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <ScrollPane layoutX="8.0" layoutY="8.0" prefHeight="365.0" prefWidth="514.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="494.0">
-                                       <children>
-                                          <GridPane layoutX="17.0" layoutY="14.0" prefHeight="506.0" prefWidth="460.0" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="14.0">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label id="eemyId" fx:id="enemyId" text="Enemy Id">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyLatitude" fx:id="enemyLatitude" text="Enemy Latitude" GridPane.rowIndex="1">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyLongitude" fx:id="enemyLongitude" text="Enemey Longitude" GridPane.rowIndex="2">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <TextField id="enemyIdField" fx:id="enemyIdField" GridPane.columnIndex="1">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <Label id="enemyAltitude" text="Enemy Altitude" GridPane.rowIndex="3">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Button id="sendEnemy" fx:id="sendEnemy" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#sendEnemyButton" text="Send Enemy" GridPane.rowIndex="14">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Button>
-                                                <Label id="enemyTime" fx:id="enemyTime" text="Time" GridPane.rowIndex="5">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyRadarId" fx:id="enemyRadarId" text="Radar Id" GridPane.rowIndex="6">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyV1" fx:id="enemyV1" text="v1" GridPane.rowIndex="7">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyV2" fx:id="enemyV2" text="v2" GridPane.rowIndex="8">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyPv1" fx:id="enemyPv1" text="p-v1" GridPane.rowIndex="9">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyPv2" fx:id="enemyPv2" text="p-v2" GridPane.rowIndex="10">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyRcs" fx:id="enemyRcs" text="rcs" GridPane.rowIndex="11">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyType" fx:id="enemyType" text="Type" GridPane.rowIndex="12">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <Label id="enemyMilitarySymbol" fx:id="enemyMilitarySymbol" text="militarySymbol" GridPane.rowIndex="13">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></Label>
-                                                <TextField id="enemyRadarIdField" fx:id="enemyRadarIdField" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <TextField id="enemyV1Field" fx:id="enemyV1Field" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <TextField id="enemyV2Field" fx:id="enemyV2Field" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <TextField id="enemyPv1Field" fx:id="enemyPv1Field" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <TextField id="enemyPv2Field" fx:id="enemyPv2Field" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <TextField id="enemyRcsField" fx:id="enemyRcsField" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <TextField id="enemyTypeField" fx:id="enemyTypeField" GridPane.columnIndex="1" GridPane.rowIndex="12">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <TextField id="enemyMilitarySymbolField" fx:id="enemyMilitarySymbolField" GridPane.columnIndex="1" GridPane.rowIndex="13">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin></TextField>
-                                                <Label id="enemySpeed" fx:id="enemySpeed" text="Enemy Speed" GridPane.rowIndex="4">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin>
-                                                </Label>
-                                                <TextField id="enemyTimeField" fx:id="enemyTimeField" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin>
-                                                </TextField>
-                                                <TextField id="enemySpeedField" fx:id="enemySpeedField" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin>
-                                                </TextField>
-                                                <TextField id="enemyAltitudeField" fx:id="enemyAltitudeField" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin>
-                                                </TextField>
-                                                <TextField id="enemyLongitudeField" fx:id="enemyLongitudeField" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin>
-                                                </TextField>
-                                                <TextField id="enemyLatitudeField" fx:id="enemyLatitudeField" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                   <GridPane.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </GridPane.margin>
-                                                </TextField>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </padding>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                          </GridPane>
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
                   <Tab text="Connection Properties">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -237,22 +68,22 @@
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin></Label>
-                                                <TextField id="deviceIdField" fx:id="deviceIdField" GridPane.columnIndex="1">
+                                                <TextField id="deviceIdField" fx:id="deviceIdField" text="1" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="deviceLatitudeField" fx:id="deviceLatitudeField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField id="deviceLatitudeField" fx:id="deviceLatitudeField" text="24" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="enemyLongitudeField" fx:id="deviceLongitudeField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <TextField id="enemyLongitudeField" fx:id="deviceLongitudeField" text="47" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="deviceAltitudeField" fx:id="deviceAltitudeField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <TextField id="deviceAltitudeField" fx:id="deviceAltitudeField" text="500" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
@@ -291,12 +122,12 @@
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <TextField id="ipAddressField" fx:id="ipAddressField" GridPane.columnIndex="1">
+                                                <TextField id="ipAddressField" fx:id="ipAddressField" text="127.0.0.1" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="portField" fx:id="portField" prefWidth="209.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField id="portField" fx:id="portField" prefWidth="209.0" text="9001" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
@@ -394,52 +225,52 @@
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Button id="AutoNewTrackSender" fx:id="AutoNewTrackSender" mnemonicParsing="false" onAction="#AutoNewTrackSenderButton" prefHeight="26.0" prefWidth="80.0" text="Create Mission" GridPane.rowIndex="11">
+                                                <Button id="AutoNewTrackSender" fx:id="AutoNewTrackSender" mnemonicParsing="false" onAction="#AutoNewTrackSenderButton" prefHeight="26.0" prefWidth="101.0" text="Create Mission" GridPane.rowIndex="11">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </Button>
-                                                <TextField id="autoTrackIdField" fx:id="autoTrackIdField" GridPane.columnIndex="1">
+                                                <TextField id="autoTrackIdField" fx:id="autoTrackIdField" text="20" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="autoTrackSpeedField" fx:id="autoTrackSpeedField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField id="autoTrackSpeedField" fx:id="autoTrackSpeedField" text="50" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="autoTrackStartLatitudeField" fx:id="autoTrackStartLatitudeField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <TextField id="autoTrackStartLatitudeField" fx:id="autoTrackStartLatitudeField" text="20" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="autoTrackStartLongitudeField" fx:id="autoTrackStartLongitudeField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <TextField id="autoTrackStartLongitudeField" fx:id="autoTrackStartLongitudeField" text="40" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="autoTrackStartAltitudeField" fx:id="autoTrackStartAltitudeField" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <TextField id="autoTrackStartAltitudeField" fx:id="autoTrackStartAltitudeField" text="500" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="autoTrackEndAltitudeField" fx:id="autoTrackEndAltitudeField" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                                <TextField id="autoTrackEndAltitudeField" fx:id="autoTrackEndAltitudeField" text="505" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="autoTrackEndLongitudeField" fx:id="autoTrackEndLongitudeField" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                                <TextField id="autoTrackEndLongitudeField" fx:id="autoTrackEndLongitudeField" text="45" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="autoTrackEndLatitudeField" fx:id="autoTrackEndLatitudeField" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                <TextField id="autoTrackEndLatitudeField" fx:id="autoTrackEndLatitudeField" text="25" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="trackFrequency" fx:id="trackFrequencyField" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                                <TextField id="trackFrequency" fx:id="trackFrequencyField" text="1" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
@@ -524,17 +355,17 @@
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <TextField id="latitudeChangeField" fx:id="latitudeChangeField" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                <TextField id="latitudeChangeField" fx:id="latitudeChangeField" text="1" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="longitudeChangeField" fx:id="longitudeChangeField" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                <TextField id="longitudeChangeField" fx:id="longitudeChangeField" text="1" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="altitudeChangeField" fx:id="altitudeChangeField" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                <TextField id="altitudeChangeField" fx:id="altitudeChangeField" text="1" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                                    <GridPane.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </GridPane.margin>
@@ -577,19 +408,6 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab id="autoTrackControl" fx:id="autoTrackControl" disable="true" text="Auto Track Control">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <ScrollPane layoutX="7.0" layoutY="7.0" prefHeight="706.0" prefWidth="511.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="721.0" prefWidth="500.0" />
-                                </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
               </tabs>
             </TabPane>
             <GridPane prefHeight="322.0" prefWidth="429.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -672,6 +490,12 @@
                         <TableColumn fx:id="timeColumn" prefWidth="75.0" text="Time" />
                         <TableColumn id="SpeedColumn" fx:id="speedColumn" prefWidth="75.0" text="Speed" />
                         <TableColumn fx:id="radarIdColumn" prefWidth="75.0" text="Radar Id" />
+                        <TableColumn id="endLatitudeColumn" fx:id="endLatitudeColumn" prefWidth="75.0" text="End Latitude" />
+                        <TableColumn id="endLongitudeColumn" fx:id="endLongitudeColumn" prefWidth="75.0" text="End Longitude" />
+                        <TableColumn id="endAltitudeColumn" fx:id="endAltitudeColumn" prefWidth="75.0" text="End Altitude" />
+                        <TableColumn id="changeInLatitudeColumn" fx:id="changeInLatitudeColumn" prefWidth="75.0" text="Change In Lat" />
+                        <TableColumn id="changeInLongitudeColumn" fx:id="changeInLongitudeColumn" prefWidth="75.0" text="Change In Long" />
+                        <TableColumn id="changeInAltitudeColumn" fx:id="changeInAltitudeColumn" prefWidth="75.0" text="Change In Alt" />
                         <TableColumn fx:id="v1Column" prefWidth="75.0" text="V1" />
                         <TableColumn fx:id="v2Column" prefWidth="75.0" text="V2" />
                         <TableColumn fx:id="pV1Column" prefWidth="75.0" text="P-V1" />
@@ -686,7 +510,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
                   <Button id="deleteTrack" fx:id="deleteTrack" layoutX="202.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteTrackButton" prefHeight="44.0" prefWidth="120.0" text="Delete Track" />
-                  <Button id="deleteEnemy" fx:id="sendEnemiesTrackButton" layoutX="322.0" layoutY="14.0" mnemonicParsing="false" onAction="#startSimulationButton" prefHeight="44.0" prefWidth="120.0" text="Send Enemies" />
+                  <Button id="deleteEnemy" fx:id="sendEnemiesTrackButton" layoutX="322.0" layoutY="14.0" mnemonicParsing="false" onAction="#startSimulationButton" prefHeight="44.0" prefWidth="120.0" text="Start Simulation" />
                   <Button id="resetSimulation" fx:id="resetSimulation" layoutX="82.0" layoutY="14.0" mnemonicParsing="false" onAction="#resetSimulationButton" prefHeight="44.0" prefWidth="120.0" text="Reset Simulation" />
                </children>
             </Pane>
