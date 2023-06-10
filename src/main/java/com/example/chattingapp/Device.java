@@ -17,42 +17,43 @@ public class Device {
     private String militarySymbol;
 
     public Device(){}
-    public Device(int id, String name, int nameID, double latitude, double longitude, double altitude, int type,
-                  String calibrationPoint, double azimuth, double elevation, double range, double angleOfView,
-                  double protectedAreaRadius, String militarySymbol)
-    {
-        this.id = id;
-        this.name = name;
-        this.nameID = nameID;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.type = type;
-        this.calibrationPoint = calibrationPoint;
-        this.azimuth = azimuth;
-        this.elevation = elevation;
-        this.range = range;
-        this.angleOfView = angleOfView;
-        this.protectedAreaRadius = protectedAreaRadius;
-        this.militarySymbol = militarySymbol;
-    }
-    public Device(int id, double latitude, double longitude, double altitude)
-    {
-        this.id = id;
-        this.name = name;
-        this.nameID = nameID;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.type = type;
-        this.calibrationPoint = calibrationPoint;
-        this.azimuth = azimuth;
-        this.elevation = elevation;
-        this.range = range;
-        this.angleOfView = angleOfView;
-        this.protectedAreaRadius = protectedAreaRadius;
-        this.militarySymbol = militarySymbol;
-    }
+
+//    public Device(int id, String name, int nameID, double latitude, double longitude, double altitude, int type,
+//                  String calibrationPoint, double azimuth, double elevation, double range, double angleOfView,
+//                  double protectedAreaRadius, String militarySymbol)
+//    {
+//        this.id = id;
+//        this.name = name;
+//        this.nameID = nameID;
+//        this.latitude = latitude;
+//        this.longitude = longitude;
+//        this.altitude = altitude;
+//        this.type = type;
+//        this.calibrationPoint = calibrationPoint;
+//        this.azimuth = azimuth;
+//        this.elevation = elevation;
+//        this.range = range;
+//        this.angleOfView = angleOfView;
+//        this.protectedAreaRadius = protectedAreaRadius;
+//        this.militarySymbol = militarySymbol;
+//    }
+//    public Device(int id, double latitude, double longitude, double altitude)
+//    {
+//        this.id = id;
+//        this.name = name;
+//        this.nameID = nameID;
+//        this.latitude = latitude;
+//        this.longitude = longitude;
+//        this.altitude = altitude;
+//        this.type = type;
+//        this.calibrationPoint = calibrationPoint;
+//        this.azimuth = azimuth;
+//        this.elevation = elevation;
+//        this.range = range;
+//        this.angleOfView = angleOfView;
+//        this.protectedAreaRadius = protectedAreaRadius;
+//        this.militarySymbol = militarySymbol;
+//    }
 
     public int getId() {
         return id;
