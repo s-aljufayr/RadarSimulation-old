@@ -17,68 +17,6 @@ public class Track implements Serializable {
     private double rcs;
     private int type;
     private double speed;
-    private  double endLongitude;
-    private double endLatitude;
-    private double endAltitude;
-    private  double startLongitude;
-    private double startLatitude;
-    private double startAltitude;
-    private double changeInLatitude;
-    private double changeInLongitude;
-    private double changeInAltitude;
-    private Long trackFrequency;
-
-    public Track(int id, String time, double latitude, double longitude, double altitude , double startLongitude, double startLatitude
-            , double startAltitude, double endLongitude, double endLatitude, double endAltitude, double changeInLatitude
-            , double changeInLongitude, double changeInAltitude, Long trackFrequency) {
-        this.id = id;
-        this.time = time;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.startLongitude = startLongitude;
-        this.startLatitude = startLatitude;
-        this.startAltitude = startAltitude;
-        this.endLongitude = endLongitude;
-        this.endLatitude = endLatitude;
-        this.endAltitude = endAltitude;
-        this.changeInLatitude = changeInLatitude;
-        this.changeInLongitude = changeInLongitude;
-        this.changeInAltitude = changeInAltitude;
-        this.trackFrequency = trackFrequency;
-    }
-
-    public Long getTrackFrequency() {
-        return trackFrequency;
-    }
-
-    public void setTrackFrequency(Long trackFrequency) {
-        this.trackFrequency = trackFrequency;
-    }
-
-    public double getStartLongitude() {
-        return startLongitude;
-    }
-
-    public void setStartLongitude(double startLongitude) {
-        this.startLongitude = startLongitude;
-    }
-
-    public double getStartLatitude() {
-        return startLatitude;
-    }
-
-    public void setStartLatitude(double startLatitude) {
-        this.startLatitude = startLatitude;
-    }
-
-    public double getStartAltitude() {
-        return startAltitude;
-    }
-
-    public void setStartAltitude(double startAltitude) {
-        this.startAltitude = startAltitude;
-    }
 
     public Track(){
 
@@ -89,31 +27,6 @@ public class Track implements Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitude = altitude;
-    }
-
-    public Track(int id, String time, double latitude, double longitude, double altitude, String militarySymbol, int radarId, double v1
-            , double v2, double p_v1, double p_v2, double rcs, int type, double speed, double endLongitude, double endLatitude
-            , double endAltitude, double changeInLatitude, double changeInLongitude, double changeInAltitude) {
-        this.id = id;
-        this.time = time;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.militarySymbol = militarySymbol;
-        this.radarId = radarId;
-        this.v1 = v1;
-        this.v2 = v2;
-        this.p_v1 = p_v1;
-        this.p_v2 = p_v2;
-        this.rcs = rcs;
-        this.type = type;
-        this.speed = speed;
-        this.endLongitude = endLongitude;
-        this.endLatitude = endLatitude;
-        this.endAltitude = endAltitude;
-        this.changeInLatitude = changeInLatitude;
-        this.changeInLongitude = changeInLongitude;
-        this.changeInAltitude = changeInAltitude;
     }
 
     public Track(int id, String time, double latitude, double longitude, double altitude, double speed, String militarySymbol,
@@ -282,62 +195,6 @@ public class Track implements Serializable {
         this.type = type;
     }
 
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public double getEndLongitude() {
-        return endLongitude;
-    }
-
-    public void setEndLongitude(double endLongitude) {
-        this.endLongitude = endLongitude;
-    }
-
-    public double getEndLatitude() {
-        return endLatitude;
-    }
-
-    public void setEndLatitude(double endLatitude) {
-        this.endLatitude = endLatitude;
-    }
-
-    public double getEndAltitude() {
-        return endAltitude;
-    }
-
-    public void setEndAltitude(double endAltitude) {
-        this.endAltitude = endAltitude;
-    }
-
-    public double getChangeInLatitude() {
-        return changeInLatitude;
-    }
-
-    public void setChangeInLatitude(double changeInLatitude) {
-        this.changeInLatitude = changeInLatitude;
-    }
-
-    public double getChangeInLongitude() {
-        return changeInLongitude;
-    }
-
-    public void setChangeInLongitude(double changeInLongitude) {
-        this.changeInLongitude = changeInLongitude;
-    }
-
-    public double getChangeInAltitude() {
-        return changeInAltitude;
-    }
-
-    public void setChangeInAltitude(double changeInAltitude) {
-        this.changeInAltitude = changeInAltitude;
-    }
-
     @Override
     public String toString() {
         return "Track{" +
@@ -355,12 +212,6 @@ public class Track implements Serializable {
                 ", rcs=" + rcs +
                 ", type=" + type +
                 ", speed=" + speed +
-                ", endLongitude=" + endLongitude +
-                ", endLatitude=" + endLatitude +
-                ", endAltitude=" + endAltitude +
-                ", changeInLatitude=" + changeInLatitude +
-                ", changeInLongitude=" + changeInLongitude +
-                ", changeInAltitude=" + changeInAltitude +
                 '}';
     }
 }
