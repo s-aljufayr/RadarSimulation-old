@@ -17,11 +17,20 @@ public class Track implements Serializable {
     private double rcs;
     private int type;
     private double speed;
+    private double startLatitude;
+    private double startLongitude;
+    private double startAltitude;
+    private double endLatitude;
+    private double endLongitude;
+    private double endAltitude;
+    private double changeInLatitude;
+    private double changeInLongitude;
+
+    private double changeInAltitude;
+    private double TrackFrequency;
 
     public Track(){
-
     }
-
     public Track(int id, double latitude, double longitude, double altitude) {
         this.id = id;
         this.latitude = latitude;
@@ -89,6 +98,93 @@ public class Track implements Serializable {
     static double calculateTime(double dist, double speed)
     {
         return dist / speed;
+    }
+    public double getTrackFrequency() {
+        return TrackFrequency;
+    }
+
+    public void setTrackFrequency(double trackFrequency) {
+        TrackFrequency = trackFrequency;
+    }
+
+    public double getChangeInLatitude() {
+        return changeInLatitude;
+    }
+
+    public void setChangeInLatitude(double changeInLatitude) {
+        this.changeInLatitude = changeInLatitude;
+    }
+
+    public double getChangeInLongitude() {
+        return changeInLongitude;
+    }
+
+    public void setChangeInLongitude(double changeInLongitude) {
+        this.changeInLongitude = changeInLongitude;
+    }
+
+    public double getChangeInAltitude() {
+        return changeInAltitude;
+    }
+
+    public void setChangeInAltitude(double changeInAltitude) {
+        this.changeInAltitude = changeInAltitude;
+    }
+
+    public double getStartLatitude() {
+        return startLatitude;
+    }
+
+    public void setStartLatitude(double startLatitude) {
+        this.startLatitude = startLatitude;
+    }
+
+    public double getStartLongitude() {
+        return startLongitude;
+    }
+
+    public void setStartLongitude(double startLongitude) {
+        this.startLongitude = startLongitude;
+    }
+
+    public double getStartAltitude() {
+        return startAltitude;
+    }
+
+    public void setStartAltitude(double startAltitude) {
+        this.startAltitude = startAltitude;
+    }
+
+    public double getEndLatitude() {
+        return endLatitude;
+    }
+
+    public void setEndLatitude(double endLatitude) {
+        this.endLatitude = endLatitude;
+    }
+
+    public double getEndLongitude() {
+        return endLongitude;
+    }
+
+    public void setEndLongitude(double endLongitude) {
+        this.endLongitude = endLongitude;
+    }
+
+    public double getEndAltitude() {
+        return endAltitude;
+    }
+
+    public void setEndAltitude(double endAltitude) {
+        this.endAltitude = endAltitude;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
     public int getId() {

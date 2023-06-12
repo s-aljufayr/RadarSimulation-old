@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.collections.ObservableList;
@@ -50,12 +53,6 @@ public class UDPSender {
         // close the socket
         socket.close();
 
-        // Convert the object to bytes
-        // You should on the resiever convert the bytes to the same object
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-//        objectOutputStream.writeObject(object);
-//        byte[] data = outputStream.toByteArray();
     }
 
     public void sendData(Device object) throws IOException {
@@ -90,6 +87,29 @@ public class UDPSender {
 //        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 //        objectOutputStream.writeObject(object);
 //        byte[] data = outputStream.toByteArray();
+    }
+    public void sendData(List<Track> object) throws IOException {
+
+
+        // Convert the track to json
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(object);
+
+        // Convert the json to bytes
+        byte[] jsonData = json.getBytes();
+
+        // Create UDP socket
+        DatagramSocket socket = new DatagramSocket();
+
+        // Create a UDP packet with the data, IP address, and port
+        DatagramPacket packet = new DatagramPacket(jsonData, jsonData.length, ipAddress, port);
+
+    System.out.println("Packet Size :" + packet.getLength() );
+        // Send the packet
+        socket.send(packet);
+        // close the socket
+        socket.close();
+
     }
 
     public void sendData(ObservableList<Track> object) throws IOException {
