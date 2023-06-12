@@ -1,31 +1,28 @@
 package com.example.chattingapp;
 
-import com.example.chattingapp.Device;
-import com.example.chattingapp.Track;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
-public class HelloController {
+public class RadarSimulationController {
 
     ObservableList<Track> tracksList;
     UDPSender udpSender = new UDPSender();
     private int minute;
     private int hour;
     private int second;
-    static boolean isReachEndLatitude = false;
-    static boolean isReachEndLongitude = false;
-    static boolean isReachEndAltitude = false;
-    static boolean isTrackExists = false;
+    static boolean isReachEndLatitude;
+    static boolean isReachEndLongitude;
+    static boolean isReachEndAltitude;
+    static boolean isTrackExists;
     String trackTime;
     @FXML
     private Button AutoNewTrackSender;
@@ -138,12 +135,11 @@ public class HelloController {
     @FXML
     private Label portLabel;
     @FXML
-    private Label deviceStatusLabel;
-    @FXML
     private Button sendDevice;
 
-    public HelloController() throws UnknownHostException {
+    public RadarSimulationController() throws UnknownHostException {
     }
+
     @FXML
     void deleteTrackButton(ActionEvent event) {
         int selectedEnemy = enemyTable.getSelectionModel().getSelectedIndex();
@@ -166,6 +162,10 @@ public class HelloController {
 
         // this counter to now the #round on the loop
         int firstRound = 0;
+        isReachEndLatitude = false;
+        isReachEndLongitude = false;
+        isReachEndAltitude = false;
+        isTrackExists = false;
 
         while (!(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude)) {
 
@@ -197,7 +197,7 @@ public class HelloController {
                 track.setTime(trackTime);
 //                this.updateRecord(rowIndex,track);
 
-                 // Check the track id on the list or not, will update if  exists, will add new if not
+                // Check the track id on the list or not, will update if  exists, will add new if not
                 OneStepTrackingList = this.checkTrackIdExists(OneStepTrackingList,track);
                 if(!isTrackExists){
                     OneStepTrackingList.add(track);
@@ -345,19 +345,12 @@ public class HelloController {
 
         track.setId(Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track))));
         track.setSpeed(Double.parseDouble(String.valueOf(speedColumn.getCellData(track))));
-
-//        track.setLatitude(Double.parseDouble(String.valueOf(enemyLatitudeColumn.getCellData(track))));
-//        track.setLongitude(Double.parseDouble(String.valueOf(enemyLongitudeColumn.getCellData(track))));
-//        track.setAltitude(Double.parseDouble(String.valueOf(enemyAltitudeColumn.getCellData(track))));
-
         track.setStartLatitude(Double.parseDouble(String.valueOf(enemyLatitudeColumn.getCellData(track))));
         track.setStartLongitude(Double.parseDouble(String.valueOf(enemyLongitudeColumn.getCellData(track))));
         track.setStartAltitude(Double.parseDouble(String.valueOf(enemyAltitudeColumn.getCellData(track))));
-
         track.setEndLatitude(Double.parseDouble(String.valueOf(endLatitudeColumn.getCellData(track))));
         track.setEndLongitude(Double.parseDouble(String.valueOf(endLongitudeColumn.getCellData(track))));
         track.setEndAltitude(Double.parseDouble(String.valueOf(endAltitudeColumn.getCellData(track))));
-
         track.setChangeInLatitude(Double.parseDouble(String.valueOf(changeInLatitudeColumn.getCellData(track))));
         track.setChangeInLongitude(Double.parseDouble(String.valueOf(changeInLongitudeColumn.getCellData(track))));
         track.setChangeInAltitude(Double.parseDouble(String.valueOf(changeInAltitudeColumn.getCellData(track))));
@@ -370,11 +363,9 @@ public class HelloController {
         track.setId(Integer.parseInt(autoTrackIdField.getText()));
         track.setSpeed(Double.parseDouble(autoTrackSpeedField.getText()));
         track.setTime(this.getLocalTime());
-
         track.setLatitude(Double.parseDouble(autoTrackStartLatitudeField.getText()));
         track.setLongitude(Double.parseDouble(autoTrackStartLongitudeField.getText()));
         track.setAltitude(Double.parseDouble(autoTrackStartAltitudeField.getText()));
-
         track.setStartLatitude(Double.parseDouble(autoTrackStartLatitudeField.getText()));
         track.setStartLongitude(Double.parseDouble(autoTrackStartLongitudeField.getText()));
         track.setStartAltitude(Double.parseDouble(autoTrackStartAltitudeField.getText()));
@@ -399,32 +390,7 @@ public class HelloController {
             isReachEndLatitude = track.getLatitude() == track.getEndLatitude() || Math.abs(track.getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
             isReachEndLongitude = track.getLongitude() == track.getEndLongitude() || Math.abs(track.getLongitude() - track.getEndLongitude()) == Math.abs(track.getChangeInLongitude());
             isReachEndAltitude = track.getAltitude() == track.getEndAltitude() || Math.abs(track.getAltitude() - track.getEndAltitude()) == Math.abs(track.getChangeInAltitude());
-
-//            if(track.getLatitude() != (track.getEndLatitude() - track.getChangeInLatitude()) || track.getLatitude() != (track.getEndLatitude() + track.getChangeInLatitude()) || track.getLatitude() != track.getEndLatitude()){
-//                isReachEndLatitude = false;
-//            }
-//            if(track.getLongitude() != (track.getEndLongitude() - track.getChangeInLongitude()) || track.getLongitude() != (track.getEndLongitude() + track.getChangeInLongitude()) || track.getLongitude() != track.getEndLongitude()){
-//                isReachEndLongitude = false;
-//            }
-//            if(track.getAltitude() != (track.getEndAltitude() - track.getChangeInAltitude()) || track.getAltitude() != (track.getEndAltitude() - track.getChangeInAltitude()) || track.getAltitude() != track.getEndAltitude()){
-//                isReachEndAltitude = false;
-//            }
-//            if(track.getLatitude() == (track.getEndLatitude() - track.getChangeInLatitude()) || track.getLatitude() == (track.getEndLatitude() + track.getChangeInLatitude()) || track.getLatitude() == track.getEndLatitude()){
-//                isReachEndLatitude = true;
-//            }
-//            if(track.getLongitude() == (track.getEndLongitude() - track.getChangeInLongitude()) || track.getLongitude() == (track.getEndLongitude() + track.getChangeInLongitude()) || track.getLongitude() == track.getEndLongitude()){
-//                isReachEndLongitude = true;
-//            }
-//            if(track.getAltitude() == (track.getEndAltitude() - track.getChangeInAltitude()) || track.getAltitude() == (track.getEndAltitude() - track.getChangeInAltitude()) || track.getAltitude() == track.getEndAltitude()){
-//                isReachEndAltitude = true;
-//            }
         }
-    }
-    private void updateRecord(int rowIndex, Track track){
-        tracksList = enemyTable.getItems();
-        tracksList.remove(rowIndex);
-        tracksList.add(rowIndex,track);
-        enemyTable.setItems(tracksList);
     }
     private List<Track> checkTrackIdExists(List<Track> trackingList, Track track) {
         for(int i = 0; i < trackingList.size(); i++){
