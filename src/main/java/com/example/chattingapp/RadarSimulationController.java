@@ -25,6 +25,10 @@ public class RadarSimulationController {
     static boolean isTrackExists;
     String trackTime;
     @FXML
+    private Label deviceStatusLabel;
+    @FXML
+    private TextArea radarStatusTextArea, radarMassegingTextArea;
+    @FXML
     private Button AutoNewTrackSender;
     @FXML
     private TextField trackFrequencyField;
@@ -150,7 +154,7 @@ public class RadarSimulationController {
         enemyTable.getItems().clear();
     }
     @FXML
-    void AutoNewTrackSenderButton(ActionEvent event) {
+    void newTrackButton(ActionEvent event) {
         Track track = this.getTrackFromUi();
         this.updateTable(track);
 
