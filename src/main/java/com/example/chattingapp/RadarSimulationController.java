@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RadarSimulationController {
 
-    ObservableList<Track> tracksList;
+    ObservableList<TrackModel> tracksList;
     UDPSender udpSender = new UDPSender();
     private int minute;
     private int hour;
@@ -24,12 +24,6 @@ public class RadarSimulationController {
     static boolean isReachEndAltitude;
     static boolean isTrackExists;
     String trackTime;
-    @FXML
-    private Label deviceStatusLabel;
-    @FXML
-    private TextArea radarStatusTextArea, radarMassegingTextArea;
-    @FXML
-    private Button AutoNewTrackSender;
     @FXML
     private TextField trackFrequencyField;
     @FXML
@@ -55,81 +49,54 @@ public class RadarSimulationController {
     @FXML
     private TextField longitudeChangeField;
     @FXML
-    private Button sendConnectionProperties;
+    private TableView<TrackModel> trackTable;
     @FXML
-    private Button sendEnemiesTrackButton;
+    TableColumn<TrackModel, Double> speedColumn;
     @FXML
-    private TableView<Track> enemyTable;
+    private TableColumn<TrackModel, String> militarySymbolColumn;
     @FXML
-    TableColumn<Track, Double> speedColumn;
+    private TableColumn<TrackModel, Double> pV1Column;
     @FXML
-    private TableColumn<Track, String> militarySymbolColumn;
+    private TableColumn<TrackModel, Double> pV2Column;
     @FXML
-    private TableColumn<Track, Double> pV1Column;
+    private TableColumn<TrackModel, Integer> radarIdColumn;
     @FXML
-    private TableColumn<Track, Double> pV2Column;
+    private TableColumn<TrackModel, Double> rcsColumn;
     @FXML
-    private TableColumn<Track, Integer> radarIdColumn;
+    private TableColumn<TrackModel, Integer> timeColumn;
     @FXML
-    private TableColumn<Track, Double> rcsColumn;
+    private TableColumn<TrackModel, Integer> typeColumn;
     @FXML
-    private TableColumn<Track, Integer> timeColumn;
+    private TableColumn<TrackModel, Double> v1Column;
     @FXML
-    private TableColumn<Track, Integer> typeColumn;
+    private TableColumn<TrackModel, Double> v2Column;
     @FXML
-    private TableColumn<Track, Double> v1Column;
+    private TableColumn<TrackModel, Double> enemyLongitudeColumn, endLongitudeColumn, changeInLongitudeColumn;
     @FXML
-    private TableColumn<Track, Double> v2Column;
+    private TableColumn<TrackModel, Integer> enemyIdColumn;
     @FXML
-    private TableColumn<Track, Double> enemyLongitudeColumn, endLongitudeColumn, changeInLongitudeColumn;
+    private TableColumn<TrackModel, Double> startAltitudeColumn, startLatitudeColumn, startLongitudeColumn;
     @FXML
-    private TableColumn<Track, Integer> enemyIdColumn;
+    private TableColumn<TrackModel, Double> enemyLatitudeColumn, endLatitudeColumn, changeInLatitudeColumn;
     @FXML
-    private TableColumn<Track, Double> startAltitudeColumn, startLatitudeColumn, startLongitudeColumn;
-
-    @FXML
-    private TableColumn<Track, Double> enemyLatitudeColumn, endLatitudeColumn, changeInLatitudeColumn;
-    @FXML
-    private TableColumn<Track, Double> enemyAltitudeColumn, endAltitudeColumn, changeInAltitudeColumn;
+    private TableColumn<TrackModel, Double> enemyAltitudeColumn, endAltitudeColumn, changeInAltitudeColumn;
     /////////////////////////////////////////////////////////
-    @FXML
-    private Label deviceAltitude;
-    @FXML
-    private Label deviceAltitude1;
     @FXML
     private TextField deviceAltitudeField;
     @FXML
     private Label deviceAltitudeLable;
     @FXML
-    private Label deviceId;
-    @FXML
-    private Label deviceId1;
-    @FXML
     private TextField deviceIdField;
     @FXML
     private Label deviceIdLable;
-    @FXML
-    private Label deviceLatitude;
-    @FXML
-    private Label deviceLatitude1;
     @FXML
     private TextField deviceLatitudeField;
     @FXML
     private Label deviceLatitudeLable;
     @FXML
-    private Label deviceLongitude;
-    @FXML
-    private Label deviceLongitude1;
-    @FXML
     private TextField deviceLongitudeField;
     @FXML
     private Label deviceLongitudeLable;
-    @FXML
-    private Label trackV2Lable, trackPv2Lable, trackPv1Lable, trackV1Lable, trackRcsLabel, trackTypeLabel;
-    @FXML
-    private Label trackRadarIdLabel;
-    @FXML
-    private Label trackMilitarySymbolLabel;
     @FXML
     private TextField ipAddressField;
     @FXML
@@ -138,31 +105,28 @@ public class RadarSimulationController {
     private Label ipAddressLabel;
     @FXML
     private Label portLabel;
-    @FXML
-    private Button sendDevice;
 
     public RadarSimulationController() throws UnknownHostException {
     }
 
     @FXML
     void deleteTrackButton(ActionEvent event) {
-        int selectedEnemy = enemyTable.getSelectionModel().getSelectedIndex();
-        enemyTable.getItems().remove(selectedEnemy);
+        int selectedEnemy = trackTable.getSelectionModel().getSelectedIndex();
+        trackTable.getItems().remove(selectedEnemy);
     }
     @FXML
     void resetSimulationButton(ActionEvent event) {
-        enemyTable.getItems().clear();
+        trackTable.getItems().clear();
     }
     @FXML
     void newTrackButton(ActionEvent event) {
-        Track track = this.getTrackFromUi();
+        TrackModel track = this.getTrackFromUi();
         this.updateTable(track);
-
     }
     @FXML
     void startSimulationButton(ActionEvent event) throws IOException {
 
-        List<Track> OneStepTrackingList = new ArrayList<>();
+        List<TrackModel> oneMoveTrackList = new ArrayList<>();
 
         // this counter to now the #round on the loop
         int firstRound = 0;
@@ -173,11 +137,11 @@ public class RadarSimulationController {
 
         while (!(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude)) {
 
-            tracksList = enemyTable.getItems();
+            tracksList = trackTable.getItems();
 
             for(int rowIndex = 0; rowIndex < tracksList.size(); rowIndex++){
 
-                Track track = tracksList.get(rowIndex);
+                TrackModel track = tracksList.get(rowIndex);
 
                 this.getTrackFromTable(track);
 
@@ -202,9 +166,9 @@ public class RadarSimulationController {
 //                this.updateRecord(rowIndex,track);
 
                 // Check the track id on the list or not, will update if  exists, will add new if not
-                OneStepTrackingList = this.checkTrackIdExists(OneStepTrackingList,track);
+                oneMoveTrackList = this.checkTrackIdExists(oneMoveTrackList,track);
                 if(!isTrackExists){
-                    OneStepTrackingList.add(track);
+                    oneMoveTrackList.add(track);
                 }
                 this.checkAllArivedToDestination(track);
 
@@ -218,9 +182,8 @@ public class RadarSimulationController {
             }
             // send the track list
             firstRound++;
-            udpSender.sendData(OneStepTrackingList);
-            System.out.println(" ");
-            System.out.println(OneStepTrackingList);
+            udpSender.sendData(oneMoveTrackList);
+            System.out.println(oneMoveTrackList);
 
         }
 
@@ -231,10 +194,8 @@ public class RadarSimulationController {
     void sendConnectionProperties(ActionEvent event) throws UnknownHostException {
         String ipAddress = ipAddressField.getText();
         int port = Integer.parseInt(portField.getText());
-
         ipAddressLabel.setText(ipAddress);
         portLabel.setText(String.valueOf(port));
-
         udpSender.setPort(Integer.parseInt(String.valueOf(port)));
         udpSender.setIp_Address(ipAddress);
 
@@ -246,19 +207,16 @@ public class RadarSimulationController {
         String radarLatitude = deviceLatitudeField.getText();
         String radarLongitude = deviceLongitudeField.getText();
         String radarAltitude = deviceAltitudeField.getText();
-
-        Device radar = new Device();
+        RadarModel radar = new RadarModel();
         radar.setId(Integer.parseInt(deviceIdField.getText()));
         radar.setLatitude(Double.parseDouble(deviceLatitudeField.getText()));
         radar.setLongitude(Double.parseDouble(deviceLongitudeField.getText()));
         radar.setAltitude(Double.parseDouble(deviceAltitudeField.getText()));
-
         // print the radar information on radar labels
         deviceIdLable.setText(radarId);
         deviceLatitudeLable.setText(radarLatitude);
         deviceLongitudeLable.setText(radarLongitude);
         deviceAltitudeLable.setText(radarAltitude);
-
         // to send the radar information
         udpSender.sendData(radar);
 
@@ -266,29 +224,29 @@ public class RadarSimulationController {
     @FXML
     public void initialize() {
 
-        militarySymbolColumn.setCellValueFactory(new PropertyValueFactory<Track, String>("militarySymbol"));
-        pV1Column.setCellValueFactory(new PropertyValueFactory<Track, Double>("p_v1"));
-        pV2Column.setCellValueFactory(new PropertyValueFactory<Track, Double>("p_v2"));
-        radarIdColumn.setCellValueFactory(new PropertyValueFactory<Track, Integer>("radarId"));
-        rcsColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("rcs"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<Track, Integer>("time"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<Track, Integer>("type"));
-        v1Column.setCellValueFactory(new PropertyValueFactory<Track, Double>("v1"));
-        v2Column.setCellValueFactory(new PropertyValueFactory<Track, Double>("v2"));
-        enemyLongitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("longitude"));
-        enemyIdColumn.setCellValueFactory(new PropertyValueFactory<Track, Integer>("id"));
-        enemyLatitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("latitude"));
-        speedColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("speed"));
-        enemyAltitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("altitude"));
-        startLatitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("startLatitude"));
-        startLongitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("startLongitude"));
-        startAltitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("startAltitude"));
-        endLatitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("endLatitude"));
-        endLongitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("endLongitude"));
-        endAltitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("endAltitude"));
-        changeInLatitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("changeInLatitude"));
-        changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("changeInLongitude"));
-        changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<Track, Double>("changeInAltitude"));
+        militarySymbolColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, String>("militarySymbol"));
+        pV1Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("p_v1"));
+        pV2Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("p_v2"));
+        radarIdColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("radarId"));
+        rcsColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("rcs"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("time"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("type"));
+        v1Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("v1"));
+        v2Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("v2"));
+        enemyLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("longitude"));
+        enemyIdColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("id"));
+        enemyLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("latitude"));
+        speedColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("speed"));
+        enemyAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("altitude"));
+        startLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("startLatitude"));
+        startLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("startLongitude"));
+        startAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("startAltitude"));
+        endLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("endLatitude"));
+        endLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("endLongitude"));
+        endAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("endAltitude"));
+        changeInLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInLatitude"));
+        changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInLongitude"));
+        changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInAltitude"));
 
     }
     private String getLocalTime(){
@@ -297,9 +255,7 @@ public class RadarSimulationController {
         second = cal.get(Calendar.SECOND);
         minute = cal.get(Calendar.MINUTE);
         hour = cal.get(Calendar.HOUR);
-
         String localTime = hour + ":" + (minute) + ":" + second;
-
         return localTime;
 
     }
@@ -345,7 +301,7 @@ public class RadarSimulationController {
         }
         return geographicCoordinates;
     }
-    private void getTrackFromTable(Track track){
+    private void getTrackFromTable(TrackModel track){
 
         track.setId(Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track))));
         track.setSpeed(Double.parseDouble(String.valueOf(speedColumn.getCellData(track))));
@@ -361,9 +317,9 @@ public class RadarSimulationController {
         track.setTrackFrequency(Long.parseLong(trackFrequencyField.getText()));
 
     }
-    private Track getTrackFromUi(){
+    private TrackModel getTrackFromUi(){
 
-        Track track = new Track();
+        TrackModel track = new TrackModel();
         track.setId(Integer.parseInt(autoTrackIdField.getText()));
         track.setSpeed(Double.parseDouble(autoTrackSpeedField.getText()));
         track.setTime(this.getLocalTime());
@@ -383,12 +339,12 @@ public class RadarSimulationController {
         return track;
 
     }
-    private void updateTable(Track track){
-        tracksList = enemyTable.getItems();
+    private void updateTable(TrackModel track){
+        tracksList = trackTable.getItems();
         tracksList.add(track);
-        enemyTable.setItems(tracksList);
+        trackTable.setItems(tracksList);
     }
-    private void checkAllArivedToDestination(Track track) {
+    private void checkAllArivedToDestination(TrackModel track) {
         if(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude){
 
             isReachEndLatitude = track.getLatitude() == track.getEndLatitude() || Math.abs(track.getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
@@ -396,9 +352,9 @@ public class RadarSimulationController {
             isReachEndAltitude = track.getAltitude() == track.getEndAltitude() || Math.abs(track.getAltitude() - track.getEndAltitude()) == Math.abs(track.getChangeInAltitude());
         }
     }
-    private List<Track> checkTrackIdExists(List<Track> trackingList, Track track) {
+    private List<TrackModel> checkTrackIdExists(List<TrackModel> trackingList, TrackModel track) {
         for(int i = 0; i < trackingList.size(); i++){
-            Track ExistingTrack = trackingList.get(i);
+            TrackModel ExistingTrack = trackingList.get(i);
             if(ExistingTrack.getId() == track.getId()){
                 trackingList.remove(i);
                 trackingList.add(track);

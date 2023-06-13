@@ -1,18 +1,12 @@
 package com.example.chattingapp;
 
 import com.fasterxml.jackson.databind.ObjectWriter;
-import javafx.application.Application;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.net.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.collections.ObservableList;
 
 
@@ -32,7 +26,7 @@ public class UDPSender {
         this.ip_Address = ip_Address;
     }
 
-    public void sendData(Track object) throws IOException {
+    public void sendData(TrackModel object) throws IOException {
 
 
         // Convert the track to json
@@ -55,7 +49,7 @@ public class UDPSender {
 
     }
 
-    public void sendData(Device object) throws IOException {
+    public void sendData(RadarModel object) throws IOException {
 
         // Define the port
 //        int port = 9001;
@@ -88,7 +82,7 @@ public class UDPSender {
 //        objectOutputStream.writeObject(object);
 //        byte[] data = outputStream.toByteArray();
     }
-    public void sendData(List<Track> object) throws IOException {
+    public void sendData(List<TrackModel> object) throws IOException {
 
 
         // Convert the track to json
@@ -112,7 +106,7 @@ public class UDPSender {
 
     }
 
-    public void sendData(ObservableList<Track> object) throws IOException {
+    public void sendData(ObservableList<TrackModel> object) throws IOException {
 
         // Define the port
 //        int port = 9001;

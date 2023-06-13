@@ -1,6 +1,6 @@
 package com.example.chattingapp;
 
-public class Device {
+public class RadarModel {
     private int id;
     private String name;
     private int nameID;
@@ -16,10 +16,10 @@ public class Device {
     private double protectedAreaRadius;
     private String militarySymbol;
 
-    public Device(){}
-    public Device(int id, String name, int nameID, double latitude, double longitude, double altitude, int type,
-                  String calibrationPoint, double azimuth, double elevation, double range, double angleOfView,
-                  double protectedAreaRadius, String militarySymbol)
+    public RadarModel(){}
+    public RadarModel(int id, String name, int nameID, double latitude, double longitude, double altitude, int type,
+                      String calibrationPoint, double azimuth, double elevation, double range, double angleOfView,
+                      double protectedAreaRadius, String militarySymbol)
     {
         this.id = id;
         this.name = name;
@@ -36,7 +36,7 @@ public class Device {
         this.protectedAreaRadius = protectedAreaRadius;
         this.militarySymbol = militarySymbol;
     }
-    public Device(int id, double latitude, double longitude, double altitude)
+    public RadarModel(int id, double latitude, double longitude, double altitude)
     {
         this.id = id;
         this.name = name;
@@ -168,7 +168,7 @@ public class Device {
 
     @Override
     public String toString() {
-        return "Device{" +
+        return "RadarModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", nameID=" + nameID +

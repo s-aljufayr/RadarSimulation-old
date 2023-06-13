@@ -413,7 +413,7 @@
                 </TabPane>
                 <ScrollPane prefHeight="260.0" prefWidth="1054.0" GridPane.rowIndex="1">
                     <content>
-                        <TableView fx:id="enemyTable" prefHeight="243.0" prefWidth="1138.0">
+                        <TableView fx:id="trackTable" prefHeight="243.0" prefWidth="1138.0">
                             <columns>
                                 <TableColumn fx:id="enemyIdColumn" prefWidth="75.0" text="Enemy Id" />
                                 <TableColumn fx:id="enemyLatitudeColumn" prefWidth="90.0" text="Enemy Latitude" />

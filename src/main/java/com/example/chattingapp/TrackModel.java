@@ -2,7 +2,7 @@ package com.example.chattingapp;
 
 import java.io.Serializable;
 
-public class Track implements Serializable {
+public class TrackModel implements Serializable {
     private int id;
     private String time;
     private double latitude;
@@ -29,17 +29,17 @@ public class Track implements Serializable {
     private double changeInAltitude;
     private double TrackFrequency;
 
-    public Track(){
+    public TrackModel(){
     }
-    public Track(int id, double latitude, double longitude, double altitude) {
+    public TrackModel(int id, double latitude, double longitude, double altitude) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitude = altitude;
     }
 
-    public Track(int id, String time, double latitude, double longitude, double altitude, double speed, String militarySymbol,
-                 int radarId, double v1, double v2, double p_v1, double p_v2, double rcs, int type)
+    public TrackModel(int id, String time, double latitude, double longitude, double altitude, double speed, String militarySymbol,
+                      int radarId, double v1, double v2, double p_v1, double p_v2, double rcs, int type)
     {
         this.id = id;
         this.time = time;
@@ -293,7 +293,7 @@ public class Track implements Serializable {
 
     @Override
     public String toString() {
-        return "Track{" +
+        return "TrackModel{" +
                 "id=" + id +
                 ", time='" + time + '\'' +
                 ", latitude=" + latitude +

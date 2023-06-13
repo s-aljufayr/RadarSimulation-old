@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class RadarSimulationApplication extends Application {
-    UDPSender udpSender;
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(RadarSimulationApplication.class.getResource("radarSimulation-view.fxml"));
