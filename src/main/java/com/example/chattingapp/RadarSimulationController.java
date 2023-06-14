@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class RadarSimulationController {
-
     ObservableList<TrackModel> tracksList;
     UDPSender udpSender = new UDPSender();
     private int minute;
@@ -25,6 +24,7 @@ public class RadarSimulationController {
     static boolean isReachEndAltitude;
     static boolean isTrackExists;
     String trackTime;
+    RadarModel radar = new RadarModel();
     @FXML
     private Label deviceStatusLabel;
     @FXML
@@ -111,7 +111,6 @@ public class RadarSimulationController {
 
     public RadarSimulationController() throws UnknownHostException {
     }
-
     @FXML
     void deleteTrackButton(ActionEvent event) {
         int selectedEnemy = trackTable.getSelectionModel().getSelectedIndex();
@@ -182,6 +181,8 @@ public class RadarSimulationController {
                     e.printStackTrace();
                 }
             }
+            if(!radar.isStatus())
+                break;
             // send the track list
             firstRound++;
             udpSender.sendData(oneMoveTrackList);
@@ -203,42 +204,17 @@ public class RadarSimulationController {
     }
     @FXML
     void setRadarButton(ActionEvent event) throws IOException {
-        RadarModel radar = new RadarModel();
+//        RadarModel radar = new RadarModel();
 // get the radar from the UI
         this.setRadarProperties(radar);
-        radar.setStatus(true);
+        this.startSending(radar);
 
-        Thread sendStatus = new Thread(() -> {
-            while (radar.isStatus()) {
-                // to send the radar information
-                try {
-                    udpSender.sendData(radar);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                // set Radar Pane On UI
-                Platform.runLater(() -> {
-                    setRadarPane(radar);
-                });
-                if(!radar.isStatus()){
-                    break;
-                }
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        sendStatus.start();
     }
     @FXML
     void stopSendingButton(ActionEvent event) {
-        RadarModel radar = new RadarModel();
         radar.setStatus(false);
         this.setRadarPane(radar);
     }
-
     @FXML
     public void initialize() {
 
@@ -376,7 +352,7 @@ public class RadarSimulationController {
         track.setChangeInLatitude(Double.parseDouble(latitudeChangeField.getText()));
         track.setChangeInLongitude(Double.parseDouble(longitudeChangeField.getText()));
         track.setChangeInAltitude(Double.parseDouble(altitudeChangeField.getText()));
-
+        track.setRadarId(radar.getId());
         return track;
 
     }
@@ -404,5 +380,32 @@ public class RadarSimulationController {
             }
         }
         return trackingList;
+    }
+    private void startSending(RadarModel radar) {
+        radar.setStatus(true);
+
+        Thread sendStatus = new Thread(() -> {
+            while (radar.isStatus()) {
+                // to send the radar information
+                try {
+                    udpSender.sendData(radar);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                // set Radar Pane On UI
+                Platform.runLater(() -> {
+                    setRadarPane(radar);
+                });
+                if(!radar.isStatus()){
+                    break;
+                }
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        sendStatus.start();
     }
 }
