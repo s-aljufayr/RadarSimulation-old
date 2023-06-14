@@ -1,5 +1,6 @@
 package com.example.chattingapp;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,8 @@ public class RadarSimulationController {
     static boolean isReachEndAltitude;
     static boolean isTrackExists;
     String trackTime;
+    @FXML
+    private Label deviceStatusLabel;
     @FXML
     private TextField trackFrequencyField;
     @FXML
@@ -127,7 +130,6 @@ public class RadarSimulationController {
     void startSimulationButton(ActionEvent event) throws IOException {
 
         List<TrackModel> oneMoveTrackList = new ArrayList<>();
-
         // this counter to now the #round on the loop
         int firstRound = 0;
         isReachEndLatitude = false;
@@ -189,9 +191,8 @@ public class RadarSimulationController {
 
 
     }
-
     @FXML
-    void sendConnectionProperties(ActionEvent event) throws UnknownHostException {
+    void setConnectionProperties(ActionEvent event) throws UnknownHostException {
         String ipAddress = ipAddressField.getText();
         int port = Integer.parseInt(portField.getText());
         ipAddressLabel.setText(ipAddress);
@@ -201,26 +202,43 @@ public class RadarSimulationController {
 
     }
     @FXML
-    void sendDeviceButton(ActionEvent event) throws IOException {
-        // get the radar from the UI
-        String radarId = deviceIdField.getText();
-        String radarLatitude = deviceLatitudeField.getText();
-        String radarLongitude = deviceLongitudeField.getText();
-        String radarAltitude = deviceAltitudeField.getText();
+    void setRadarButton(ActionEvent event) throws IOException {
         RadarModel radar = new RadarModel();
-        radar.setId(Integer.parseInt(deviceIdField.getText()));
-        radar.setLatitude(Double.parseDouble(deviceLatitudeField.getText()));
-        radar.setLongitude(Double.parseDouble(deviceLongitudeField.getText()));
-        radar.setAltitude(Double.parseDouble(deviceAltitudeField.getText()));
-        // print the radar information on radar labels
-        deviceIdLable.setText(radarId);
-        deviceLatitudeLable.setText(radarLatitude);
-        deviceLongitudeLable.setText(radarLongitude);
-        deviceAltitudeLable.setText(radarAltitude);
-        // to send the radar information
-        udpSender.sendData(radar);
+// get the radar from the UI
+        this.setRadarProperties(radar);
+        radar.setStatus(true);
 
+        Thread sendStatus = new Thread(() -> {
+            while (radar.isStatus()) {
+                // to send the radar information
+                try {
+                    udpSender.sendData(radar);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                // set Radar Pane On UI
+                Platform.runLater(() -> {
+                    setRadarPane(radar);
+                });
+                if(!radar.isStatus()){
+                    break;
+                }
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        sendStatus.start();
     }
+    @FXML
+    void stopSendingButton(ActionEvent event) {
+        RadarModel radar = new RadarModel();
+        radar.setStatus(false);
+        this.setRadarPane(radar);
+    }
+
     @FXML
     public void initialize() {
 
@@ -248,6 +266,29 @@ public class RadarSimulationController {
         changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInLongitude"));
         changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInAltitude"));
 
+    }
+    private void setRadarProperties(RadarModel radar) {
+        radar.setId(Integer.parseInt(deviceIdField.getText()));
+        radar.setLatitude(Double.parseDouble(deviceLatitudeField.getText()));
+        radar.setLongitude(Double.parseDouble(deviceLongitudeField.getText()));
+        radar.setAltitude(Double.parseDouble(deviceAltitudeField.getText()));
+        radar.setStatus(true);
+    }
+    private void setRadarPane(RadarModel radar) {
+        // print the radar information on radar labels
+        if(!radar.isStatus()){
+            deviceIdLable.setText("Unknown");
+            deviceLatitudeLable.setText("Unknown");
+            deviceLongitudeLable.setText("Unknown");
+            deviceAltitudeLable.setText("Unknown");
+            deviceStatusLabel.setText("Offline");
+        }else{
+            deviceIdLable.setText(String.valueOf(radar.getId()));
+            deviceLatitudeLable.setText(String.valueOf(radar.getLatitude()));
+            deviceLongitudeLable.setText(String.valueOf(radar.getLongitude()));
+            deviceAltitudeLable.setText(String.valueOf(radar.getAltitude()));
+            deviceStatusLabel.setText("Online");
+        }
     }
     private String getLocalTime(){
 

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="768.0" prefWidth="1052.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chattingapp.RadarSimulationController">
+<VBox alignment="CENTER" prefHeight="768.0" prefWidth="1051.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chattingapp.RadarSimulationController">
     <!--    <padding>-->
     <!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />-->
     <!--    </padding>-->
@@ -93,7 +93,7 @@
                                                                     <GridPane.margin>
                                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                     </GridPane.margin></Label>
-                                                                <Button id="sendDevice" fx:id="sendDevice" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#sendDeviceButton" prefHeight="26.0" prefWidth="70.0" text="SET" GridPane.rowIndex="4">
+                                                                <Button id="setRadar" fx:id="setRadar" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setRadarButton" prefHeight="26.0" prefWidth="70.0" text="SET" GridPane.rowIndex="4">
                                                                     <GridPane.margin>
                                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                     </GridPane.margin></Button>
@@ -133,7 +133,7 @@
                                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                     </GridPane.margin>
                                                                 </TextField>
-                                                                <Button id="sendConnectionProperties" fx:id="sendConnectionProperties" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#sendConnectionProperties" prefHeight="26.0" prefWidth="70.0" text="SET" GridPane.rowIndex="2">
+                                                                <Button id="setConnectionProperties" fx:id="setConnectionProperties" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setConnectionProperties" prefHeight="26.0" prefWidth="70.0" text="SET" GridPane.rowIndex="2">
                                                                     <GridPane.margin>
                                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                     </GridPane.margin>
@@ -504,22 +504,22 @@
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <Label id="deviceIdLable" fx:id="deviceIdLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="231.0" text="Unknwon" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <Label id="deviceIdLable" fx:id="deviceIdLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="231.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <GridPane.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <Label id="deviceLatitudeLable" fx:id="deviceLatitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="232.0" text="Unknwon" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <Label id="deviceLatitudeLable" fx:id="deviceLatitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="232.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                     <GridPane.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <Label id="enemyongitudeLable" fx:id="deviceLongitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="230.0" text="Unknwon" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                <Label id="enemyongitudeLable" fx:id="deviceLongitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="230.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                     <GridPane.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <Label id="deviceAltitudeLable" fx:id="deviceAltitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="232.0" text="Unknwon" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                <Label id="deviceAltitudeLable" fx:id="deviceAltitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="232.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                     <GridPane.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </GridPane.margin>
@@ -542,7 +542,7 @@
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <Label id="radarStatusLable" fx:id="deviceStatusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="222.0" text="Unknwon" textFill="#fa0707" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                <Label id="radarStatusLable" fx:id="deviceStatusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="222.0" text="Unknown" textFill="#fa0707" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                     <GridPane.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </GridPane.margin>
@@ -572,6 +572,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
                 </Pane>
+            <Button fx:id="stopSending" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#stopSendingButton" prefHeight="25.0" prefWidth="105.0" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <!--            <Pane id="enemySpeed" fx:id="enemySpeed" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />-->
             </children>
             <VBox.margin>

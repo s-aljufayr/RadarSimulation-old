@@ -15,6 +15,7 @@ public class RadarModel {
     private double angleOfView;
     private double protectedAreaRadius;
     private String militarySymbol;
+    private static boolean status = false;
 
     public RadarModel(){}
     public RadarModel(int id, String name, int nameID, double latitude, double longitude, double altitude, int type,
@@ -164,6 +165,14 @@ public class RadarModel {
 
     public void setMilitarySymbol(String militarySymbol) {
         this.militarySymbol = militarySymbol;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
