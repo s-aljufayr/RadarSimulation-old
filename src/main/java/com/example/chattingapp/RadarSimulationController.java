@@ -158,6 +158,7 @@ public class RadarSimulationController {
             if(!udpReceiver.isOnline()){
                 udpReceiver.getSocket().close();
                 udpSender.getSocket().close();
+                break;
             }
             firstRound++;
             udpSender.sendData(oneMoveTrackList);

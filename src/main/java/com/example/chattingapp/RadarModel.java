@@ -16,7 +16,6 @@ public class RadarModel {
     private double protectedAreaRadius;
     private String militarySymbol;
     private static boolean status = false;
-
     public RadarModel(){}
     public RadarModel(int id, String name, int nameID, double latitude, double longitude, double altitude, int type,
                       String calibrationPoint, double azimuth, double elevation, double range, double angleOfView,
