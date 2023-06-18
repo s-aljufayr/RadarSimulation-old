@@ -8,10 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,6 +17,7 @@ public class RadarSimulationController {
     ObservableList<TrackModel> tracksList;
     UDPSender udpSender = new UDPSender();
     UDPReceiver udpReceiver = new UDPReceiver();
+    RadarModel radar = new RadarModel();
     private int minute;
     private int hour;
     private int second;
@@ -27,9 +26,6 @@ public class RadarSimulationController {
     static boolean isReachEndAltitude;
     static boolean isTrackExists;
     String trackTime;
-    RadarModel radar = new RadarModel();
-    @FXML
-    public TextArea radarStatusTextArea, radarMassegingTextArea;
     @FXML
     private Label deviceStatusLabel;
     @FXML
@@ -90,31 +86,11 @@ public class RadarSimulationController {
     private TableColumn<TrackModel, Double> enemyAltitudeColumn, endAltitudeColumn, changeInAltitudeColumn;
     /////////////////////////////////////////////////////////
     @FXML
-    private TextField deviceAltitudeField;
+    private TextField deviceAltitudeField,deviceIdField,deviceLatitudeField,deviceLongitudeField,ipAddressField,portField;
     @FXML
-    private Label deviceAltitudeLable;
-    @FXML
-    private TextField deviceIdField;
-    @FXML
-    private Label deviceIdLable;
-    @FXML
-    private TextField deviceLatitudeField;
-    @FXML
-    private Label deviceLatitudeLable;
-    @FXML
-    private TextField deviceLongitudeField;
-    @FXML
-    private Label deviceLongitudeLable;
-    @FXML
-    private TextField ipAddressField;
-    @FXML
-    private TextField portField;
-    @FXML
-    private Label ipAddressLabel;
-    @FXML
-    private Label portLabel;
+    private Label deviceAltitudeLable, deviceIdLable, deviceLatitudeLable,deviceLongitudeLable,ipAddressLabel,portLabel;
 
-    public RadarSimulationController() throws UnknownHostException, SocketException {
+    public RadarSimulationController() throws IOException {
     }
     @FXML
     void deleteTrackButton(ActionEvent event) {
@@ -132,7 +108,7 @@ public class RadarSimulationController {
     }
     @FXML
     void startSimulationButton(ActionEvent event) throws IOException {
-
+        TrackModel track = new TrackModel();
         List<TrackModel> oneMoveTrackList = new ArrayList<>();
         // this counter to now the #round on the loop
         int firstRound = 0;
@@ -141,21 +117,19 @@ public class RadarSimulationController {
         isReachEndAltitude = false;
         isTrackExists = false;
 
+
         while (!(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude)) {
 
             tracksList = trackTable.getItems();
 
             for(int rowIndex = 0; rowIndex < tracksList.size(); rowIndex++){
 
-                TrackModel track = tracksList.get(rowIndex);
+                track = tracksList.get(rowIndex);
 
                 this.getTrackFromTable(track);
-
                 System.out.println(("Row Index : " + rowIndex));
                 System.out.println("loop Counter: "+firstRound);
-
                 // Perform loop operations here
-
                 if(firstRound == 0){
                     track.setLatitude(this.countLLA(track.getStartLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),isReachEndLatitude,"latitude"));
                     track.setLongitude(this.countLLA(track.getStartLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),isReachEndLongitude, "longitude"));
@@ -165,20 +139,15 @@ public class RadarSimulationController {
                     track.setLongitude(this.countLLA(track.getLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),isReachEndLongitude,"longitude"));
                     track.setAltitude(this.countLLA(track.getAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),isReachEndAltitude,"altitude"));
                 }
-
-                // Calculate track time
+                // get track time
                 trackTime = this.getLocalTime();
                 track.setTime(trackTime);
-//                this.updateRecord(rowIndex,track);
-
                 // Check the track id on the list or not, will update if  exists, will add new if not
                 oneMoveTrackList = this.checkTrackIdExists(oneMoveTrackList,track);
                 if(!isTrackExists){
                     oneMoveTrackList.add(track);
                 }
                 this.checkAllArivedToDestination(track);
-
-
                 // Delay for TrackFrequency second
                 try {
                     Thread.sleep((long) (track.getTrackFrequency()*1000));
@@ -186,16 +155,14 @@ public class RadarSimulationController {
                     e.printStackTrace();
                 }
             }
-            if(!radar.isStatus())
-                break;
-            // send the track list
+            if(!udpReceiver.isOnline()){
+                udpReceiver.getSocket().close();
+                udpSender.getSocket().close();
+            }
             firstRound++;
             udpSender.sendData(oneMoveTrackList);
             System.out.println(oneMoveTrackList);
-
         }
-
-
     }
     @FXML
     void setConnectionProperties(ActionEvent event) throws UnknownHostException {
@@ -205,16 +172,13 @@ public class RadarSimulationController {
         portLabel.setText(String.valueOf(port));
         udpSender.setPort(Integer.parseInt(String.valueOf(port)));
         udpSender.setIp_Address(ipAddress);
-
     }
     @FXML
     void setRadarButton(ActionEvent event) throws IOException {
-//        RadarModel radar = new RadarModel();
         // get the radar from the UI
-        final boolean[] jsonMessage;
         this.setRadarProperties(radar);
+        udpReceiver.startReceiving();
         this.startSending(radar);
-        jsonMessage = udpReceiver.startReceiving();
     }
     @FXML
     void stopSendingButton(ActionEvent event) {
@@ -223,7 +187,6 @@ public class RadarSimulationController {
     }
     @FXML
     public void initialize() {
-
         militarySymbolColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, String>("militarySymbol"));
         pV1Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("p_v1"));
         pV2Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("p_v2"));
@@ -247,7 +210,6 @@ public class RadarSimulationController {
         changeInLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInLatitude"));
         changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInLongitude"));
         changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInAltitude"));
-
     }
     private void setRadarProperties(RadarModel radar) {
         radar.setId(Integer.parseInt(deviceIdField.getText()));
@@ -256,7 +218,7 @@ public class RadarSimulationController {
         radar.setAltitude(Double.parseDouble(deviceAltitudeField.getText()));
         radar.setStatus(true);
     }
-    private void setRadarPane(RadarModel radar) {
+    public void setRadarPane(RadarModel radar) {
         // print the radar information on radar labels
         if(!radar.isStatus()){
             deviceIdLable.setText("Unknown");
@@ -273,64 +235,54 @@ public class RadarSimulationController {
         }
     }
     private String getLocalTime(){
-
         Calendar cal = Calendar.getInstance();
         second = cal.get(Calendar.SECOND);
         minute = cal.get(Calendar.MINUTE);
         hour = cal.get(Calendar.HOUR);
         String localTime = hour + ":" + (minute) + ":" + second;
         return localTime;
-
     }
     private Double countLLA(Double geographicCoordinates, Double endLLA,Double changeInLLA, boolean breakLoop, String key){
-
         if(!breakLoop) {
             if (geographicCoordinates < endLLA) {
                 geographicCoordinates += changeInLLA;
                 if (geographicCoordinates >= endLLA) {
-                    if (key == "latitude") {
+                    if (key == "latitude")
                         isReachEndLatitude = true;
-                    }
-                    if (key == "longitude") {
+                    if (key == "longitude")
                         isReachEndLongitude = true;
-                    }
-                    if (key == "altitude") {
+                    if (key == "altitude")
                         isReachEndAltitude = true;
-                    }
                 }
             }
             else if(geographicCoordinates > endLLA) {
                 geographicCoordinates -= changeInLLA;
                 if (geographicCoordinates <= endLLA){
-                    if(key == "latitude"){
+                    if(key == "latitude")
                         isReachEndLatitude = true;
-                    }if(key == "longitude"){
+                    if(key == "longitude")
                         isReachEndLongitude = true;
-                    }if(key == "altitude"){
+                    if(key == "altitude")
                         isReachEndAltitude = true;
-                    }
                 }
-
             }
             else if(geographicCoordinates == endLLA){
-                if(key == "latitude"){
+                if(key == "latitude")
                     isReachEndLatitude = true;
-                }if(key == "longitude"){
+                if(key == "longitude")
                     isReachEndLongitude = true;
-                }if(key == "altitude"){
+                if(key == "altitude")
                     isReachEndAltitude = true;
-                }
             }
         }
         return geographicCoordinates;
     }
     private void getTrackFromTable(TrackModel track){
-
         track.setId(Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track))));
         track.setSpeed(Double.parseDouble(String.valueOf(speedColumn.getCellData(track))));
-        track.setStartLatitude(Double.parseDouble(String.valueOf(enemyLatitudeColumn.getCellData(track))));
-        track.setStartLongitude(Double.parseDouble(String.valueOf(enemyLongitudeColumn.getCellData(track))));
-        track.setStartAltitude(Double.parseDouble(String.valueOf(enemyAltitudeColumn.getCellData(track))));
+        track.setStartLatitude(Double.parseDouble(String.valueOf(startLatitudeColumn.getCellData(track))));
+        track.setStartLongitude(Double.parseDouble(String.valueOf(startLongitudeColumn.getCellData(track))));
+        track.setStartAltitude(Double.parseDouble(String.valueOf(startAltitudeColumn.getCellData(track))));
         track.setEndLatitude(Double.parseDouble(String.valueOf(endLatitudeColumn.getCellData(track))));
         track.setEndLongitude(Double.parseDouble(String.valueOf(endLongitudeColumn.getCellData(track))));
         track.setEndAltitude(Double.parseDouble(String.valueOf(endAltitudeColumn.getCellData(track))));
@@ -338,10 +290,8 @@ public class RadarSimulationController {
         track.setChangeInLongitude(Double.parseDouble(String.valueOf(changeInLongitudeColumn.getCellData(track))));
         track.setChangeInAltitude(Double.parseDouble(String.valueOf(changeInAltitudeColumn.getCellData(track))));
         track.setTrackFrequency(Long.parseLong(trackFrequencyField.getText()));
-
     }
     private TrackModel getTrackFromUi(){
-
         TrackModel track = new TrackModel();
         track.setId(Integer.parseInt(autoTrackIdField.getText()));
         track.setSpeed(Double.parseDouble(autoTrackSpeedField.getText()));
@@ -360,7 +310,6 @@ public class RadarSimulationController {
         track.setChangeInAltitude(Double.parseDouble(altitudeChangeField.getText()));
         track.setRadarId(radar.getId());
         return track;
-
     }
     private void updateTable(TrackModel track){
         tracksList = trackTable.getItems();
@@ -369,7 +318,6 @@ public class RadarSimulationController {
     }
     private void checkAllArivedToDestination(TrackModel track) {
         if(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude){
-
             isReachEndLatitude = track.getLatitude() == track.getEndLatitude() || Math.abs(track.getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
             isReachEndLongitude = track.getLongitude() == track.getEndLongitude() || Math.abs(track.getLongitude() - track.getEndLongitude()) == Math.abs(track.getChangeInLongitude());
             isReachEndAltitude = track.getAltitude() == track.getEndAltitude() || Math.abs(track.getAltitude() - track.getEndAltitude()) == Math.abs(track.getChangeInAltitude());
@@ -402,9 +350,10 @@ public class RadarSimulationController {
                 Platform.runLater(() -> {
                     setRadarPane(radar);
                 });
-                if(!radar.isStatus()){
+                if(!udpReceiver.isOnline())
+                    radar.setStatus(false);
+                if(!radar.isStatus())
                     break;
-                }
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {

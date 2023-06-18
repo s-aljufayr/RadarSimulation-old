@@ -1,70 +1,100 @@
 package com.example.chattingapp;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import javafx.application.Platform;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
+import java.net.UnknownHostException;
 
 public class UDPReceiver {
-    private int receiverPort = 9002;
-    private boolean isReceivingMessages = true;
-    static boolean[] online;
-    DatagramSocket socket = new DatagramSocket(receiverPort);
-    public UDPReceiver() throws SocketException {
+    static boolean online = true;
+    boolean isReceivingMessages = true;
+    Integer receiverPort = 9002;
+    private DatagramSocket socket;
+    public UDPReceiver() throws UnknownHostException {
     }
-    public boolean[] startReceiving() throws IOException {
-        AtomicBoolean isReceivingMessages = new AtomicBoolean(true);
-        DatagramSocket socket = new DatagramSocket(receiverPort);
-        byte[] buffer = new byte[1024];
+    public void startReceiving() throws IOException {
+        setReceivingMessages(true);
+        setOnline(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    socket = null;
+                    try {
+                        socket = new DatagramSocket(receiverPort);
+                    } catch (SocketException e) {
+                        throw new RuntimeException(e);
+                    }
 
-        DatagramPacket packet = new DatagramPacket(buffer, 1024);
+                    byte[] buffer = new byte[1024];
+                    DatagramPacket packet = new DatagramPacket(buffer, 1024);
 
-        new Thread(() -> {
-            try {
-                while (isReceivingMessages.get()) {
-                    socket.receive(packet);
-                    String jsonMessage = new String(packet.getData(), 0, packet.getLength());
-                    // Process the received JSON message
-                    String key = "online";
-
-                    // Find the index of the key in the JSON string
-                    int keyIndex = jsonMessage.indexOf("\"" + key + "\"");
-
-                    // If the key exists, extract the boolean value
-                    if (keyIndex != -1) {
-                        // Find the index of the value
-                        int valueStartIndex = jsonMessage.indexOf(":", keyIndex);
-                        int valueEndIndex = jsonMessage.indexOf(",", keyIndex);
-                        if (valueEndIndex == -1) {
-                            valueEndIndex = jsonMessage.indexOf("}", keyIndex);
+                    while (isReceivingMessages) {
+                        try {
+                            socket.receive(packet);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
 
-                        // Extract the value substring
-                        String valueString = jsonMessage.substring(valueStartIndex + 1, valueEndIndex).trim();
+                        String json = new String(packet.getData(), 0, packet.getLength());
+                        ObjectMapper mapper = new ObjectMapper();
+                        JsonNode rootNode;
+                        try {
+                            rootNode = mapper.readTree(json);
+                        } catch (JsonProcessingException e) {
+                            throw new RuntimeException(e);
+                        }
 
-                        // Parse the value into a boolean
-                        boolean booleanValue = Boolean.parseBoolean(valueString);
-                        if(!booleanValue)
+                        setOnline(rootNode.get("online").asBoolean());
+                        if(!online){
+                            setReceivingMessages(false);
+                            socket.close();
                             break;
-                        online[0] = booleanValue;
+                        }
+                        packet.setLength(1024); // Reset the packet length for the next receive
                     }
-                    packet.setLength(1024);
+                    System.out.println(online);
+                    socket.close();// Close the socket when done receiving
+                    break;
                 }
-                socket.close();
-            } catch (Exception e) {
-                System.out.println("Error receiving UDP message: " + e.getMessage());
             }
         }).start();
+    }
+
+    public static boolean isOnline() {
         return online;
     }
 
+    public static void setOnline(boolean online) {
+        UDPReceiver.online = online;
+    }
+
+    public boolean isReceivingMessages() {
+        return isReceivingMessages;
+    }
+
+    public void setReceivingMessages(boolean receivingMessages) {
+        isReceivingMessages = receivingMessages;
+    }
+
+    public Integer getReceiverPort() {
+        return receiverPort;
+    }
+
+    public void setReceiverPort(Integer receiverPort) {
+        this.receiverPort = receiverPort;
+    }
+
+    public DatagramSocket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(DatagramSocket socket) {
+        this.socket = socket;
+    }
 }
