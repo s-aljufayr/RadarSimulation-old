@@ -11,11 +11,12 @@ import javafx.collections.ObservableList;
 
 
 public class UDPSender {
-    private int port;
+    private Integer port;
     // Define the destination IP address and port
     // Change to the receiver's IP address
     private String ip_Address;
     private InetAddress ipAddress = InetAddress.getByName(ip_Address);
+    private DatagramSocket socket;
 
     public UDPSender() throws UnknownHostException {
     }
@@ -29,7 +30,7 @@ public class UDPSender {
         byte[] jsonData = json.getBytes();
 
         // Create UDP socket
-        DatagramSocket socket = new DatagramSocket();
+        socket = new DatagramSocket();
 
         // Create a UDP packet with the data, IP address, and port
         DatagramPacket packet = new DatagramPacket(jsonData, jsonData.length, ipAddress, port);
@@ -57,7 +58,7 @@ public class UDPSender {
         byte[] jsonData = json.getBytes();
 
         // Create UDP socket
-        DatagramSocket socket = new DatagramSocket();
+        socket = new DatagramSocket();
 
         // Create a UDP packet with the data, IP address, and port
         DatagramPacket packet = new DatagramPacket(jsonData, jsonData.length, ipAddress, port);
@@ -69,11 +70,11 @@ public class UDPSender {
         socket.close();
     }
 
-    public int getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 
@@ -83,5 +84,13 @@ public class UDPSender {
 
     public void setIp_Address(String ip_Address) {
         this.ip_Address = ip_Address;
+    }
+
+    public DatagramSocket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(DatagramSocket socket) {
+        this.socket = socket;
     }
 }
