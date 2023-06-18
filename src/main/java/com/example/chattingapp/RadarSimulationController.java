@@ -8,14 +8,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 public class RadarSimulationController {
     ObservableList<TrackModel> tracksList;
     UDPSender udpSender = new UDPSender();
+    UDPReceiver udpReceiver = new UDPReceiver();
     private int minute;
     private int hour;
     private int second;
@@ -25,6 +28,8 @@ public class RadarSimulationController {
     static boolean isTrackExists;
     String trackTime;
     RadarModel radar = new RadarModel();
+    @FXML
+    public TextArea radarStatusTextArea, radarMassegingTextArea;
     @FXML
     private Label deviceStatusLabel;
     @FXML
@@ -109,7 +114,7 @@ public class RadarSimulationController {
     @FXML
     private Label portLabel;
 
-    public RadarSimulationController() throws UnknownHostException {
+    public RadarSimulationController() throws UnknownHostException, SocketException {
     }
     @FXML
     void deleteTrackButton(ActionEvent event) {
@@ -205,10 +210,11 @@ public class RadarSimulationController {
     @FXML
     void setRadarButton(ActionEvent event) throws IOException {
 //        RadarModel radar = new RadarModel();
-// get the radar from the UI
+        // get the radar from the UI
+        final boolean[] jsonMessage;
         this.setRadarProperties(radar);
         this.startSending(radar);
-
+        jsonMessage = udpReceiver.startReceiving();
     }
     @FXML
     void stopSendingButton(ActionEvent event) {
