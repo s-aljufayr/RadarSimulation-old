@@ -117,7 +117,6 @@ public class RadarSimulationController {
         isReachEndAltitude = false;
         isTrackExists = false;
 
-
         while (!(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude)) {
 
             tracksList = trackTable.getItems();
