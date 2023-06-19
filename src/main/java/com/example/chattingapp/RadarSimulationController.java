@@ -161,8 +161,10 @@ public class RadarSimulationController {
                 break;
             }
             firstRound++;
-            udpSender.sendData(oneMoveTrackList);
-            System.out.println(oneMoveTrackList);
+            if(!oneMoveTrackList.isEmpty()){
+                udpSender.sendData(oneMoveTrackList);
+                System.out.println(oneMoveTrackList);
+            }
         }
     }
     @FXML
