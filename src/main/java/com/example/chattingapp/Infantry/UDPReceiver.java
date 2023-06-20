@@ -1,4 +1,4 @@
-package com.example.chattingapp;
+package com.example.chattingapp.Infantry;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -8,4 +8,6 @@ module com.example.chattingapp {
 
     opens com.example.chattingapp to javafx.fxml;
     exports com.example.chattingapp;
+    exports com.example.chattingapp.Infantry;
+    opens com.example.chattingapp.Infantry to javafx.fxml;
 }

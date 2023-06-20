@@ -1,4 +1,4 @@
-package com.example.chattingapp;
+package com.example.chattingapp.Infantry;
 
 import com.fasterxml.jackson.databind.ObjectWriter;
 
@@ -7,7 +7,6 @@ import java.net.*;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.collections.ObservableList;
 
 
 public class UDPSender {

@@ -1,4 +1,4 @@
-package com.example.chattingapp;
+package com.example.chattingapp.Infantry;
 
 import java.io.Serializable;
 
@@ -25,9 +25,11 @@ public class TrackModel implements Serializable {
     private double endAltitude;
     private double changeInLatitude;
     private double changeInLongitude;
-
     private double changeInAltitude;
     private double TrackFrequency;
+    private boolean isReachEndLatitude;
+    private boolean isReachEndLongitude;
+    private boolean isReachEndAltitude;
 
     public TrackModel(){
     }
@@ -312,6 +314,30 @@ public class TrackModel implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public boolean isReachEndLatitude() {
+        return isReachEndLatitude;
+    }
+
+    public void setReachEndLatitude(boolean reachEndLatitude) {
+        isReachEndLatitude = reachEndLatitude;
+    }
+
+    public boolean isReachEndLongitude() {
+        return isReachEndLongitude;
+    }
+
+    public void setReachEndLongitude(boolean reachEndLongitude) {
+        isReachEndLongitude = reachEndLongitude;
+    }
+
+    public boolean isReachEndAltitude() {
+        return isReachEndAltitude;
+    }
+
+    public void setReachEndAltitude(boolean reachEndAltitude) {
+        isReachEndAltitude = reachEndAltitude;
     }
 
     @Override

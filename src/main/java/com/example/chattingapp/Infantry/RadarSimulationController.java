@@ -1,4 +1,4 @@
-package com.example.chattingapp;
+package com.example.chattingapp.Infantry;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -26,6 +26,7 @@ public class RadarSimulationController {
     static boolean isReachEndAltitude;
     static boolean isTrackExists;
     String trackTime;
+    TrackModel track = new TrackModel();
     @FXML
     private Label deviceStatusLabel;
     @FXML
@@ -108,16 +109,19 @@ public class RadarSimulationController {
     }
     @FXML
     void startSimulationButton(ActionEvent event) throws IOException {
-        TrackModel track = new TrackModel();
+//        TrackModel track = new TrackModel();
         List<TrackModel> oneMoveTrackList = new ArrayList<>();
         // this counter to now the #round on the loop
         int firstRound = 0;
+        track.setReachEndLatitude(false);
+        track.setReachEndLongitude(false);
+        track.setReachEndAltitude(false);
         isReachEndLatitude = false;
         isReachEndLongitude = false;
         isReachEndAltitude = false;
         isTrackExists = false;
 
-        while (!(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude)) {
+        while (!(this.track.isReachEndLatitude() && this.track.isReachEndLongitude() && this.track.isReachEndAltitude())) {
 
             tracksList = trackTable.getItems();
 
@@ -128,7 +132,10 @@ public class RadarSimulationController {
                 this.getTrackFromTable(track);
                 System.out.println(("Row Index : " + rowIndex));
                 System.out.println("loop Counter: "+firstRound);
+
                 // Perform loop operations here
+                this.getChangeInLLA(track);
+
                 if(firstRound == 0){
                     track.setLatitude(this.countLLA(track.getStartLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),isReachEndLatitude,"latitude"));
                     track.setLongitude(this.countLLA(track.getStartLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),isReachEndLongitude, "longitude"));
@@ -213,6 +220,11 @@ public class RadarSimulationController {
         changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInLongitude"));
         changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInAltitude"));
     }
+    private void getChangeInLLA(TrackModel track) {
+        track.setChangeInLatitude(Math.abs(track.getStartLatitude() - track.getEndLatitude()) / track.getSpeed());
+        track.setChangeInLongitude(Math.abs(track.getStartLongitude() - track.getEndLongitude()) / track.getSpeed());
+        track.setChangeInAltitude(Math.abs(track.getStartAltitude() - track.getEndAltitude()) / track.getSpeed());
+    }
     private void setRadarProperties(RadarModel radar) {
         radar.setId(Integer.parseInt(deviceIdField.getText()));
         radar.setLatitude(Double.parseDouble(deviceLatitudeField.getText()));
@@ -249,32 +261,50 @@ public class RadarSimulationController {
             if (geographicCoordinates < endLLA) {
                 geographicCoordinates += changeInLLA;
                 if (geographicCoordinates >= endLLA) {
-                    if (key == "latitude")
-                        isReachEndLatitude = true;
-                    if (key == "longitude")
-                        isReachEndLongitude = true;
-                    if (key == "altitude")
-                        isReachEndAltitude = true;
+                    if (key == "latitude"){
+                        this.isReachEndLatitude = true;
+                        this.track.setReachEndLatitude(true);
+                    }
+                    if (key == "longitude"){
+                        this.isReachEndLongitude = true;
+                        this.track.setReachEndLongitude(true);
+                    }
+                    if (key == "altitude"){
+                        this.isReachEndAltitude = true;
+                        this.track.setReachEndAltitude(true);
+                    }
                 }
             }
             else if(geographicCoordinates > endLLA) {
                 geographicCoordinates -= changeInLLA;
                 if (geographicCoordinates <= endLLA){
-                    if(key == "latitude")
-                        isReachEndLatitude = true;
-                    if(key == "longitude")
-                        isReachEndLongitude = true;
-                    if(key == "altitude")
-                        isReachEndAltitude = true;
+                    if (key == "latitude"){
+                        this.isReachEndLatitude = true;
+                        this.track.setReachEndLatitude(true);
+                    }
+                    if (key == "longitude"){
+                        this.isReachEndLongitude = true;
+                        this.track.setReachEndLongitude(true);
+                    }
+                    if (key == "altitude"){
+                        this.isReachEndAltitude = true;
+                        this.track.setReachEndAltitude(true);
+                    }
                 }
             }
-            else if(geographicCoordinates == endLLA){
-                if(key == "latitude")
-                    isReachEndLatitude = true;
-                if(key == "longitude")
-                    isReachEndLongitude = true;
-                if(key == "altitude")
-                    isReachEndAltitude = true;
+            else if(geographicCoordinates.equals(endLLA)){
+                if (key == "latitude"){
+                    this.isReachEndLatitude = true;
+                    this.track.setReachEndLatitude(true);
+                }
+                if (key == "longitude"){
+                    this.isReachEndLongitude = true;
+                    this.track.setReachEndLongitude(true);
+                }
+                if (key == "altitude"){
+                    this.isReachEndAltitude = true;
+                    this.track.setReachEndAltitude(true);
+                }
             }
         }
         return geographicCoordinates;
@@ -318,12 +348,33 @@ public class RadarSimulationController {
         tracksList.add(track);
         trackTable.setItems(tracksList);
     }
+    public boolean hasReachedEndLatitude(TrackModel track) {
+        return track.getLatitude() == track.getEndLatitude()
+                || Math.abs(track.getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
+    }
+    public boolean hasReachedEndLongitude(TrackModel track) {
+        return track.getLongitude() == track.getEndLongitude()
+                || Math.abs(track.getLongitude() - track.getEndLongitude()) == Math.abs(track.getChangeInLongitude());
+    }
+    public boolean hasReachedEndAltitude(TrackModel track) {
+        return track.getAltitude() == track.getEndAltitude()
+                || Math.abs(track.getAltitude() - track.getEndAltitude()) == Math.abs(track.getChangeInAltitude());
+    }
     private void checkAllArivedToDestination(TrackModel track) {
-        if(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude){
-            isReachEndLatitude = track.getLatitude() == track.getEndLatitude() || Math.abs(track.getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
-            isReachEndLongitude = track.getLongitude() == track.getEndLongitude() || Math.abs(track.getLongitude() - track.getEndLongitude()) == Math.abs(track.getChangeInLongitude());
-            isReachEndAltitude = track.getAltitude() == track.getEndAltitude() || Math.abs(track.getAltitude() - track.getEndAltitude()) == Math.abs(track.getChangeInAltitude());
-        }
+
+        track.setReachEndLatitude(hasReachedEndLatitude(track));
+        track.setReachEndLongitude(hasReachedEndLongitude(track));
+        track.setReachEndAltitude(hasReachedEndAltitude(track));
+//        isReachEndLatitude = hasReachedEndLatitude(track);
+//        isReachEndLongitude = hasReachedEndLongitude(track);
+//        isReachEndAltitude = hasReachedEndAltitude(track);
+        //----------------------------------------------------------
+//        if(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude){
+//            isReachEndLatitude = track.getLatitude() == track.getEndLatitude() || Math.abs(track.getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
+//            isReachEndLongitude = track.getLongitude() == track.getEndLongitude() || Math.abs(track.getLongitude() - track.getEndLongitude()) == Math.abs(track.getChangeInLongitude());
+//            isReachEndAltitude = track.getAltitude() == track.getEndAltitude() || Math.abs(track.getAltitude() - track.getEndAltitude()) == Math.abs(track.getChangeInAltitude());
+//        }
+
     }
     private List<TrackModel> checkTrackIdExists(List<TrackModel> trackingList, TrackModel track) {
         for(int i = 0; i < trackingList.size(); i++){
