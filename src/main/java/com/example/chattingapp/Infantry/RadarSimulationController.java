@@ -54,6 +54,8 @@ public class RadarSimulationController {
     @FXML
     private TextField longitudeChangeField;
     @FXML
+    private TextField trackTimeField;
+    @FXML
     private TableView<TrackModel> trackTable;
     @FXML
     TableColumn<TrackModel, Double> speedColumn;
@@ -221,9 +223,10 @@ public class RadarSimulationController {
         changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInAltitude"));
     }
     private void getChangeInLLA(TrackModel track) {
-        track.setChangeInLatitude(Math.abs(track.getStartLatitude() - track.getEndLatitude()) / track.getSpeed());
-        track.setChangeInLongitude(Math.abs(track.getStartLongitude() - track.getEndLongitude()) / track.getSpeed());
-        track.setChangeInAltitude(Math.abs(track.getStartAltitude() - track.getEndAltitude()) / track.getSpeed());
+        int trackTime = Integer.parseInt(trackTimeField.getText());
+        track.setChangeInLatitude(Math.abs(track.getStartLatitude() - track.getEndLatitude()) / trackTime);
+        track.setChangeInLongitude(Math.abs(track.getStartLongitude() - track.getEndLongitude()) / trackTime);
+        track.setChangeInAltitude(Math.abs(track.getStartAltitude() - track.getEndAltitude()) / trackTime);
     }
     private void setRadarProperties(RadarModel radar) {
         radar.setId(Integer.parseInt(deviceIdField.getText()));
@@ -362,12 +365,12 @@ public class RadarSimulationController {
     }
     private void checkAllArivedToDestination(TrackModel track) {
 
-        track.setReachEndLatitude(hasReachedEndLatitude(track));
-        track.setReachEndLongitude(hasReachedEndLongitude(track));
-        track.setReachEndAltitude(hasReachedEndAltitude(track));
-//        isReachEndLatitude = hasReachedEndLatitude(track);
-//        isReachEndLongitude = hasReachedEndLongitude(track);
-//        isReachEndAltitude = hasReachedEndAltitude(track);
+//        track.setReachEndLatitude(hasReachedEndLatitude(track));
+//        track.setReachEndLongitude(hasReachedEndLongitude(track));
+//        track.setReachEndAltitude(hasReachedEndAltitude(track));
+        isReachEndLatitude = hasReachedEndLatitude(track);
+        isReachEndLongitude = hasReachedEndLongitude(track);
+        isReachEndAltitude = hasReachedEndAltitude(track);
         //----------------------------------------------------------
 //        if(isReachEndLatitude && isReachEndLongitude && isReachEndAltitude){
 //            isReachEndLatitude = track.getLatitude() == track.getEndLatitude() || Math.abs(track.getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());

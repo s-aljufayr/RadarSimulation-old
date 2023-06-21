@@ -1,7 +1,6 @@
 package com.example.chattingapp.Infantry;
 
 public class PrimitiveTrackModel {
-//    TrackModel track;
     private int id;
     private String time;
     private double latitude;
