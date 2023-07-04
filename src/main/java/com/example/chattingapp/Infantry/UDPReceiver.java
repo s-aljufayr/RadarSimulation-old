@@ -13,9 +13,62 @@ import java.net.UnknownHostException;
 public class UDPReceiver {
     static boolean online = true;
     boolean isReceivingMessages = true;
+    boolean isReceivingTracks = true;
     Integer receiverPort = 9002;
     private DatagramSocket socket;
+    DatagramSocket trackSocket;
+    double latitude[];
+    double longitude[];
+    double altitude[];
     public UDPReceiver() throws UnknownHostException {
+    }
+    public void receivingTrack(){
+        int trackPort = 9003;
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        trackSocket = new DatagramSocket(trackPort);
+                    } catch (SocketException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    byte[] buffer = new byte[1024];
+                    DatagramPacket packet = new DatagramPacket(buffer, 1024);
+
+                    while (isReceivingTracks) {
+                        try {
+                            trackSocket.receive(packet);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        String json = new String(packet.getData(), 0, packet.getLength());
+                        ObjectMapper mapper = new ObjectMapper();
+                        JsonNode rootNode;
+                        try {
+                            rootNode = mapper.readTree(json);
+                        } catch (JsonProcessingException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        setOnline(rootNode.get("online").asBoolean());
+                        if(!online){
+                            setReceivingMessages(false);
+                            trackSocket.close();
+                            break;
+                        }
+                        packet.setLength(1024); // Reset the packet length for the next receive
+                    }
+                    System.out.println(online);
+                    trackSocket.close();// Close the socket when done receiving
+                    break;
+                }
+            }
+        }).start();
     }
     public void startReceiving() throws IOException {
         setReceivingMessages(true);

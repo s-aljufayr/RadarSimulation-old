@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.chattingapp.Infantry.connectionPropertiesController"
+            prefHeight="400.0" prefWidth="600.0">
+
+
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <children>
+            <ScrollPane prefHeight="820.0" prefWidth="518.0">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="664.0" prefWidth="498.0">
+                        <children>
+                            <GridPane layoutX="20.0" layoutY="153.0" prefHeight="198.0" prefWidth="458.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="443.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="441.0" minWidth="10.0" prefWidth="441.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                <children>
+                                    <Label id="deviceId" fx:id="deviceId" text="Device Id">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </Label>
+                                    <Label id="deviceLatitude" fx:id="deviceLatitude" text="Device Latitude" GridPane.rowIndex="1">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </Label>
+                                    <Label id="deviceLongitude" fx:id="deviceLongitude" text="Device Longitude" GridPane.rowIndex="2">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </Label>
+                                    <TextField id="deviceIdField" fx:id="deviceIdField" text="1" GridPane.columnIndex="1">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </TextField>
+                                    <TextField id="deviceLatitudeField" fx:id="deviceLatitudeField" text="24" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </TextField>
+                                    <TextField id="enemyLongitudeField" fx:id="deviceLongitudeField" text="47" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </TextField>
+                                    <TextField id="deviceAltitudeField" fx:id="deviceAltitudeField" text="500" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </TextField>
+                                    <Label id="deviceAltitude" fx:id="deviceAltitude" text="Device Altitude" GridPane.rowIndex="3">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </Label>
+                                    <Button id="setRadar" fx:id="setRadar" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setRadarButton" prefHeight="26.0" prefWidth="70.0" text="SET" GridPane.rowIndex="4">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </Button>
+                                </children>
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </GridPane>
+                            <GridPane layoutX="22.0" layoutY="19.0" prefHeight="128.0" prefWidth="454.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                <children>
+                                    <Label text="IP Address">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </Label>
+                                    <Label text="Port" GridPane.rowIndex="1">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </Label>
+                                    <TextField id="ipAddressField" fx:id="ipAddressField" text="127.0.0.1" GridPane.columnIndex="1">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </TextField>
+                                    <TextField id="portField" fx:id="portField" prefWidth="209.0" text="9001" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </TextField>
+                                    <Button id="setConnectionProperties" fx:id="setConnectionProperties" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setConnectionProperties" prefHeight="26.0" prefWidth="70.0" text="SET" GridPane.rowIndex="2">
+                                        <GridPane.margin>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </GridPane.margin>
+                                    </Button>
+                                </children>
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </GridPane>
+                            <Pane prefHeight="259.0" prefWidth="498.0" AnchorPane.bottomAnchor="10.0">
+                                <children>
+                                    <GridPane layoutX="68.0" layoutY="3.0" prefHeight="252.0" prefWidth="377.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="229.4" />
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="441.0" minWidth="10.0" prefWidth="123.80000000000004" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <Label id="portLabel" fx:id="portLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="219.0" text="Unknwon" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="Port" GridPane.rowIndex="8">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="ipAddressLabel" fx:id="ipAddressLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="209.0" text="Unknwon" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="IP Address" GridPane.rowIndex="7">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label alignment="CENTER" contentDisplay="CENTER" text="Radar Information" textAlignment="CENTER">
+                                                <font>
+                                                    <Font name="Apple Braille Outline 6 Dot" size="18.0" />
+                                                </font>
+                                                <GridPane.margin>
+                                                    <Insets left="40.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="deviceId" fx:id="deviceId1" text="Radar Id" GridPane.rowIndex="1">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="deviceLatitude" fx:id="deviceLatitude1" text="Radar Latitude" GridPane.rowIndex="2">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="deviceLongitude" fx:id="deviceLongitude1" text="Radar Longitude" GridPane.rowIndex="3">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="deviceIdLable" fx:id="deviceIdLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="231.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="deviceLatitudeLable" fx:id="deviceLatitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="232.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="enemyongitudeLable" fx:id="deviceLongitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="230.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="deviceAltitudeLable" fx:id="deviceAltitudeLable" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="232.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label alignment="CENTER" contentDisplay="CENTER" text="Connection Information" GridPane.rowIndex="6">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                                <padding>
+                                                    <Insets left="30.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label id="deviceAltitude" fx:id="deviceAltitude1" text="Radar Altitude" GridPane.rowIndex="4">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="Radar Status" GridPane.rowIndex="5">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="radarStatusLable" fx:id="deviceStatusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="222.0" text="Unknown" textFill="#fa0707" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                        </children>
+                                        <padding>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </padding>
+                                    </GridPane>
+                                </children>
+                            </Pane>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </ScrollPane>
+        </children>
+    </AnchorPane>
+</AnchorPane>

@@ -10,10 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class UDPSender {
-    private Integer port;
+    private static Integer port;
     // Define the destination IP address and port
     // Change to the receiver's IP address
-    private String ip_Address;
+    private static String ip_Address;
     private InetAddress ipAddress = InetAddress.getByName(ip_Address);
     private DatagramSocket socket;
 

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chattingapp.Infantry.TrackControlController">
+
+
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="863.0" prefWidth="530.0">
+        <children>
+            <ScrollPane layoutX="9.0" prefHeight="868.0" prefWidth="507.0">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="843.0" prefWidth="507.0">
+                        <children>
+                            <ScrollPane prefHeight="526.0" prefWidth="507.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <content>
+                                    <GridPane prefHeight="514.0" prefWidth="457.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <Label text="Track id">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="Start Latitude" GridPane.rowIndex="2">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="Start Longitude" GridPane.rowIndex="3">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="Track Speed" GridPane.rowIndex="1">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="Start Altitude" GridPane.rowIndex="4">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="End Latitude" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="End Longitude" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="End Altitude" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="Frequency" GridPane.rowIndex="8">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Button id="newTrackButton" fx:id="newTrackButton" mnemonicParsing="false" onAction="#newTrackButton" prefHeight="26.0" prefWidth="101.0" text="Create Mission" GridPane.rowIndex="11">
+                                                <GridPane.margin>
+                                                    <Insets left="10.0" />
+                                                </GridPane.margin>
+                                            </Button>
+                                            <TextField id="autoTrackIdField" fx:id="autoTrackIdField" text="20" GridPane.columnIndex="1">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="autoTrackSpeedField" fx:id="autoTrackSpeedField" text="50" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="autoTrackStartLatitudeField" fx:id="autoTrackStartLatitudeField" text="20" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="autoTrackStartLongitudeField" fx:id="autoTrackStartLongitudeField" text="40" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="autoTrackStartAltitudeField" fx:id="autoTrackStartAltitudeField" text="500" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="autoTrackEndAltitudeField" fx:id="autoTrackEndAltitudeField" text="505" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="autoTrackEndLongitudeField" fx:id="autoTrackEndLongitudeField" text="45" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="autoTrackEndLatitudeField" fx:id="autoTrackEndLatitudeField" text="25" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="trackFrequency" fx:id="trackFrequencyField" text="1" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <Label text="Time" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="Radar Id" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="rcs" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="Type" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="militarySymbol" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="V1" GridPane.rowIndex="9">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="V2" GridPane.rowIndex="10">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="P - V1" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="P - V2" GridPane.columnIndex="2" GridPane.rowIndex="10">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="trackRadarIdLabel" fx:id="trackRadarIdLabel" text="999" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="trackRcsLabel" fx:id="trackRcsLabel" text="999" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="trackTypeLabel" fx:id="trackTypeLabel" text="999" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="trackMilitarySymbolLabel" fx:id="trackMilitarySymbolLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label text="Change in latitude" GridPane.rowIndex="5">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="Change in longitude" GridPane.rowIndex="6">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <Label text="Change in altitude" GridPane.rowIndex="7">
+                                                <padding>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </padding>
+                                            </Label>
+                                            <TextField id="latitudeChangeField" fx:id="latitudeChangeField" text="1" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="longitudeChangeField" fx:id="longitudeChangeField" text="1" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <TextField id="altitudeChangeField" fx:id="altitudeChangeField" text="1" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                            <Label id="trackV1Lable" fx:id="trackV1Lable" text="999" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="trackV2Lable" fx:id="trackV2Lable" text="999" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="trackPv1Lable" fx:id="trackPv1Lable" text="999" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label id="trackPv2Lable" fx:id="trackPv2Lable" text="999" GridPane.columnIndex="3" GridPane.rowIndex="10">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <TextField id="trackTimeField" fx:id="trackTimeField" text="20" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                <GridPane.margin>
+                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                </GridPane.margin>
+                                            </TextField>
+                                        </children>
+                                        <padding>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </padding>
+                                    </GridPane>
+                                </content>
+                            </ScrollPane>
+                            <Pane layoutX="1.0" layoutY="767.0" prefHeight="65.0" prefWidth="503.0" AnchorPane.bottomAnchor="25.0">
+                                <children>
+                                    <Button id="deleteTrack" fx:id="deleteTrack" layoutX="202.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteTrackButton" prefHeight="44.0" prefWidth="120.0" text="Delete Track" />
+                                    <Button id="deleteEnemy" fx:id="sendEnemiesTrackButton" layoutX="322.0" layoutY="14.0" mnemonicParsing="false" onAction="#startSimulationButton" prefHeight="44.0" prefWidth="120.0" text="Start Simulation" />
+                                    <Button id="resetSimulation" fx:id="resetSimulation" layoutX="82.0" layoutY="14.0" mnemonicParsing="false" onAction="#resetSimulationButton" prefHeight="44.0" prefWidth="120.0" text="Reset Simulation" />
+                                </children>
+                            </Pane>
+                            <ScrollPane prefHeight="215.0" prefWidth="490.0" AnchorPane.bottomAnchor="94.0" AnchorPane.leftAnchor="10.0">
+                                <content>
+                                    <TableView fx:id="trackTable" prefHeight="197.0" prefWidth="499.0">
+                                        <columns>
+                                            <TableColumn fx:id="enemyIdColumn" prefWidth="62.0" text="Enemy Id" />
+                                            <TableColumn fx:id="enemyLatitudeColumn" prefWidth="94.0" text="Enemy Latitude" />
+                                            <TableColumn fx:id="enemyLongitudeColumn" prefWidth="105.0" text="Enemy Longitude" />
+                                            <TableColumn fx:id="enemyAltitudeColumn" prefWidth="91.0" text="Enemy Altitude" />
+                                            <TableColumn id="timeColumn" fx:id="timeColumn" prefWidth="69.0" text="Time" />
+                                            <TableColumn id="SpeedColumn" fx:id="speedColumn" prefWidth="69.0" text="Speed" />
+                                            <TableColumn fx:id="radarIdColumn" prefWidth="65.0" text="Radar Id" />
+                                            <TableColumn id="startLatitudeColumn" fx:id="startLatitudeColumn" prefWidth="75.0" text="Start Latitude" visible="false" />
+                                            <TableColumn id="startLongitudeColumn" fx:id="startLongitudeColumn" prefWidth="75.0" text="Start Longitude" visible="false" />
+                                            <TableColumn id="startAltitudeColumn" fx:id="startAltitudeColumn" prefWidth="75.0" text="Start Altitude" visible="false" />
+                                            <TableColumn id="endLatitudeColumn" fx:id="endLatitudeColumn" prefWidth="75.0" text="End Latitude" visible="false" />
+                                            <TableColumn id="endLongitudeColumn" fx:id="endLongitudeColumn" prefWidth="75.0" text="End Longitude" visible="false" />
+                                            <TableColumn id="endAltitudeColumn" fx:id="endAltitudeColumn" prefWidth="75.0" text="End Altitude" visible="false" />
+                                            <TableColumn id="changeInLatitudeColumn" fx:id="changeInLatitudeColumn" prefWidth="75.0" text="Change In Lat" visible="false" />
+                                            <TableColumn id="changeInLongitudeColumn" fx:id="changeInLongitudeColumn" prefWidth="75.0" text="Change In Long" visible="false" />
+                                            <TableColumn id="changeInAltitudeColumn" fx:id="changeInAltitudeColumn" prefWidth="75.0" text="Change In Alt" visible="false" />
+                                            <TableColumn fx:id="v1Column" prefWidth="75.0" text="V1" visible="false" />
+                                            <TableColumn fx:id="v2Column" prefWidth="75.0" text="V2" visible="false" />
+                                            <TableColumn fx:id="pV1Column" prefWidth="75.0" text="P-V1" visible="false" />
+                                            <TableColumn fx:id="pV2Column" prefWidth="75.0" text="P-V2" visible="false" />
+                                            <TableColumn fx:id="rcsColumn" prefWidth="75.0" text="RCS" visible="false" />
+                                            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" visible="false" />
+                                            <TableColumn fx:id="militarySymbolColumn" prefWidth="90.0" text="Military Symbol" visible="false" />
+                                        </columns>
+                                    </TableView>
+                                </content>
+                            </ScrollPane>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </ScrollPane>
+        </children>
+    </AnchorPane>
+</AnchorPane>

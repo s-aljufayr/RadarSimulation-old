@@ -27,58 +27,29 @@ public class TrackModel implements Serializable {
     private double changeInLongitude;
     private double changeInAltitude;
     private double TrackFrequency;
+    private double timeFrame;
     private boolean isReachEndLatitude;
     private boolean isReachEndLongitude;
     private boolean isReachEndAltitude;
 
     public TrackModel(){
     }
-    public TrackModel(int id, double latitude, double longitude, double altitude) {
-        this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-    }
-
-    public TrackModel(int id, String time, double latitude, double longitude, double altitude, double speed, String militarySymbol,
-                      int radarId, double v1, double v2, double p_v1, double p_v2, double rcs, int type)
-    {
-        this.id = id;
-        this.time = time;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.speed = speed;
-        this.militarySymbol = militarySymbol;
-        this.radarId = radarId;
-        this.v1 = v1;
-        this.v2 = v2;
-        this.p_v1 = p_v1;
-        this.p_v2 = p_v2;
-        this.rcs = rcs;
-        this.type = type;
-    }
     public static double calculateDistance(double lat1, double lon1, double alt1, double lat2, double lon2, double alt2) {
         double earthRadius = 6371000; // Average radius of the Earth in meters
-
         // Convert latitude and longitude from degrees to radians
         double lat1Rad = Math.toRadians(lat1);
         double lon1Rad = Math.toRadians(lon1);
         double lat2Rad = Math.toRadians(lat2);
         double lon2Rad = Math.toRadians(lon2);
-
         // Calculate the differences in latitude, longitude, and altitude
         double dLat = lat2Rad - lat1Rad;
         double dLon = lon2Rad - lon1Rad;
         double dAlt = alt2 - alt1;
-
         // Apply the Haversine formula to calculate the great-circle distance between the points
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(lat1Rad) * Math.cos(lat2Rad) *
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
         // Calculate the total distance in three-dimensional space
         return Math.sqrt(Math.pow(earthRadius * c, 2) + Math.pow(dAlt, 2));
     }
@@ -338,6 +309,14 @@ public class TrackModel implements Serializable {
 
     public void setReachEndAltitude(boolean reachEndAltitude) {
         isReachEndAltitude = reachEndAltitude;
+    }
+
+    public double getTimeFrame() {
+        return timeFrame;
+    }
+
+    public void setTimeFrame(double timeFrame) {
+        this.timeFrame = timeFrame;
     }
 
     @Override
