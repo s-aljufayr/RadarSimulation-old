@@ -19,6 +19,7 @@ public class TrackControlController {
     UDPSender udpSender = new UDPSender();
     UDPReceiver udpReceiver = new UDPReceiver();
     RadarModel radar = new RadarModel();
+    double maxTrackTime = 0;
     private int minute;
     private int hour;
     private int second;
@@ -114,7 +115,6 @@ public class TrackControlController {
         isReachEndLatitude = false;
         isReachEndLongitude = false;
         isReachEndAltitude = false;
-        double maxTrackTime = 0;
         //!(track.isReachEndLatitude() && track.isReachEndLongitude() && track.isReachEndAltitude())
         while (firstRound <= maxTrackTime) {
 
@@ -130,17 +130,8 @@ public class TrackControlController {
                 
                 // Perform loop operations here
                 this.getChangeInLLA(track,track.getTimeFrame());
-                this.checkAllArrivedToDestination(track);
-                if(firstRound == 0){
-                    track.setLatitude(this.countLLA(track.getStartLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),track.isReachEndLatitude(),"latitude"));
-                    track.setLongitude(this.countLLA(track.getStartLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(), "longitude"));
-                    track.setAltitude(this.countLLA(track.getStartAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(), "altitude"));
-                    maxTrackTime = this.maxTrackTime(tracksList);
-                }else{
-                    track.setLatitude(this.countLLA(track.getLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),track.isReachEndLatitude(),"latitude"));
-                    track.setLongitude(this.countLLA(track.getLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(),"longitude"));
-                    track.setAltitude(this.countLLA(track.getAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(),"altitude"));
-                }
+//                this.checkAllArrivedToDestination(track);
+                this.calculateLLAAfterMovement(track, firstRound);
                 // get track time
                 track.setTime(this.getLocalTime());
                 // Check the track id on the list or not, will update if  exists, will add new if not
@@ -149,15 +140,12 @@ public class TrackControlController {
                 if(!isTrackExists){
                     tracksListAfterMovement.add(track);
                 }
-
-//                this.checkAllArrived(track);
-                // Delay for TrackFrequency second
-                try {
-                    Thread.sleep((long) (track.getTrackFrequency()*1000));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+            }
+            // Delay for TrackFrequency second
+            try {
+                Thread.sleep((long) (track.getTrackFrequency()*1000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             if(!udpReceiver.isOnline()){
                 udpReceiver.getSocket().close();
@@ -171,17 +159,6 @@ public class TrackControlController {
             }
         }
     }
-
-    private double maxTrackTime(ObservableList<TrackModel> trackList) {
-        double maxTrackTime = 0;
-        for (int rowIndex = 0; rowIndex < trackList.size(); rowIndex++){
-            double trackTime = trackList.get(rowIndex).getTimeFrame();
-            if(maxTrackTime < trackTime)
-                maxTrackTime = trackTime;
-        }
-        return maxTrackTime;
-    }
-
     @FXML
     public void initialize() {
         enemyIdColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("id"));
@@ -212,14 +189,6 @@ public class TrackControlController {
         typeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("type"));
         v1Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("v1"));
         v2Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("v2"));
-    }
-    private String getLocalTime(){
-        Calendar cal = Calendar.getInstance();
-        second = cal.get(Calendar.SECOND);
-        minute = cal.get(Calendar.MINUTE);
-        hour = cal.get(Calendar.HOUR);
-        String localTime = hour + ":" + (minute) + ":" + second;
-        return localTime;
     }
     private Double countLLA(Double geographicCoordinates, Double endLLA,Double changeInLLA, boolean breakLoop, String key){
         if(!breakLoop) {
@@ -285,9 +254,6 @@ public class TrackControlController {
         track.setEndAltitude(Double.parseDouble(String.valueOf(endAltitudeColumn.getCellData(track))));
         track.setTrackFrequency(Long.parseLong(trackFrequencyField.getText()));
         track.setTimeFrame(Double.parseDouble(String.valueOf(timeColumn.getCellData(track))));
-//        track.setChangeInLatitude(Math.abs(track.getStartLatitude() - track.getEndLatitude()) / track.getTimeFrame());
-//        track.setChangeInLongitude(Math.abs(track.getStartLongitude() - track.getEndLongitude()) / track.getTimeFrame());
-//        track.setChangeInAltitude(Math.abs(track.getStartAltitude() - track.getEndAltitude()) / track.getTimeFrame());
     }
     private TrackModel getTrackFromUi(){
         TrackModel track = new TrackModel();
@@ -331,11 +297,18 @@ public class TrackControlController {
         this.isReachEndLatitude = hasReachedEndLatitude(track);
         this.isReachEndLongitude = hasReachedEndLongitude(track);
         this.isReachEndAltitude = hasReachedEndAltitude(track);
-
-//        track.setReachEndLatitude(hasReachedEndLatitude(track));
-//        track.setReachEndLongitude(hasReachedEndLongitude(track));
-//        track.setReachEndAltitude(hasReachedEndAltitude(track));
-
+    }
+    private void calculateLLAAfterMovement(TrackModel track, int firstRound) {
+        if(firstRound == 0){
+            track.setLatitude(this.countLLA(track.getStartLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),track.isReachEndLatitude(),"latitude"));
+            track.setLongitude(this.countLLA(track.getStartLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(), "longitude"));
+            track.setAltitude(this.countLLA(track.getStartAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(), "altitude"));
+            this.maxTrackTime = this.maxTrackTime(tracksList);
+        }else{
+            track.setLatitude(this.countLLA(track.getLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),track.isReachEndLatitude(),"latitude"));
+            track.setLongitude(this.countLLA(track.getLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(),"longitude"));
+            track.setAltitude(this.countLLA(track.getAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(),"altitude"));
+        }
     }
     private List<TrackModel> checkTrackIdExists(List<TrackModel> trackingList, TrackModel track) {
         for(int listIndex = 0; listIndex < trackingList.size(); listIndex++){
@@ -349,53 +322,26 @@ public class TrackControlController {
         }
         return trackingList;
     }
-    private void checkAllArrived(TrackModel track){
-        ObservableList<TrackModel> tracks = trackTable.getItems();
-        for(int tableId = 1; tableId < tracks.size(); tableId++){
-            if(tracks.get(tableId).getStartLatitude() > tracks.get(tableId).getEndLatitude()){
-                if(track.getLatitude() <= track.getEndLatitude()){
-                    track.setReachEndLatitude(true);
-                    this.isReachEndLatitude = true;
-                }
-            }
-            if(tracks.get(tableId).getStartLongitude() > tracks.get(tableId).getEndLongitude()){
-                if(track.getLongitude() <= track.getEndLongitude()){
-                    track.setReachEndLongitude(true);
-                    this.isReachEndLongitude = true;
-                }
-            }
-            if(tracks.get(tableId).getStartAltitude() > tracks.get(tableId).getEndAltitude()){
-                if(track.getAltitude() <= track.getEndAltitude()){
-                    track.setReachEndAltitude(true);
-                    this.isReachEndAltitude = true;
-                }
-            }
-            /////////////////////////////////////////////
-            if(tracks.get(tableId).getStartLatitude() < tracks.get(tableId).getEndLatitude()){
-                if(track.getLatitude() >= track.getEndLatitude()){
-                    track.setReachEndLatitude(true);
-                    this.isReachEndLatitude = true;
-                }
-            }
-            if(tracks.get(tableId).getStartLongitude() < tracks.get(tableId).getEndLongitude()){
-                if(track.getLongitude() >= track.getEndLongitude()){
-                    track.setReachEndLongitude(true);
-                    this.isReachEndLongitude = true;
-                }
-            }
-            if(tracks.get(tableId).getStartAltitude() < tracks.get(tableId).getEndAltitude()){
-                if(track.getAltitude() >= track.getEndAltitude()){
-                    track.setReachEndAltitude(true);
-                    this.isReachEndAltitude = true;
-                }
-            }
-        }
-    }
     private void getChangeInLLA(TrackModel track, Double trackTime) {
-
         track.setChangeInLatitude(Math.abs(track.getStartLatitude() - track.getEndLatitude()) / trackTime);
         track.setChangeInLongitude(Math.abs(track.getStartLongitude() - track.getEndLongitude()) / trackTime);
         track.setChangeInAltitude(Math.abs(track.getStartAltitude() - track.getEndAltitude()) / trackTime);
     }
-    
+    private double maxTrackTime(ObservableList<TrackModel> trackList) {
+        double maxTrackTime = 0;
+        for (int rowIndex = 0; rowIndex < trackList.size(); rowIndex++){
+            double trackTime = trackList.get(rowIndex).getTimeFrame();
+            if(maxTrackTime < trackTime)
+                maxTrackTime = trackTime;
+        }
+        return maxTrackTime;
+    }
+    private String getLocalTime(){
+        Calendar cal = Calendar.getInstance();
+        second = cal.get(Calendar.SECOND);
+        minute = cal.get(Calendar.MINUTE);
+        hour = cal.get(Calendar.HOUR);
+        String localTime = hour + ":" + (minute) + ":" + second;
+        return localTime;
+    }
 }
