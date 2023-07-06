@@ -148,7 +148,7 @@ public class TrackControlController {
                 e.printStackTrace();
             }
             if(!udpReceiver.isOnline()){
-                udpReceiver.getSocket().close();
+//                udpReceiver.getSocket().close();
                 udpSender.getSocket().close();
                 break;
             }
