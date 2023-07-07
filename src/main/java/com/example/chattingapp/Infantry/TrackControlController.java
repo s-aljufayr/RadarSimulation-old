@@ -1,5 +1,9 @@
 package com.example.chattingapp.Infantry;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TrackControlController {
-    ObservableList<TrackModel> tracksList;
+    ObservableList<CalcTrackModel> tracksList;
     UDPSender udpSender = new UDPSender();
     UDPReceiver udpReceiver = new UDPReceiver();
     RadarModel radar = new RadarModel();
@@ -28,7 +32,7 @@ public class TrackControlController {
     static boolean isReachEndAltitude;
     static boolean isTrackExists;
     String trackTime;
-    TrackModel track = new TrackModel();
+    CalcTrackModel calcTrackModel = new CalcTrackModel();
     @FXML
     private TextField trackFrequencyField;
     @FXML
@@ -56,37 +60,43 @@ public class TrackControlController {
     @FXML
     private TextField trackTimeField;
     @FXML
-    private TableView<TrackModel> trackTable;
+    private TableView<CalcTrackModel> trackTable;
     @FXML
-    TableColumn<TrackModel, Double> speedColumn;
+    private TableColumn<CalcTrackModel, Double> speedColumn;
     @FXML
-    private TableColumn<TrackModel, String> militarySymbolColumn;
+    private TableColumn<CalcTrackModel, String> militarySymbolColumn;
     @FXML
-    private TableColumn<TrackModel, Double> pV1Column;
+    private TableColumn<CalcTrackModel, Double> pV1Column;
     @FXML
-    private TableColumn<TrackModel, Double> pV2Column;
+    private TableColumn<CalcTrackModel, Double> pV2Column;
     @FXML
-    private TableColumn<TrackModel, Integer> radarIdColumn;
+    private TableColumn<CalcTrackModel, Integer> radarIdColumn;
     @FXML
-    private TableColumn<TrackModel, Double> rcsColumn;
+    private TableColumn<CalcTrackModel, Double> rcsColumn;
     @FXML
-    private TableColumn<TrackModel, Double> timeColumn;
+    private TableColumn<CalcTrackModel, Integer> typeColumn;
     @FXML
-    private TableColumn<TrackModel, Integer> typeColumn;
+    private TableColumn<CalcTrackModel, Double> v1Column;
     @FXML
-    private TableColumn<TrackModel, Double> v1Column;
+    private TableColumn<CalcTrackModel, Double> v2Column;
     @FXML
-    private TableColumn<TrackModel, Double> v2Column;
+    private TableColumn<CalcTrackModel, Double> enemyLongitudeColumn;
     @FXML
-    private TableColumn<TrackModel, Double> enemyLongitudeColumn, endLongitudeColumn, changeInLongitudeColumn;
+    private TableColumn<CalcTrackModel, Integer> enemyIdColumn;
     @FXML
-    private TableColumn<TrackModel, Integer> enemyIdColumn;
+    private TableColumn<CalcTrackModel, Double> enemyLatitudeColumn, enemyAltitudeColumn;
+
+    //////////////////////////////////////////////
     @FXML
-    private TableColumn<TrackModel, Double> startAltitudeColumn, startLatitudeColumn, startLongitudeColumn;
+    private TableColumn<CalcTrackModel, Double> timeColumn;
     @FXML
-    private TableColumn<TrackModel, Double> enemyLatitudeColumn, endLatitudeColumn, changeInLatitudeColumn;
+    private TableColumn<CalcTrackModel, Double> endLongitudeColumn, changeInLongitudeColumn;
     @FXML
-    private TableColumn<TrackModel, Double> enemyAltitudeColumn, endAltitudeColumn, changeInAltitudeColumn;
+    private TableColumn<CalcTrackModel, Double> startAltitudeColumn, startLatitudeColumn, startLongitudeColumn;
+    @FXML
+    private TableColumn<CalcTrackModel, Double> endLatitudeColumn, changeInLatitudeColumn;
+    @FXML
+    private TableColumn<CalcTrackModel, Double>  endAltitudeColumn, changeInAltitudeColumn;
     public TrackControlController() throws UnknownHostException {
     }
     @FXML
@@ -100,18 +110,19 @@ public class TrackControlController {
     }
     @FXML
     void newTrackButton(ActionEvent event) {
-        TrackModel track = this.getTrackFromUi();
+        CalcTrackModel track = this.getTrackFromUi();
         this.updateTable(track);
     }
     @FXML
     void startSimulationButton(ActionEvent event) throws IOException {
-//        TrackModel track = new TrackModel();
-        List<TrackModel> tracksListAfterMovement = new ArrayList<>();
+//        CalcTrackModel track = new CalcTrackModel();
+        List<CalcTrackModel> tracksListAfterMovement = new ArrayList<>();
+        List<TrackModel> trackModelListAfterMovement = new ArrayList<>();
         // this counter to now the #round on the loop
         int firstRound = 0;
-        track.setReachEndLatitude(false);
-        track.setReachEndLongitude(false);
-        track.setReachEndAltitude(false);
+        calcTrackModel.setReachEndLatitude(false);
+        calcTrackModel.setReachEndLongitude(false);
+        calcTrackModel.setReachEndAltitude(false);
         isReachEndLatitude = false;
         isReachEndLongitude = false;
         isReachEndAltitude = false;
@@ -122,28 +133,30 @@ public class TrackControlController {
 
             for(int rowIndex = 0; rowIndex < tracksList.size(); rowIndex++){
 
-                track = tracksList.get(rowIndex);
+                calcTrackModel = (CalcTrackModel) tracksList.get(rowIndex);
 
-                this.getTrackFromTable(track);
+                this.getTrackFromTable(calcTrackModel);
                 System.out.println(("Row Index : " + rowIndex));
                 System.out.println("loop Counter: "+firstRound);
                 
                 // Perform loop operations here
-                this.getChangeInLLA(track,track.getTimeFrame());
+                this.getChangeInLLA(calcTrackModel,calcTrackModel.getTimeFrame());
 //                this.checkAllArrivedToDestination(track);
-                this.calculateLLAAfterMovement(track, firstRound);
+                this.calculateLLAAfterMovement(calcTrackModel, firstRound);
                 // get track time
-                track.setTime(this.getLocalTime());
+                calcTrackModel.getTrackModel().setTime(this.getLocalTime());
                 // Check the track id on the list or not, will update if  exists, will add new if not
                 isTrackExists = false;
-                tracksListAfterMovement = this.checkTrackIdExists(tracksListAfterMovement,track);
+//                tracksListAfterMovement = this.checkTrackIdExists(tracksListAfterMovement,calcTrackModel);
+                trackModelListAfterMovement = this.checkTrackIdExists(trackModelListAfterMovement,(TrackModel) calcTrackModel.trackModel);
                 if(!isTrackExists){
-                    tracksListAfterMovement.add(track);
+                    trackModelListAfterMovement.add(calcTrackModel.trackModel);
+//                    tracksListAfterMovement.add(calcTrackModel);
                 }
             }
             // Delay for TrackFrequency second
             try {
-                Thread.sleep((long) (track.getTrackFrequency()*1000));
+                Thread.sleep((long) (1000));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -153,42 +166,62 @@ public class TrackControlController {
                 break;
             }
             firstRound++;
-            if(!tracksListAfterMovement.isEmpty()){
-                udpSender.sendData(tracksListAfterMovement);
-                System.out.println(tracksListAfterMovement);
+            if(!trackModelListAfterMovement.isEmpty()){
+                udpSender.sendData(trackModelListAfterMovement);
+                System.out.println(trackModelListAfterMovement);
+//                udpSender.sendData(tracksListAfterMovement);
+//                System.out.println(tracksListAfterMovement);
             }
         }
     }
     @FXML
     public void initialize() {
-        enemyIdColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("id"));
-        speedColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("speed"));
+//        trackTable.setItems(FXCollections.observableArrayList());
+        enemyIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTrackModel().getId()).asObject());
+        speedColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getSpeed()).asObject());
+        enemyLatitudeColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getLatitude()).asObject());
+        enemyLongitudeColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getLongitude()).asObject());
+        enemyAltitudeColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getAltitude()).asObject());
+        militarySymbolColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTrackModel().getMilitarySymbol()));
+        v1Column.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getV1()).asObject());
+        v2Column.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getV2()).asObject());
+        pV1Column.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getP_v1()).asObject());
+        pV2Column.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getP_v2()).asObject());
+        rcsColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getRcs()).asObject());
+        radarIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTrackModel().getRadarId()).asObject());
+        typeColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTrackModel().getType()).asObject());
 
-        enemyLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("latitude"));
-        enemyLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("longitude"));
-        enemyAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("altitude"));
 
-        startLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("startLatitude"));
-        startLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("startLongitude"));
-        startAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("startAltitude"));
+//        enemyIdColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, TrackModel>("trackModel"));
+//        speedColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, TrackModel>("trackModel"));
 
-        endLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("endLatitude"));
-        endLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("endLongitude"));
-        endAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("endAltitude"));
+//        enemyLatitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
+//        enemyLongitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
+//        enemyAltitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
 
-        changeInLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInLatitude"));
-        changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInLongitude"));
-        changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("changeInAltitude"));
+//        militarySymbolColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, String>("trackModel"));
+//        pV1Column.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
+//        pV2Column.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
+//        radarIdColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Integer>("trackModel"));
+//        rcsColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
+//        typeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Integer>("trackModel"));
+//        v1Column.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
+//        v2Column.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
 
-        militarySymbolColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, String>("militarySymbol"));
-        pV1Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("p_v1"));
-        pV2Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("p_v2"));
-        radarIdColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("radarId"));
-        rcsColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("rcs"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("timeFrame"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<TrackModel, Integer>("type"));
-        v1Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("v1"));
-        v2Column.setCellValueFactory(new PropertyValueFactory<TrackModel, Double>("v2"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("timeFrame"));
+
+        startLatitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("startLatitude"));
+        startLongitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("startLongitude"));
+        startAltitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("startAltitude"));
+
+        endLatitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("endLatitude"));
+        endLongitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("endLongitude"));
+        endAltitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("endAltitude"));
+
+        changeInLatitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("changeInLatitude"));
+        changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("changeInLongitude"));
+        changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("changeInAltitude"));
+
     }
     private Double countLLA(Double geographicCoordinates, Double endLLA,Double changeInLLA, boolean breakLoop, String key){
         if(!breakLoop) {
@@ -197,15 +230,15 @@ public class TrackControlController {
                 if (geographicCoordinates >= endLLA) {
                     if (key == "latitude"){
                         this.isReachEndLatitude = true;
-                        this.track.setReachEndLatitude(true);
+                        this.calcTrackModel.setReachEndLatitude(true);
                     }
                     if (key == "longitude"){
                         this.isReachEndLongitude = true;
-                        this.track.setReachEndLongitude(true);
+                        this.calcTrackModel.setReachEndLongitude(true);
                     }
                     if (key == "altitude"){
                         this.isReachEndAltitude = true;
-                        this.track.setReachEndAltitude(true);
+                        this.calcTrackModel.setReachEndAltitude(true);
                     }
                 }
             }
@@ -214,38 +247,38 @@ public class TrackControlController {
                 if (geographicCoordinates <= endLLA){
                     if (key == "latitude"){
                         this.isReachEndLatitude = true;
-                        this.track.setReachEndLatitude(true);
+                        this.calcTrackModel.setReachEndLatitude(true);
                     }
                     if (key == "longitude"){
                         this.isReachEndLongitude = true;
-                        this.track.setReachEndLongitude(true);
+                        this.calcTrackModel.setReachEndLongitude(true);
                     }
                     if (key == "altitude"){
                         this.isReachEndAltitude = true;
-                        this.track.setReachEndAltitude(true);
+                        this.calcTrackModel.setReachEndAltitude(true);
                     }
                 }
             }
             else if(geographicCoordinates.equals(endLLA)){
                 if (key == "latitude"){
                     this.isReachEndLatitude = true;
-                    this.track.setReachEndLatitude(true);
+                    this.calcTrackModel.setReachEndLatitude(true);
                 }
                 if (key == "longitude"){
                     this.isReachEndLongitude = true;
-                    this.track.setReachEndLongitude(true);
+                    this.calcTrackModel.setReachEndLongitude(true);
                 }
                 if (key == "altitude"){
                     this.isReachEndAltitude = true;
-                    this.track.setReachEndAltitude(true);
+                    this.calcTrackModel.setReachEndAltitude(true);
                 }
             }
         }
         return geographicCoordinates;
     }
-    private void getTrackFromTable(TrackModel track){
-        track.setId(Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track))));
-        track.setSpeed(Double.parseDouble(String.valueOf(speedColumn.getCellData(track))));
+    private void getTrackFromTable(CalcTrackModel track){
+        track.getTrackModel().setId(Integer.parseInt(String.valueOf(enemyIdColumn.getCellData(track))));
+        track.getTrackModel().setSpeed(Double.parseDouble(String.valueOf(speedColumn.getCellData(track))));
         track.setStartLatitude(Double.parseDouble(String.valueOf(startLatitudeColumn.getCellData(track))));
         track.setStartLongitude(Double.parseDouble(String.valueOf(startLongitudeColumn.getCellData(track))));
         track.setStartAltitude(Double.parseDouble(String.valueOf(startAltitudeColumn.getCellData(track))));
@@ -255,65 +288,76 @@ public class TrackControlController {
         track.setTrackFrequency(Long.parseLong(trackFrequencyField.getText()));
         track.setTimeFrame(Double.parseDouble(String.valueOf(timeColumn.getCellData(track))));
     }
-    private TrackModel getTrackFromUi(){
+    private CalcTrackModel getTrackFromUi(){
+        CalcTrackModel calcTrackModel = new CalcTrackModel();
         TrackModel track = new TrackModel();
+
         track.setId(Integer.parseInt(autoTrackIdField.getText()));
         track.setSpeed(Double.parseDouble(autoTrackSpeedField.getText()));
         track.setTime(this.getLocalTime());
         track.setLatitude(Double.parseDouble(autoTrackStartLatitudeField.getText()));
         track.setLongitude(Double.parseDouble(autoTrackStartLongitudeField.getText()));
         track.setAltitude(Double.parseDouble(autoTrackStartAltitudeField.getText()));
-        track.setStartLatitude(Double.parseDouble(autoTrackStartLatitudeField.getText()));
-        track.setStartLongitude(Double.parseDouble(autoTrackStartLongitudeField.getText()));
-        track.setStartAltitude(Double.parseDouble(autoTrackStartAltitudeField.getText()));
-        track.setEndLatitude(Double.parseDouble(autoTrackEndLatitudeField.getText()));
-        track.setEndLongitude(Double.parseDouble(autoTrackEndLongitudeField.getText()));
-        track.setEndAltitude(Double.parseDouble(autoTrackEndAltitudeField.getText()));
-        track.setChangeInLatitude(Double.parseDouble(latitudeChangeField.getText()));
-        track.setChangeInLongitude(Double.parseDouble(longitudeChangeField.getText()));
-        track.setChangeInAltitude(Double.parseDouble(altitudeChangeField.getText()));
-        track.setTimeFrame(Double.parseDouble(trackTimeField.getText()));
         track.setRadarId(radar.getId());
-        return track;
+
+        calcTrackModel.setTrackModel(track);
+        calcTrackModel.setStartLatitude(Double.parseDouble(autoTrackStartLatitudeField.getText()));
+        calcTrackModel.setStartLongitude(Double.parseDouble(autoTrackStartLongitudeField.getText()));
+        calcTrackModel.setStartAltitude(Double.parseDouble(autoTrackStartAltitudeField.getText()));
+        calcTrackModel.setEndLatitude(Double.parseDouble(autoTrackEndLatitudeField.getText()));
+        calcTrackModel.setEndLongitude(Double.parseDouble(autoTrackEndLongitudeField.getText()));
+        calcTrackModel.setEndAltitude(Double.parseDouble(autoTrackEndAltitudeField.getText()));
+        calcTrackModel.setChangeInLatitude(Double.parseDouble(latitudeChangeField.getText()));
+        calcTrackModel.setChangeInLongitude(Double.parseDouble(longitudeChangeField.getText()));
+        calcTrackModel.setChangeInAltitude(Double.parseDouble(altitudeChangeField.getText()));
+        calcTrackModel.setTimeFrame(Double.parseDouble(trackTimeField.getText()));
+
+        return calcTrackModel;
     }
-    private void updateTable(TrackModel track){
+    private void updateTable(CalcTrackModel track){
+//        ObservableList<CalcTrackModel> listOfTrack = trackTable.getItems();
         tracksList = trackTable.getItems();
         tracksList.add(track);
         trackTable.setItems(tracksList);
     }
-    public boolean hasReachedEndLatitude(TrackModel track) {
-        return track.getLatitude() == track.getEndLatitude()
-                || Math.abs(track.getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
+//    private void updateTable(TrackModel track){
+//        ObservableList<Object> listOfTrack = trackTable.getItems();
+//        listOfTrack.add(track);
+//        trackTable.setItems(listOfTrack);
+//    }
+    public boolean hasReachedEndLatitude(CalcTrackModel track) {
+        return track.getTrackModel().getLatitude() == track.getEndLatitude()
+                || Math.abs(track.getTrackModel().getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
     }
-    public boolean hasReachedEndLongitude(TrackModel track) {
-        return track.getLongitude() == track.getEndLongitude()
-                || Math.abs(track.getLongitude() - track.getEndLongitude()) == Math.abs(track.getChangeInLongitude());
+    public boolean hasReachedEndLongitude(CalcTrackModel track) {
+        return track.getTrackModel().getLongitude() == track.getEndLongitude()
+                || Math.abs(track.getTrackModel().getLongitude() - track.getEndLongitude()) == Math.abs(track.getChangeInLongitude());
     }
-    public boolean hasReachedEndAltitude(TrackModel track) {
-        return track.getAltitude() == track.getEndAltitude()
-                || Math.abs(track.getAltitude() - track.getEndAltitude()) == Math.abs(track.getChangeInAltitude());
+    public boolean hasReachedEndAltitude(CalcTrackModel track) {
+        return track.getTrackModel().getAltitude() == track.getEndAltitude()
+                || Math.abs(track.getTrackModel().getAltitude() - track.getEndAltitude()) == Math.abs(track.getChangeInAltitude());
     }
-    private void checkAllArrivedToDestination(TrackModel track) {
+    private void checkAllArrivedToDestination(CalcTrackModel track) {
         this.isReachEndLatitude = hasReachedEndLatitude(track);
         this.isReachEndLongitude = hasReachedEndLongitude(track);
         this.isReachEndAltitude = hasReachedEndAltitude(track);
     }
-    private void calculateLLAAfterMovement(TrackModel track, int firstRound) {
+    private void calculateLLAAfterMovement(CalcTrackModel track, int firstRound) {
         if(firstRound == 0){
-            track.setLatitude(this.countLLA(track.getStartLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),track.isReachEndLatitude(),"latitude"));
-            track.setLongitude(this.countLLA(track.getStartLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(), "longitude"));
-            track.setAltitude(this.countLLA(track.getStartAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(), "altitude"));
+            track.getTrackModel().setLatitude(this.countLLA(track.getStartLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),track.isReachEndLatitude(),"latitude"));
+            track.getTrackModel().setLongitude(this.countLLA(track.getStartLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(), "longitude"));
+            track.getTrackModel().setAltitude(this.countLLA(track.getStartAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(), "altitude"));
             this.maxTrackTime = this.maxTrackTime(tracksList);
         }else{
-            track.setLatitude(this.countLLA(track.getLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),track.isReachEndLatitude(),"latitude"));
-            track.setLongitude(this.countLLA(track.getLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(),"longitude"));
-            track.setAltitude(this.countLLA(track.getAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(),"altitude"));
+            track.getTrackModel().setLatitude(this.countLLA(track.getTrackModel().getLatitude(),track.getEndLatitude(),track.getChangeInLatitude(),track.isReachEndLatitude(),"latitude"));
+            track.getTrackModel().setLongitude(this.countLLA(track.getTrackModel().getLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(),"longitude"));
+            track.getTrackModel().setAltitude(this.countLLA(track.getTrackModel().getAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(),"altitude"));
         }
     }
-    private List<TrackModel> checkTrackIdExists(List<TrackModel> trackingList, TrackModel track) {
+    private List<CalcTrackModel> checkTrackIdExists(List<CalcTrackModel> trackingList, CalcTrackModel track) {
         for(int listIndex = 0; listIndex < trackingList.size(); listIndex++){
-            TrackModel ExistingTrack = trackingList.get(listIndex);
-            if(ExistingTrack.getId() == track.getId()){
+            CalcTrackModel ExistingTrack = trackingList.get(listIndex);
+            if(ExistingTrack.getTrackModel().getId() == track.getTrackModel().getId()){
                 trackingList.remove(listIndex);
                 trackingList.add(track);
                 this.isTrackExists = true;
@@ -322,12 +366,25 @@ public class TrackControlController {
         }
         return trackingList;
     }
-    private void getChangeInLLA(TrackModel track, Double trackTime) {
+    private List<TrackModel> checkTrackIdExists(List<TrackModel> trackingList, TrackModel track) {
+        int trackId = track.getId();
+        for(int listIndex = 0; listIndex < trackingList.size(); listIndex++){
+            Integer existingTrack = trackingList.get(listIndex).getId();
+            if(existingTrack.equals(trackId)){
+                trackingList.remove(listIndex);
+                trackingList.add(track);
+                this.isTrackExists = true;
+                break;
+            }
+        }
+        return trackingList;
+    }
+    private void getChangeInLLA(CalcTrackModel track, Double trackTime) {
         track.setChangeInLatitude(Math.abs(track.getStartLatitude() - track.getEndLatitude()) / trackTime);
         track.setChangeInLongitude(Math.abs(track.getStartLongitude() - track.getEndLongitude()) / trackTime);
         track.setChangeInAltitude(Math.abs(track.getStartAltitude() - track.getEndAltitude()) / trackTime);
     }
-    private double maxTrackTime(ObservableList<TrackModel> trackList) {
+    private double maxTrackTime(ObservableList<CalcTrackModel> trackList) {
         double maxTrackTime = 0;
         for (int rowIndex = 0; rowIndex < trackList.size(); rowIndex++){
             double trackTime = trackList.get(rowIndex).getTimeFrame();

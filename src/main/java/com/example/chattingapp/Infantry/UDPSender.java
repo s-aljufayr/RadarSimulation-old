@@ -19,6 +19,7 @@ public class UDPSender {
 
     public UDPSender() throws UnknownHostException {
     }
+
     public void sendData(RadarModel object) throws IOException {
 
         // Convert the track to json

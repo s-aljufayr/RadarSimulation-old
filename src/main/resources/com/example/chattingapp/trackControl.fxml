@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chattingapp.Infantry.TrackControlController">
 
 
@@ -279,14 +280,50 @@
                                 <content>
                                     <TableView fx:id="trackTable" prefHeight="197.0" prefWidth="499.0">
                                         <columns>
-                                            <TableColumn fx:id="enemyIdColumn" prefWidth="62.0" text="Enemy Id" />
-                                            <TableColumn fx:id="enemyLatitudeColumn" prefWidth="94.0" text="Enemy Latitude" />
-                                            <TableColumn fx:id="enemyLongitudeColumn" prefWidth="105.0" text="Enemy Longitude" />
-                                            <TableColumn fx:id="enemyAltitudeColumn" prefWidth="91.0" text="Enemy Altitude" />
-                                            <TableColumn id="timeColumn" fx:id="timeColumn" prefWidth="69.0" text="Time" />
-                                            <TableColumn id="SpeedColumn" fx:id="speedColumn" prefWidth="69.0" text="Speed" />
-                                            <TableColumn fx:id="radarIdColumn" prefWidth="65.0" text="Radar Id" />
-                                            <TableColumn id="startLatitudeColumn" fx:id="startLatitudeColumn" prefWidth="75.0" text="Start Latitude" visible="false" />
+
+                                            <TableColumn fx:id="enemyIdColumn" prefWidth="62.0" text="Enemy Id" >
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.getId()"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="enemyLatitudeColumn" prefWidth="94.0" text="Enemy Latitude">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.getLatitude"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="enemyLongitudeColumn" prefWidth="105.0" text="Enemy Longitude">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.getLongitude"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="enemyAltitudeColumn" prefWidth="91.0" text="Enemy Altitude">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.getAltitude"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn id="timeColumn" fx:id="timeColumn" prefWidth="69.0" text="Time">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.time"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn id="SpeedColumn" fx:id="speedColumn" prefWidth="69.0" text="Speed">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.speed"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="radarIdColumn" prefWidth="65.0" text="Radar Id">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.radarId"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn id="startLatitudeColumn" fx:id="startLatitudeColumn" prefWidth="75.0" text="Start Latitude" visible="false"/>
                                             <TableColumn id="startLongitudeColumn" fx:id="startLongitudeColumn" prefWidth="75.0" text="Start Longitude" visible="false" />
                                             <TableColumn id="startAltitudeColumn" fx:id="startAltitudeColumn" prefWidth="75.0" text="Start Altitude" visible="false" />
                                             <TableColumn id="endLatitudeColumn" fx:id="endLatitudeColumn" prefWidth="75.0" text="End Latitude" visible="false" />
@@ -295,13 +332,49 @@
                                             <TableColumn id="changeInLatitudeColumn" fx:id="changeInLatitudeColumn" prefWidth="75.0" text="Change In Lat" visible="false" />
                                             <TableColumn id="changeInLongitudeColumn" fx:id="changeInLongitudeColumn" prefWidth="75.0" text="Change In Long" visible="false" />
                                             <TableColumn id="changeInAltitudeColumn" fx:id="changeInAltitudeColumn" prefWidth="75.0" text="Change In Alt" visible="false" />
-                                            <TableColumn fx:id="v1Column" prefWidth="75.0" text="V1" visible="false" />
-                                            <TableColumn fx:id="v2Column" prefWidth="75.0" text="V2" visible="false" />
-                                            <TableColumn fx:id="pV1Column" prefWidth="75.0" text="P-V1" visible="false" />
-                                            <TableColumn fx:id="pV2Column" prefWidth="75.0" text="P-V2" visible="false" />
-                                            <TableColumn fx:id="rcsColumn" prefWidth="75.0" text="RCS" visible="false" />
-                                            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" visible="false" />
-                                            <TableColumn fx:id="militarySymbolColumn" prefWidth="90.0" text="Military Symbol" visible="false" />
+
+                                            <TableColumn fx:id="v1Column" prefWidth="75.0" text="V1" visible="false">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.v1"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="v2Column" prefWidth="75.0" text="V2" visible="false">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.v2"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="pV1Column" prefWidth="75.0" text="P-V1" visible="false">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.p_v1"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="pV2Column" prefWidth="75.0" text="P-V2" visible="false">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.p_v2"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="rcsColumn" prefWidth="75.0" text="RCS" visible="false">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.rcs"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" visible="false">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.type"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
+                                            <TableColumn fx:id="militarySymbolColumn" prefWidth="90.0" text="Military Symbol" visible="false">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="trackModel.militarySymbol"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+
                                         </columns>
                                     </TableView>
                                 </content>
