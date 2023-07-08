@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>17.0.2</version>
+        </dependency>
+        <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.12.5</version>
@@ -68,6 +73,11 @@
             <groupId>net.minidev</groupId>
             <artifactId>json-smart</artifactId>
             <version>2.4.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>19.0.2.1</version>
         </dependency>
     </dependencies>
 

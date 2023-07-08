@@ -2,17 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
 
 <VBox alignment="CENTER" prefHeight="940.0" prefWidth="1433.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chattingapp.Infantry.RadarSimulationController">
 
@@ -45,31 +42,6 @@
                                 <fx:include source="trackControl.fxml" />
                             </content>
                         </Tab>
-                  <Tab id="trackMission" text="Track Mission ">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="236.0" prefWidth="497.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="233.0" prefWidth="494.0">
-                                       <children>
-                                          <TableView id="trackMissionTable" fx:id="trackMissionTable" layoutX="9.0" layoutY="7.0" prefHeight="221.0" prefWidth="478.0">
-                                            <columns>
-                                              <TableColumn id="trackMissionIdColumn" fx:id="trackMissionIdColumn" prefWidth="75.0" text="ID" />
-                                              <TableColumn id="trackMissionLatitudeColumn" fx:id="trackMissionLatitudeColumn" prefWidth="75.0" text="Latitude" />
-                                                <TableColumn id="trackMissionLongitudeColumn" fx:id="trackMissionLongitudeColumn" prefWidth="75.0" text="Longitude" />
-                                                <TableColumn id="trackMissionAltitudeColumn" fx:id="trackMissionAltitudeColumn" prefWidth="75.0" text="Altitude" />
-                                                <TableColumn id="trackMissionTimeColumn" fx:id="trackMissionTimeColumn" prefWidth="75.0" text="Time" />
-                                            </columns>
-                                          </TableView>
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
                     </tabs>
                 </TabPane>
                 <Pane prefHeight="162.0" prefWidth="448.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -77,6 +49,11 @@
                   <Button fx:id="stopSending" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#stopSendingButton" prefHeight="25.0" prefWidth="105.0" text="Button" />
                </children>
                 </Pane>
+            <Pane prefHeight="793.0" prefWidth="862.0" GridPane.columnIndex="1">
+               <children>
+                  <WebView id="mapWebView" fx:id="mapWebView" layoutX="9.0" layoutY="13.0" prefHeight="632.0" prefWidth="850.0" />
+               </children>
+            </Pane>
          </children>
         </GridPane>
     </children>

@@ -5,6 +5,7 @@ module com.example.chattingapp {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires com.fasterxml.jackson.databind;
+    requires javafx.web;
 
     opens com.example.chattingapp to javafx.fxml;
     exports com.example.chattingapp;

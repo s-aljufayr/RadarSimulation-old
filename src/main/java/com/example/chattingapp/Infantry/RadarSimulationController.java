@@ -3,25 +3,17 @@ package com.example.chattingapp.Infantry;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.fxml.FXML;
+import javafx.scene.web.WebView;
 
 public class RadarSimulationController {
     RadarModel radar = new RadarModel();
     @FXML
+    private WebView mapWebView;
+    @FXML
     private Label deviceStatusLabel;
     @FXML
     private Label deviceAltitudeLable, deviceIdLable, deviceLatitudeLable,deviceLongitudeLable,ipAddressLabel,portLabel;
-    @FXML
-    private TableView<TrackSeries> trackMissionTable;
-    @FXML
-    private TableColumn<TrackSeries, Integer> trackMissionIdColumn;
-    @FXML
-    private TableColumn<TrackSeries, Double[]> trackMissionAltitudeColumn;
-    @FXML
-    private TableColumn<TrackSeries, Double[]> trackMissionLatitudeColumn;
-    @FXML
-    private TableColumn<TrackSeries, Double[]> trackMissionLongitudeColumn;
-    @FXML
     private TableColumn<TrackSeries, String> trackMissionTimeColumn;
     @FXML
     void stopSendingButton(ActionEvent event) {
@@ -30,11 +22,8 @@ public class RadarSimulationController {
     }
     @FXML
     public void initialize() {
-        trackMissionIdColumn.setCellValueFactory(new PropertyValueFactory<TrackSeries, Integer>("id"));
-        trackMissionLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackSeries, Double[]>("latitude"));
-        trackMissionLongitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackSeries, Double[]>("longitude"));
-        trackMissionAltitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackSeries, Double[]>("altitude"));
-        trackMissionTimeColumn.setCellValueFactory(new PropertyValueFactory<TrackSeries, String>("time"));
+        // Here you can add your link
+        mapWebView.getEngine().load("Here you can add your link");
     }
     public void setRadarPane(RadarModel radar) {
         // print the radar information on radar labels
