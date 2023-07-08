@@ -14,7 +14,6 @@ public class RadarSimulationController {
     private Label deviceStatusLabel;
     @FXML
     private Label deviceAltitudeLable, deviceIdLable, deviceLatitudeLable,deviceLongitudeLable,ipAddressLabel,portLabel;
-    private TableColumn<TrackSeries, String> trackMissionTimeColumn;
     @FXML
     void stopSendingButton(ActionEvent event) {
         radar.setStatus(false);

@@ -297,16 +297,10 @@ public class TrackControlController {
         return calcTrackModel;
     }
     private void updateTable(CalcTrackModel track){
-//        ObservableList<CalcTrackModel> listOfTrack = trackTable.getItems();
         tracksList = trackTable.getItems();
         tracksList.add(track);
         trackTable.setItems(tracksList);
     }
-//    private void updateTable(TrackModel track){
-//        ObservableList<Object> listOfTrack = trackTable.getItems();
-//        listOfTrack.add(track);
-//        trackTable.setItems(listOfTrack);
-//    }
     public boolean hasReachedEndLatitude(CalcTrackModel track) {
         return track.getTrackModel().getLatitude() == track.getEndLatitude()
                 || Math.abs(track.getTrackModel().getLatitude() - track.getEndLatitude()) == Math.abs(track.getChangeInLatitude());
@@ -335,18 +329,6 @@ public class TrackControlController {
             track.getTrackModel().setLongitude(this.countLLA(track.getTrackModel().getLongitude(), track.getEndLongitude(), track.getChangeInLongitude(),track.isReachEndLongitude(),"longitude"));
             track.getTrackModel().setAltitude(this.countLLA(track.getTrackModel().getAltitude(), track.getEndAltitude(), track.getChangeInAltitude(),track.isReachEndAltitude(),"altitude"));
         }
-    }
-    private List<CalcTrackModel> checkTrackIdExists(List<CalcTrackModel> trackingList, CalcTrackModel track) {
-        for(int listIndex = 0; listIndex < trackingList.size(); listIndex++){
-            CalcTrackModel ExistingTrack = trackingList.get(listIndex);
-            if(ExistingTrack.getTrackModel().getId() == track.getTrackModel().getId()){
-                trackingList.remove(listIndex);
-                trackingList.add(track);
-                this.isTrackExists = true;
-                break;
-            }
-        }
-        return trackingList;
     }
     private List<TrackModel> checkTrackIdExists(List<TrackModel> trackingList, TrackModel track) {
         int trackId = track.getId();
