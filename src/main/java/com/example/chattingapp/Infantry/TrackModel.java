@@ -18,31 +18,12 @@ public class TrackModel {
 
     public TrackModel() {
     }
-    public TrackModel(int id, String time, double latitude, double longitude, double altitude, String militarySymbol, int radarId, double v1, double v2, double p_v1, double p_v2, double rcs, int type, double speed) {
-        this.id = id;
-        this.time = time;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.militarySymbol = militarySymbol;
-        this.radarId = radarId;
-        this.v1 = v1;
-        this.v2 = v2;
-        this.p_v1 = p_v1;
-        this.p_v2 = p_v2;
-        this.rcs = rcs;
-        this.type = type;
-        this.speed = speed;
-    }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getTime() {
         return time;
     }

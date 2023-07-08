@@ -27,7 +27,8 @@ public class RadarSimulationController {
     void stopSendingButton(ActionEvent event) {
         radar.setStatus(false);
         this.setRadarPane(radar);
-    }@FXML
+    }
+    @FXML
     public void initialize() {
         trackMissionIdColumn.setCellValueFactory(new PropertyValueFactory<TrackSeries, Integer>("id"));
         trackMissionLatitudeColumn.setCellValueFactory(new PropertyValueFactory<TrackSeries, Double[]>("latitude"));

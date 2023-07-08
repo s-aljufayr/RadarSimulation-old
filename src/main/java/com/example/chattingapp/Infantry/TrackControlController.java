@@ -190,24 +190,6 @@ public class TrackControlController {
         rcsColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTrackModel().getRcs()).asObject());
         radarIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTrackModel().getRadarId()).asObject());
         typeColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTrackModel().getType()).asObject());
-
-
-//        enemyIdColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, TrackModel>("trackModel"));
-//        speedColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, TrackModel>("trackModel"));
-
-//        enemyLatitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
-//        enemyLongitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
-//        enemyAltitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
-
-//        militarySymbolColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, String>("trackModel"));
-//        pV1Column.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
-//        pV2Column.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
-//        radarIdColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Integer>("trackModel"));
-//        rcsColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
-//        typeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Integer>("trackModel"));
-//        v1Column.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
-//        v2Column.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("trackModel"));
-
         timeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("timeFrame"));
 
         startLatitudeColumn.setCellValueFactory(new PropertyValueFactory<CalcTrackModel, Double>("startLatitude"));
@@ -285,7 +267,7 @@ public class TrackControlController {
         track.setEndLatitude(Double.parseDouble(String.valueOf(endLatitudeColumn.getCellData(track))));
         track.setEndLongitude(Double.parseDouble(String.valueOf(endLongitudeColumn.getCellData(track))));
         track.setEndAltitude(Double.parseDouble(String.valueOf(endAltitudeColumn.getCellData(track))));
-        track.setTrackFrequency(Long.parseLong(trackFrequencyField.getText()));
+//        track.setTrackFrequency(Long.parseLong(trackFrequencyField.getText()));
         track.setTimeFrame(Double.parseDouble(String.valueOf(timeColumn.getCellData(track))));
     }
     private CalcTrackModel getTrackFromUi(){
@@ -307,9 +289,9 @@ public class TrackControlController {
         calcTrackModel.setEndLatitude(Double.parseDouble(autoTrackEndLatitudeField.getText()));
         calcTrackModel.setEndLongitude(Double.parseDouble(autoTrackEndLongitudeField.getText()));
         calcTrackModel.setEndAltitude(Double.parseDouble(autoTrackEndAltitudeField.getText()));
-        calcTrackModel.setChangeInLatitude(Double.parseDouble(latitudeChangeField.getText()));
-        calcTrackModel.setChangeInLongitude(Double.parseDouble(longitudeChangeField.getText()));
-        calcTrackModel.setChangeInAltitude(Double.parseDouble(altitudeChangeField.getText()));
+//        calcTrackModel.setChangeInLatitude(Double.parseDouble(latitudeChangeField.getText()));
+//        calcTrackModel.setChangeInLongitude(Double.parseDouble(longitudeChangeField.getText()));
+//        calcTrackModel.setChangeInAltitude(Double.parseDouble(altitudeChangeField.getText()));
         calcTrackModel.setTimeFrame(Double.parseDouble(trackTimeField.getText()));
 
         return calcTrackModel;

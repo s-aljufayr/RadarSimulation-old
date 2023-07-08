@@ -3,20 +3,6 @@ package com.example.chattingapp.Infantry;
 import java.io.Serializable;
 
 public class CalcTrackModel implements Serializable {
-//    private int id;
-//    private String time;
-//    private double latitude;
-//    private double longitude;
-//    private double altitude;
-//    private String militarySymbol;
-//    private int radarId;
-//    private double v1;
-//    private double v2;
-//    private double p_v1;
-//    private double p_v2;
-//    private double rcs;
-//    private int type;
-//    private double speed;
     public TrackModel trackModel;
     private double startLatitude;
     private double startLongitude;
@@ -34,25 +20,8 @@ public class CalcTrackModel implements Serializable {
     private boolean isReachEndAltitude;
     public CalcTrackModel(){
     }
-
     public CalcTrackModel(TrackModel trackModel, double startLatitude, double startLongitude, double startAltitude, double endLatitude, double endLongitude, double endAltitude, double changeInLatitude, double changeInLongitude, double changeInAltitude, double trackFrequency, double timeFrame, boolean isReachEndLatitude, boolean isReachEndLongitude, boolean isReachEndAltitude) {
         this.trackModel = trackModel;
-
-//        this.trackModel.setId(trackModel.getId());
-//        this.trackModel.setLatitude(trackModel.getLatitude());
-//        this.trackModel.setLongitude(trackModel.getLongitude());
-//        this.trackModel.setAltitude(trackModel.getAltitude());
-//        this.trackModel.setRadarId(trackModel.getRadarId());
-//        this.trackModel.setSpeed(trackModel.getSpeed());
-//        this.trackModel.setMilitarySymbol(trackModel.getMilitarySymbol());
-//        this.trackModel.setRcs(trackModel.getRcs());
-//        this.trackModel.setP_v1(trackModel.getP_v1());
-//        this.trackModel.setP_v2(trackModel.getP_v2());
-//        this.trackModel.setV1(trackModel.getV1());
-//        this.trackModel.setV2(trackModel.getV2());
-//        this.trackModel.setTime(trackModel.getTime());
-//        this.trackModel.setType(trackModel.getType());
-
         this.startLatitude = startLatitude;
         this.startLongitude = startLongitude;
         this.startAltitude = startAltitude;
