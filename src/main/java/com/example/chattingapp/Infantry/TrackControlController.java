@@ -160,11 +160,11 @@ public class TrackControlController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(!udpReceiver.isOnline()){
-//                udpReceiver.getSocket().close();
-                udpSender.getSocket().close();
-                break;
-            }
+//            if(!udpReceiver.isOnline()){
+////                udpReceiver.getSocket().close();
+//                udpSender.getSocket().close();
+//                break;
+//            }
             firstRound++;
             if(!trackModelListAfterMovement.isEmpty()){
                 udpSender.sendData(trackModelListAfterMovement);

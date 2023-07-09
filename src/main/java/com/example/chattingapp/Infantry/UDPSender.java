@@ -36,7 +36,7 @@ public class UDPSender {
         DatagramPacket packet = new DatagramPacket(jsonData, jsonData.length, ipAddress, port);
 
         // Send the packet
-        socket.send(packet);
+//        socket.send(packet); //COMMented
         // close the socket
         socket.close();
 

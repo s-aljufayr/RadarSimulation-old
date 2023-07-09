@@ -44,7 +44,7 @@ public class connectionPropertiesController {
     void setRadarButton(ActionEvent event) throws IOException {
         // get the radar from the UI
         this.setRadarProperties(radar);
-        udpReceiver.startReceiving();
+//        udpReceiver.startReceiving();
         this.startSending(radar);
     }
     private void setRadarProperties(RadarModel radar) {
@@ -85,8 +85,8 @@ public class connectionPropertiesController {
                 Platform.runLater(() -> {
                     setRadarPane(radar);
                 });
-                if(!udpReceiver.isOnline())
-                    radar.setStatus(false);
+//                if(!udpReceiver.isOnline())
+//                    radar.setStatus(false);
                 if(!radar.isStatus())
                     break;
                 try {
