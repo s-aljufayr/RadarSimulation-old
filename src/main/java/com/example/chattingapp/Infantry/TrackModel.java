@@ -131,20 +131,20 @@ public class TrackModel {
     @Override
     public String toString() {
         return "TrackModel{" +
-                "id=" + id +
-                ", time='" + time + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", altitude=" + altitude +
-                ", militarySymbol='" + militarySymbol + '\'' +
-                ", radarId=" + radarId +
-                ", v1=" + v1 +
-                ", v2=" + v2 +
-                ", p_v1=" + p_v1 +
-                ", p_v2=" + p_v2 +
-                ", rcs=" + rcs +
-                ", type=" + type +
-                ", speed=" + speed +
+                "id=" + this.id +
+                ", time='" + this.time + '\'' +
+                ", latitude=" + this.latitude +
+                ", longitude=" + this.longitude +
+                ", altitude=" + this.altitude +
+                ", militarySymbol='" + this.militarySymbol + '\'' +
+                ", radarId=" + this.radarId +
+                ", v1=" + this.v1 +
+                ", v2=" + this.v2 +
+                ", p_v1=" + this.p_v1 +
+                ", p_v2=" + this.p_v2 +
+                ", rcs=" + this.rcs +
+                ", type=" + this.type +
+            ", speed=" + this.speed +
                 '}';
     }
 }

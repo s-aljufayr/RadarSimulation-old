@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 
 public class RadarSimulationController {
-    RadarModel radar = new RadarModel();
     @FXML
     private WebView mapWebView;
     @FXML
@@ -15,14 +14,9 @@ public class RadarSimulationController {
     @FXML
     private Label deviceAltitudeLable, deviceIdLable, deviceLatitudeLable,deviceLongitudeLable,ipAddressLabel,portLabel;
     @FXML
-    void stopSendingButton(ActionEvent event) {
-        radar.setStatus(false);
-        this.setRadarPane(radar);
-    }
-    @FXML
     public void initialize() {
         // Here you can add your link
-        mapWebView.getEngine().load("Here you can add your link");
+        mapWebView.getEngine().load("https://www.google.com/maps/@24.8012483,46.641581,14z?authuser=0&entry=ttu");
     }
     public void setRadarPane(RadarModel radar) {
         // print the radar information on radar labels
