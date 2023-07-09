@@ -118,11 +118,11 @@ public class TrackControlController {
                 System.out.println("loop timer Counter: "+timer);
                 movementTrackModel.getChangeInLLA(movementTrackModel, movementTrackModel.getTimeFrame());
                 if(timer == 0 && rowIndex == 0)
-                    maxTrackTime = this.maxTrackTime(tracksList);
+                    maxTrackTime = movementTrackModel.maxTrackTime(tracksList);
                 movementTrackModel.calculateLLAAfterMovement(movementTrackModel, timer);
                 movementTrackModel.getTrackModel().setTime(this.getLocalTime());
                 isTrackExists = false;
-                trackModelListAfterMovement = this.checkTrackIdExists(trackModelListAfterMovement,(TrackModel) movementTrackModel.trackModel);
+                trackModelListAfterMovement = this.checkTrackIdExists(trackModelListAfterMovement,movementTrackModel.trackModel);
                 if(!isTrackExists){
                     trackModelListAfterMovement.add(movementTrackModel.trackModel);
                 }
@@ -159,19 +159,15 @@ public class TrackControlController {
         radarIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTrackModel().getRadarId()).asObject());
         typeColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTrackModel().getType()).asObject());
         timeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("timeFrame"));
-
         startLatitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("startLatitude"));
         startLongitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("startLongitude"));
         startAltitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("startAltitude"));
-
         endLatitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("endLatitude"));
         endLongitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("endLongitude"));
         endAltitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("endAltitude"));
-
         changeInLatitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("changeInLatitude"));
         changeInLongitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("changeInLongitude"));
         changeInAltitudeColumn.setCellValueFactory(new PropertyValueFactory<MovementTrackModel, Double>("changeInAltitude"));
-
     }
     private void resetFlagOfReachedDistination(){
          this.movementTrackModel.setReachEndLatitude(false);
@@ -233,66 +229,5 @@ public class TrackControlController {
             }
         }
         return trackingList;
-    }
-    public double maxTrackTime(ObservableList<MovementTrackModel> trackList) {
-        double maxTrackTime = 0;
-        for (int rowIndex = 0; rowIndex < trackList.size(); rowIndex++){
-            double trackTime = trackList.get(rowIndex).getTimeFrame();
-            if(maxTrackTime < trackTime)
-                maxTrackTime = trackTime;
-        }
-        return maxTrackTime;
-    }
-    private Double countLLA(Double geographicCoordinates, Double endLLA,Double changeInLLA, boolean breakLoop, String key){
-        if(!breakLoop) {
-            if (geographicCoordinates < endLLA) {
-                geographicCoordinates += changeInLLA;
-                if (geographicCoordinates >= endLLA) {
-                    if (key == "latitude"){
-                        this.movementTrackModel.setReachEndLatitude(true);
-                    }
-                    if (key == "longitude"){
-                        this.movementTrackModel.setReachEndLongitude(true);
-                    }
-                    if (key == "altitude"){
-                        this.movementTrackModel.setReachEndAltitude(true);
-                    }
-                }
-            }
-            else if(geographicCoordinates > endLLA) {
-                geographicCoordinates -= changeInLLA;
-                if (geographicCoordinates <= endLLA){
-                    if (key == "latitude"){
-                        this.movementTrackModel.setReachEndLatitude(true);
-                    }
-                    if (key == "longitude"){
-                        this.movementTrackModel.setReachEndLongitude(true);
-                    }
-                    if (key == "altitude"){
-                        this.movementTrackModel.setReachEndAltitude(true);
-                    }
-                }
-            }
-            else if(geographicCoordinates.equals(endLLA)){
-                if (key == "latitude"){
-                    this.movementTrackModel.setReachEndLatitude(true);
-                }
-                if (key == "longitude"){
-                    this.movementTrackModel.setReachEndLongitude(true);
-                }
-                if (key == "altitude"){
-                    this.movementTrackModel.setReachEndAltitude(true);
-                }
-            }
-        }
-        return geographicCoordinates;
-    }
-    private void calculateLLAAfterMovement(MovementTrackModel track, int firstRound) {
-
-    }
-    private void getChangeInLLA(MovementTrackModel track, Double trackTime) {
-        track.setChangeInLatitude(Math.abs(track.getStartLatitude() - track.getEndLatitude()) / trackTime);
-        track.setChangeInLongitude(Math.abs(track.getStartLongitude() - track.getEndLongitude()) / trackTime);
-        track.setChangeInAltitude(Math.abs(track.getStartAltitude() - track.getEndAltitude()) / trackTime);
     }
 }
