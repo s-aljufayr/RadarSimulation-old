@@ -4,19 +4,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
 
 public class RadarSimulationController {
+//    @FXML
+//    private WebView mapWebView;
     @FXML
-    private WebView mapWebView;
+    private ImageView logoImageView;
     @FXML
     private Label deviceStatusLabel;
     @FXML
     private Label deviceAltitudeLable, deviceIdLable, deviceLatitudeLable,deviceLongitudeLable,ipAddressLabel,portLabel;
     @FXML
     public void initialize() {
+
         // Here you can add your link
-        mapWebView.getEngine().load("https://www.google.com/maps/@24.8012483,46.641581,14z?authuser=0&entry=ttu");
+//        mapWebView.getEngine().load("https://www.google.com/maps/@24.8012483,46.641581,14z?authuser=0&entry=ttu");
     }
     public void setRadarPane(RadarModel radar) {
         // print the radar information on radar labels

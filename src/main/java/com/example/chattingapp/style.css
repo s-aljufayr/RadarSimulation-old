@@ -1,0 +1,6 @@
+.tab-header-background {
+    -fx-background-color:  #14046c; /* Replace with your desired background color */
+}
+.tab {
+    -fx-background-color: #ffffff; /* Replace with your desired tab background color */
+}

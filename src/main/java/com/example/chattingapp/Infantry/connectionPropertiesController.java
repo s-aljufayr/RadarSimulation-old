@@ -17,7 +17,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class connectionPropertiesController {
-
     UDPSender udpSender = new UDPSender();
     UDPReceiver udpReceiver = new UDPReceiver();
     RadarModel radar = new RadarModel();
