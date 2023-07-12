@@ -1,4 +1,4 @@
-package com.example.chattingapp;
+package com.example.simulationApp;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

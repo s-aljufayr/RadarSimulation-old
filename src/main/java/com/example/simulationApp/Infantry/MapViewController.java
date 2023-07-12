@@ -1,4 +1,4 @@
-package com.example.chattingapp.Infantry;
+package com.example.simulationApp.Infantry;
 
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;

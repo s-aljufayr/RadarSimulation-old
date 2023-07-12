@@ -9,7 +9,7 @@
 <?import javafx.scene.web.WebView?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.chattingapp.Infantry.MapViewController"
+            fx:controller="com.example.simulationApp.Infantry.MapViewController"
             prefHeight="400.0" prefWidth="600.0">
 
 

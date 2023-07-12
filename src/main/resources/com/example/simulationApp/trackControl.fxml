@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="762.0" prefWidth="504.0" style="-fx-background-color: #14046c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chattingapp.Infantry.TrackControlController">
+<AnchorPane prefHeight="762.0" prefWidth="504.0" style="-fx-background-color: #14046c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simulationApp.Infantry.TrackControlController">
 
 
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="762.0" prefWidth="519.0" style="-fx-background-color: #14046c;">

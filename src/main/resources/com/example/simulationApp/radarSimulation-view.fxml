@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="940.0" prefWidth="1433.0" spacing="20.0" style="-fx-background-color: #11044c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chattingapp.Infantry.RadarSimulationController">
+<VBox alignment="CENTER" prefHeight="940.0" prefWidth="1433.0" spacing="20.0" style="-fx-background-color: #11044c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simulationApp.Infantry.RadarSimulationController">
 
     <children>
         <GridPane id="trackIdField" fx:id="AnimationPan" prefHeight="927.0" prefWidth="1421.0" style="-fx-background-color: #11044c; -fx-border-color: #11044c;">

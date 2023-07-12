@@ -1,4 +1,4 @@
-package com.example.chattingapp.Infantry;
+package com.example.simulationApp.Infantry;
 
 public class RadarModel {
     private int id;

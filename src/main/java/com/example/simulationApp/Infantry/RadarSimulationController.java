@@ -1,11 +1,8 @@
-package com.example.chattingapp.Infantry;
+package com.example.simulationApp.Infantry;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.WebView;
 
 public class RadarSimulationController {
 //    @FXML

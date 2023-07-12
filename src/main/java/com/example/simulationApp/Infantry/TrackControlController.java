@@ -1,4 +1,4 @@
-package com.example.chattingapp.Infantry;
+package com.example.simulationApp.Infantry;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
