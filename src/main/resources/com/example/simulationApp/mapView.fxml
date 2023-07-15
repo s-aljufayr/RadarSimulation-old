@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.web.WebView?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.simulationApp.Infantry.MapViewController"
+            prefHeight="400.0" prefWidth="600.0">
+
+
+    <children>
+        <WebView id="mapWebView" fx:id="mapWebView" layoutX="22.0" layoutY="13.0" prefHeight="632.0" prefWidth="837.0" />
+    </children>
+
+</AnchorPane>

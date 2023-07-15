@@ -1,23 +1,15 @@
-package com.example.chattingapp.Infantry;
+package com.example.simulationApp.Infantry;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 public class connectionPropertiesController {
-
     UDPSender udpSender = new UDPSender();
     UDPReceiver udpReceiver = new UDPReceiver();
     RadarModel radar = new RadarModel();

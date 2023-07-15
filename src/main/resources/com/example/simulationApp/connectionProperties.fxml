@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.chattingapp.Infantry.connectionPropertiesController"
-            prefHeight="400.0" prefWidth="600.0">
+
+<AnchorPane prefHeight="666.0" prefWidth="485.0" style="-fx-background-color: #14046c; -fx-border-color: #11044c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simulationApp.Infantry.connectionPropertiesController">
 
 
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="666.0" prefWidth="500.0" style="-fx-background-color: #14046c;">
         <children>
-            <ScrollPane prefHeight="820.0" prefWidth="518.0">
+            <ScrollPane prefHeight="666.0" prefWidth="500.0" style="-fx-background-color: #14046c;">
                 <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="664.0" prefWidth="498.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="664.0" prefWidth="498.0" style="-fx-background-color: #14046c;">
                         <children>
-                            <GridPane layoutX="20.0" layoutY="153.0" prefHeight="198.0" prefWidth="458.0">
+                            <GridPane layoutX="20.0" layoutY="153.0" prefHeight="198.0" prefWidth="458.0" style="-fx-text-background-color: white; -fx-background-color: #14046c;">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="443.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="441.0" minWidth="10.0" prefWidth="441.0" />
@@ -73,7 +74,7 @@
                                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                         </GridPane.margin>
                                     </Label>
-                                    <Button id="setRadar" fx:id="setRadar" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setRadarButton" prefHeight="26.0" prefWidth="70.0" text="SET" GridPane.rowIndex="4">
+                                    <Button id="setRadar" fx:id="setRadar" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setRadarButton" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #90218a;" text="SET" textFill="WHITE" GridPane.rowIndex="4">
                                         <GridPane.margin>
                                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                         </GridPane.margin>
@@ -83,7 +84,7 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                 </padding>
                             </GridPane>
-                            <GridPane layoutX="22.0" layoutY="19.0" prefHeight="128.0" prefWidth="454.0">
+                            <GridPane layoutX="22.0" layoutY="19.0" prefHeight="128.0" prefWidth="454.0" style="-fx-text-background-color: white; -fx-background-color: #14046c;">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -114,7 +115,7 @@
                                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                         </GridPane.margin>
                                     </TextField>
-                                    <Button id="setConnectionProperties" fx:id="setConnectionProperties" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setConnectionProperties" prefHeight="26.0" prefWidth="70.0" text="SET" GridPane.rowIndex="2">
+                                    <Button id="setConnectionProperties" fx:id="setConnectionProperties" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setConnectionProperties" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #90218a;" text="SET" textFill="WHITE" GridPane.rowIndex="2">
                                         <GridPane.margin>
                                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                         </GridPane.margin>
@@ -124,9 +125,9 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                 </padding>
                             </GridPane>
-                            <Pane prefHeight="259.0" prefWidth="498.0" AnchorPane.bottomAnchor="10.0">
+                            <Pane prefHeight="259.0" prefWidth="498.0" style="-fx-background-color: #14046c;" AnchorPane.bottomAnchor="10.0">
                                 <children>
-                                    <GridPane layoutX="68.0" layoutY="3.0" prefHeight="252.0" prefWidth="377.0">
+                                    <GridPane layoutX="68.0" layoutY="3.0" prefHeight="252.0" prefWidth="377.0" style="-fx-text-background-color: white;">
                                         <columnConstraints>
                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="229.4" />
                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="441.0" minWidth="10.0" prefWidth="123.80000000000004" />
@@ -224,7 +225,7 @@
                                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                 </GridPane.margin>
                                             </Label>
-                                            <Label id="radarStatusLable" fx:id="deviceStatusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="222.0" text="Unknown" textFill="#fa0707" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                            <Label id="radarStatusLable" fx:id="deviceStatusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="222.0" text="Unknown" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                 <GridPane.margin>
                                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                 </GridPane.margin>

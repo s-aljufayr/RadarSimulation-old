@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="940.0" prefWidth="1433.0" spacing="20.0" style="-fx-background-color: #11044c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simulationApp.Infantry.RadarSimulationController">
+
+    <children>
+        <GridPane id="trackIdField" fx:id="AnimationPan" prefHeight="927.0" prefWidth="1421.0" style="-fx-background-color: #11044c; -fx-border-color: #11044c;">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1067.0" minWidth="10.0" prefWidth="530.064697265625" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="901.0" minWidth="10.0" prefWidth="850.935302734375" />
+            </columnConstraints>
+            <rowConstraints>
+            <RowConstraints maxHeight="882.0" minHeight="10.0" prefHeight="81.19432067871094" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="882.0" minHeight="10.0" prefHeight="795.388671875" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <VBox.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </VBox.margin>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+         <children>
+                <TabPane id="tabPane" fx:id="tabPane" prefHeight="752.0" prefWidth="520.0" style="-fx-background-color: #11044c; -fx-border-color: #11044c;" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
+                    <tabs>
+                        <Tab id="connectionProperties" fx:id="connectionProperties" style="-fx-background-color: #8f2289; -fx-border-color: #11044c;" text="Connection Properties">
+                            <content>
+                                <fx:include source="connectionProperties.fxml" />
+                            </content>
+                        </Tab>
+                        <Tab id="trackControl" fx:id="trackControl" style="-fx-background-color: #8f2289; -fx-border-color: #8f2289;" text="Track Control">
+                            <content>
+                                <fx:include source="trackControl.fxml" />
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            <Pane prefHeight="783.0" prefWidth="861.0" style="-fx-background-color: #11044c;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <fx:include source="mapView.fxml" />
+            </Pane>
+         </children>
+        </GridPane>
+    </children>
+    <padding>
+        <Insets left="10.0" />
+    </padding>
+</VBox>

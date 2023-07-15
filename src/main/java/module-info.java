@@ -7,8 +7,8 @@ module com.example.chattingapp {
     requires com.fasterxml.jackson.databind;
     requires javafx.web;
 
-    opens com.example.chattingapp to javafx.fxml;
-    exports com.example.chattingapp;
-    exports com.example.chattingapp.Infantry;
-    opens com.example.chattingapp.Infantry to javafx.fxml;
+    opens com.example.simulationApp to javafx.fxml;
+    exports com.example.simulationApp;
+    exports com.example.simulationApp.Infantry;
+    opens com.example.simulationApp.Infantry to javafx.fxml;
 }

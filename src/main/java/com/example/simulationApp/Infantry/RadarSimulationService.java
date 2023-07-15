@@ -1,9 +1,6 @@
-package com.example.chattingapp.Infantry;
+package com.example.simulationApp.Infantry;
 
-import javafx.application.Platform;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.List;
 
 public class RadarSimulationService {
     RadarSimulationController radarSimulationController = new RadarSimulationController();
@@ -13,7 +10,7 @@ public class RadarSimulationService {
     public RadarSimulationService() throws IOException {
     }
 
-    public void getChangeInLLA(CalcTrackModel track, int trackTime) {
+    public void getChangeInLLA(MovementTrackModel track, int trackTime) {
         track.setChangeInLatitude(Math.abs(track.getStartLatitude() - track.getEndLatitude()) / trackTime);
         track.setChangeInLongitude(Math.abs(track.getStartLongitude() - track.getEndLongitude()) / trackTime);
         track.setChangeInAltitude(Math.abs(track.getStartAltitude() - track.getEndAltitude()) / trackTime);
@@ -38,7 +35,7 @@ public class RadarSimulationService {
         return Math.sqrt(Math.pow(earthRadius * c, 2) + Math.pow(dAlt, 2));
     }
 
-    public double distanceBetweenTowPoints(double lat1, double lat2, double lon1, double lon2)
+    public double distanceBetweenTwoPoints(double lat1, double lat2, double lon1, double lon2)
     {
         // The math module contains a function
         // named toRadians which converts from
