@@ -12,6 +12,7 @@ public class RadarSimulationApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(RadarSimulationApplication.class.getResource("radarSimulation-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Radar Simulation");
+        stage.setIconified(true);
         stage.setScene(scene);
         stage.show();
     }
